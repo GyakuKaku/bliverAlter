@@ -5,7 +5,6 @@
       background-color="#304156"
       text-color="#bfcbd9"
       active-text-color="rgb(64, 158, 255)"
-      :default-active="$route.path"
     >
       <el-menu-item index="/">
         <i class="el-icon-s-home"></i>{{$t('sidebar.home')}}
@@ -13,7 +12,9 @@
       <el-menu-item :index="$router.resolve({name: 'imgManager'}).href">
         <i class="el-icon-refresh"></i>图片转换配置
       </el-menu-item>
-      <el-menu-item :index="$router.resolve({name: 'stylegen'}).href">
+      <el-menu-item :index="$router.resolve({name: 'stylegen', query: {
+        imgTransformer: getUrl()
+      }}).href">
         <i class="el-icon-brush"></i>{{$t('sidebar.stylegen')}}
       </el-menu-item>
       <el-menu-item :index="$router.resolve({name: 'help'}).href">
@@ -51,6 +52,9 @@ export default {
   methods: {
     onSelectLanguage(locale) {
       window.localStorage.lang = this.$i18n.locale = locale
+    },
+    getUrl() {
+      return window.localStorage.imgTransformer == null ? '[{"from":"(真不是人)","target":"test1.jpg"},{"from":"(悠亚画画)","target":"test2.jpg"}]' : window.localStorage.imgTransformer
     }
   }
 }

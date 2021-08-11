@@ -378,13 +378,15 @@ export default {
     },
     handleImgMessage(message) {
       try {
-        const transformerStr = window.localStorage.imgTransformer == null ? '[{"from":"(真不是人)","target":"test1.jpg"},{"from":"(悠亚画画)","target":"test2.jpg"}]' : window.localStorage.imgTransformer
-        const transformer = JSON.parse(transformerStr)
-        for (let i = 0; i < transformer.length; i++) {
-          if (message.content === transformer[i].from) {
-            message.imgFlag = true
-            message.img = transformer[i].target
-            break
+        if (this.$route.query.imgTransformer) {
+          const transformerStr = String(this.$route.query.imgTransformer)
+          const transformer = JSON.parse(transformerStr)
+          for (let i = 0; i < transformer.length; i++) {
+            if (message.content === transformer[i].from) {
+              message.imgFlag = true
+              message.img = transformer[i].target
+              break
+            }
           }
         }
       } catch (e) {
