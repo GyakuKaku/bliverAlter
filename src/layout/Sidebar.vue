@@ -10,6 +10,9 @@
       <el-menu-item index="/">
         <i class="el-icon-s-home"></i>{{$t('sidebar.home')}}
       </el-menu-item>
+      <el-menu-item :index="$router.resolve({name: 'imgManager'}).href">
+        <i class="el-icon-refresh"></i>图片转换配置
+      </el-menu-item>
       <el-menu-item :index="$router.resolve({name: 'stylegen'}).href">
         <i class="el-icon-brush"></i>{{$t('sidebar.stylegen')}}
       </el-menu-item>

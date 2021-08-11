@@ -341,19 +341,6 @@
           </el-col>
         </el-row>
       </el-card>
-
-      <h3>图片替换文字</h3>
-      <el-card shadow="never">
-        <el-row :gutter="20">
-          <el-col :xs="24" :sm="24">
-            <el-input type="textarea" :rows="2" v-model="imgTransformer"></el-input>
-          </el-col>
-        </el-row>
-        <el-row :gutter="20">
-          <el-button @click="saveImgTransformer">保存</el-button>
-          <el-button @click="resetImgTransformer">重置</el-button>
-        </el-row>
-      </el-card>
     </el-form>
   </div>
 </template>
@@ -365,7 +352,6 @@ import FontSelect from './FontSelect'
 import * as common from './common'
 import {mergeConfig} from '@/utils'
 
-const DEFAULT_IMG_TRANSFORMER = '[{"from":"(真不是人)","target":"test1.jpg"},{"from":"(测试)","target":"test2.jpg"}]'
 export const DEFAULT_CONFIG = {
   showOutlines: true,
   outlineSize: 2,
@@ -439,8 +425,7 @@ export default {
   },
   data() {
     return {
-      form: this.loadConfig(),
-      imgTransformer: this.loadImgTransformer()
+      form: this.loadConfig()
     }
   },
   computed: {
@@ -666,28 +651,11 @@ yt-live-chat-ticker-sponsor-item-renderer * {
       let config = mergeConfig(this.form, DEFAULT_CONFIG)
       window.localStorage.stylegenConfig = JSON.stringify(config)
     }, 500),
-    saveImgTransformer() {
-      window.localStorage.imgTransformer = this.imgTransformer
-    },
     loadConfig() {
       try {
         return mergeConfig(JSON.parse(window.localStorage.stylegenConfig), DEFAULT_CONFIG)
       } catch {
         return {...DEFAULT_CONFIG}
-      }
-    },
-    resetImgTransformer() {
-      this.imgTransformer = DEFAULT_IMG_TRANSFORMER
-      window.localStorage.imgTransformer = DEFAULT_IMG_TRANSFORMER
-    },
-    loadImgTransformer() {
-      if (window.localStorage.imgTransformer == null) {
-        return DEFAULT_IMG_TRANSFORMER
-      }
-      try {
-        return window.localStorage.imgTransformer
-      } catch {
-        return DEFAULT_IMG_TRANSFORMER
       }
     },
     resetConfig() {
