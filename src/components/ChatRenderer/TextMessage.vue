@@ -5,10 +5,9 @@
     ></img-shadow>
     <div id="content" class="style-scope yt-live-chat-text-message-renderer">
       <span id="timestamp" class="style-scope yt-live-chat-text-message-renderer">{{timeText}}</span>
-      <yt-live-chat-author-chip class="style-scope yt-live-chat-text-message-renderer">
-        <span id="author-name" dir="auto" class="style-scope yt-live-chat-author-chip" :type="authorTypeText">{{
-          authorName
-          }}<!-- 这里是已验证勋章 -->
+      <yt-live-chat-author-chip style="vertical-align: top;" class="style-scope yt-live-chat-text-message-renderer">
+        <span id="author-name" dir="auto" class="style-scope yt-live-chat-author-chip" :type="authorTypeText">
+          <span>{{ authorName }}</span>
           <span id="chip-badges" class="style-scope yt-live-chat-author-chip"></span>
         </span>
         <span id="chat-badges" class="style-scope yt-live-chat-author-chip">
@@ -17,14 +16,14 @@
           ></author-badge>
         </span>
       </yt-live-chat-author-chip>
-      <span v-if="!imgFlag" id="message" class="style-scope yt-live-chat-text-message-renderer">
+      <span v-if="!imgFlag" style="vertical-align: bottom;" id="message" class="style-scope yt-live-chat-text-message-renderer">
         {{ content }}
         <el-badge :value="repeated" :max="99" v-show="repeated > 1" class="style-scope yt-live-chat-text-message-renderer"
           :style="{'--repeated-mark-color': repeatedMarkColor}"
         ></el-badge>
       </span>
+      <img v-if="imgFlag" :src="img" style="max-height: 48px;">
     </div>
-    <img v-if="imgFlag" :src="img" style="max-height: 48px;">
   </yt-live-chat-text-message-renderer>
 </template>
 

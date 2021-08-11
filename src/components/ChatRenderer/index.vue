@@ -6,9 +6,7 @@
     <yt-live-chat-item-list-renderer class="style-scope yt-live-chat-renderer" allow-scroll>
       <div ref="scroller" id="item-scroller" class="style-scope yt-live-chat-item-list-renderer animated" @scroll="onScroll">
         <div ref="itemOffset" id="item-offset" class="style-scope yt-live-chat-item-list-renderer" style="height: 0px;">
-          <div ref="items" id="items" class="style-scope yt-live-chat-item-list-renderer" style="overflow: hidden"
-            :style="{transform: `translateY(${Math.floor(scrollPixelsRemaining)}px)`}"
-          >
+          <div ref="items" id="items" class="style-scope yt-live-chat-item-list-renderer" style="overflow: hidden" :style="{transform: `translateY(${Math.floor(scrollPixelsRemaining)}px)`}">
             <template v-for="message in messages">
               <text-message :key="message.id" v-if="message.type === MESSAGE_TYPE_TEXT"
                 class="style-scope yt-live-chat-item-list-renderer"
