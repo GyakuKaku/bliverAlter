@@ -22,7 +22,7 @@
           :style="{'--repeated-mark-color': repeatedMarkColor}"
         ></el-badge>
       </span>
-      <img v-if="imgFlag" :src="img" style="max-height: 48px;">
+      <img v-if="imgFlag" :src="img" style="height: 64px;">
     </div>
   </yt-live-chat-text-message-renderer>
 </template>

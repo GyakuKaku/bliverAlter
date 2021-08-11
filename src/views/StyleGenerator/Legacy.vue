@@ -351,7 +351,7 @@
         </el-row>
         <el-row :gutter="20">
           <el-button @click="saveImgTransformer">保存</el-button>
-          <el-button>重置</el-button>
+          <el-button @click="resetImgTransformer">重置</el-button>
         </el-row>
       </el-card>
     </el-form>
@@ -365,7 +365,7 @@ import FontSelect from './FontSelect'
 import * as common from './common'
 import {mergeConfig} from '@/utils'
 
-const DEFAULT_IMG_TRANSFORMER = '[{"from":"(手机)","target":"test1.jpg"},{"from":"(呆滞)","target":"test2.jpg"}]'
+const DEFAULT_IMG_TRANSFORMER = '[{"from":"(真不是人)","target":"test1.jpg"},{"from":"(测试)","target":"test2.jpg"}]'
 export const DEFAULT_CONFIG = {
   showOutlines: true,
   outlineSize: 2,
@@ -675,6 +675,10 @@ yt-live-chat-ticker-sponsor-item-renderer * {
       } catch {
         return {...DEFAULT_CONFIG}
       }
+    },
+    resetImgTransformer() {
+      this.imgTransformer = DEFAULT_IMG_TRANSFORMER
+      window.localStorage.imgTransformer = DEFAULT_IMG_TRANSFORMER
     },
     loadImgTransformer() {
       if (window.localStorage.imgTransformer == null) {
