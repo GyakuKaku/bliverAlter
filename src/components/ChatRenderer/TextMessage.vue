@@ -16,13 +16,13 @@
           ></author-badge>
         </span>
       </yt-live-chat-author-chip>
-      <span v-if="!imgFlag" style="vertical-align: bottom;" id="message" class="style-scope yt-live-chat-text-message-renderer">
-        {{ content }}
+      <span style="vertical-align: bottom;" id="message" class="style-scope yt-live-chat-text-message-renderer">
+        <span v-if="!imgFlag">{{ content }}</span>
+        <img v-if="imgFlag" :src="img" style="height: 64px;">
         <el-badge :value="repeated" :max="99" v-show="repeated > 1" class="style-scope yt-live-chat-text-message-renderer"
           :style="{'--repeated-mark-color': repeatedMarkColor}"
         ></el-badge>
       </span>
-      <img v-if="imgFlag" :src="img" style="height: 64px;">
     </div>
   </yt-live-chat-text-message-renderer>
 </template>
