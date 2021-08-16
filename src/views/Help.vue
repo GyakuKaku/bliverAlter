@@ -19,6 +19,7 @@
     <p class="img-container large-img"><el-image fit="scale-down" src="/static/img/tutorial/tutorial-6.png"></el-image></p>
     <p>在这个页面按格式配一下，from是要被替换的文字，target是图片名字，保存要是成功了下面应该能显示。</p>
     <p class="img-container large-img"><el-image fit="scale-down" src="/static/img/tutorial/tutorial-7.png"></el-image></p>
+    <p>改完图片配置后要重新复制一下房间url。</p>
   </div>
 </template>
 
