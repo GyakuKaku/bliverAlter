@@ -27,7 +27,7 @@
 </template>
 
 <script>
-const DEFAULT_IMG_TRANSFORMER = '[{"from":"(真不是人)","target":"test1.jpg"},{"from":"(悠亚画画)","target":"test2.jpg"}]'
+const DEFAULT_IMG_TRANSFORMER = '[{"from":"(轴依的肯定)","target":"JOIYES.jpg"},{"from":"(轴依的的否定)","target":"JOINO.jpg"}]'
 
 export default {
   name: 'ImgManager',
