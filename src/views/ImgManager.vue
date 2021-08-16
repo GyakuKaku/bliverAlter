@@ -57,11 +57,11 @@ export default {
     resetImgTransformer() {
       this.imgTransformer = JSON.stringify(JSON.parse(DEFAULT_IMG_TRANSFORMER), null, " ")
       window.localStorage.imgTransformer = DEFAULT_IMG_TRANSFORMER
-      this.getTransformList()
+      location.reload()
     },
     saveImgTransformer() {
       window.localStorage.imgTransformer = this.imgTransformer
-      this.getTransformList()
+      location.reload()
     },
     loadImgTransformer() {
       if (window.localStorage.imgTransformer == null) {
