@@ -11,7 +11,7 @@
               <text-message :key="message.id" v-if="message.type === MESSAGE_TYPE_TEXT"
                 class="style-scope yt-live-chat-item-list-renderer"
                 :img-flag="message.imgFlag"
-                :img="`/static/img/memes/${message.img}`"
+                :img="'/static/img/memes/' + message.img"
                 :avatarUrl="message.avatarUrl" :time="message.time" :authorName="message.authorName"
                 :authorType="message.authorType" :content="getShowContent(message)" :privilegeType="message.privilegeType"
                 :repeated="message.repeated"
