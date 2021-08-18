@@ -19,7 +19,7 @@
         </el-col>
         <el-col :key="trans.from" v-for="trans in transformList" :xs="6" :sm="6" style="margin-top: 3px;">
           <p>{{ trans.from }}</p>
-          <img :src="`/static/img/memes/${trans.target}`" style="height: 64px;">
+          <img :src="`/static/img/memes/${trans.target}`" style="height: 64px;"  alt=""/>
         </el-col>
       </el-row>
     </el-card>
@@ -27,7 +27,7 @@
 </template>
 
 <script>
-const DEFAULT_IMG_TRANSFORMER = '[{"from":"(轴依的肯定)","target":"JOIYES.jpg"},{"from":"(轴依的否定)","target":"JOINO.jpg"}]'
+const DEFAULT_IMG_TRANSFORMER = '[{"from":"(轴伊的肯定)","target":"JOIYES.jpg"},{"from":"(轴伊的否定)","target":"JOINO.jpg"}]'
 
 export default {
   name: 'ImgManager',
