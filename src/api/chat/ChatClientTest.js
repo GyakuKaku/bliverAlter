@@ -19,7 +19,7 @@ const NAMES = [
 //   '有一说一，这件事大家懂的都懂，不懂的，说了你也不明白，不如不说', '让我看看', '我柜子动了，我不玩了'
 // ]
 const CONTENTS = [
-  '(真不是人)', '(悠亚画画)', '老板大气'
+  '(轴伊的肯定)', '(轴伊的否定)', '老板大气'
 ]
 
 const AUTHOR_TYPES = [
@@ -40,18 +40,18 @@ function randGuardInfo () {
   return {authorType, privilegeType}
 }
 
-// const GIFT_INFO_LIST = [
-//   {giftName: 'B坷垃', totalCoin: 9900},
-//   {giftName: '礼花', totalCoin: 28000},
-//   {giftName: '花式夸夸', totalCoin: 39000},
-//   {giftName: '天空之翼', totalCoin: 100000},
-//   {giftName: '摩天大楼', totalCoin: 450000},
-//   {giftName: '小电视飞船', totalCoin: 1245000}
-// ]
+const GIFT_INFO_LIST = [
+  {giftName: 'B坷垃', totalCoin: 9900},
+  {giftName: '礼花', totalCoin: 28000},
+  {giftName: '花式夸夸', totalCoin: 39000},
+  {giftName: '天空之翼', totalCoin: 100000},
+  {giftName: '摩天大楼', totalCoin: 450000},
+  {giftName: '小电视飞船', totalCoin: 1245000}
+]
 
-// const SC_PRICES = [
-//   30, 50, 100, 200, 500, 1000
-// ]
+const SC_PRICES = [
+  30, 50, 100, 200, 500, 1000
+]
 
 const MESSAGE_GENERATORS = [
   // 文字
@@ -77,57 +77,57 @@ const MESSAGE_GENERATORS = [
       }
     }
   },
-  // // 礼物
-  // {
-  //   weight: 1,
-  //   value() {
-  //     return {
-  //       type: constants.MESSAGE_TYPE_GIFT,
-  //       message: {
-  //         ...randomChoose(GIFT_INFO_LIST),
-  //         id: getUuid4Hex(),
-  //         avatarUrl: avatar.DEFAULT_AVATAR_URL,
-  //         timestamp: new Date().getTime() / 1000,
-  //         authorName: randomChoose(NAMES),
-  //         num: 1
-  //       }
-  //     }
-  //   }
-  // },
-  // // SC
-  // {
-  //   weight: 3,
-  //   value() {
-  //     return {
-  //       type: constants.MESSAGE_TYPE_SUPER_CHAT,
-  //       message: {
-  //         id: getUuid4Hex(),
-  //         avatarUrl: avatar.DEFAULT_AVATAR_URL,
-  //         timestamp: new Date().getTime() / 1000,
-  //         authorName: randomChoose(NAMES),
-  //         price: randomChoose(SC_PRICES),
-  //         content: randomChoose(CONTENTS),
-  //         translation: ''
-  //       }
-  //     }
-  //   }
-  // },
-  // // 新舰长
-  // {
-  //   weight: 1,
-  //   value() {
-  //     return {
-  //       type: constants.MESSAGE_TYPE_MEMBER,
-  //       message: {
-  //         id: getUuid4Hex(),
-  //         avatarUrl: avatar.DEFAULT_AVATAR_URL,
-  //         timestamp: new Date().getTime() / 1000,
-  //         authorName: randomChoose(NAMES),
-  //         privilegeType: randInt(1, 3)
-  //       }
-  //     }
-  //   }
-  // }
+  // 礼物
+  {
+    weight: 1,
+    value() {
+      return {
+        type: constants.MESSAGE_TYPE_GIFT,
+        message: {
+          ...randomChoose(GIFT_INFO_LIST),
+          id: getUuid4Hex(),
+          avatarUrl: avatar.DEFAULT_AVATAR_URL,
+          timestamp: new Date().getTime() / 1000,
+          authorName: randomChoose(NAMES),
+          num: 1
+        }
+      }
+    }
+  },
+  // SC
+  {
+    weight: 3,
+    value() {
+      return {
+        type: constants.MESSAGE_TYPE_SUPER_CHAT,
+        message: {
+          id: getUuid4Hex(),
+          avatarUrl: avatar.DEFAULT_AVATAR_URL,
+          timestamp: new Date().getTime() / 1000,
+          authorName: randomChoose(NAMES),
+          price: randomChoose(SC_PRICES),
+          content: randomChoose(CONTENTS),
+          translation: ''
+        }
+      }
+    }
+  },
+  // 新舰长
+  {
+    weight: 1,
+    value() {
+      return {
+        type: constants.MESSAGE_TYPE_MEMBER,
+        message: {
+          id: getUuid4Hex(),
+          avatarUrl: avatar.DEFAULT_AVATAR_URL,
+          timestamp: new Date().getTime() / 1000,
+          authorName: randomChoose(NAMES),
+          privilegeType: randInt(1, 3)
+        }
+      }
+    }
+  }
 ]
 
 function randomChoose (nodes) {
