@@ -4,7 +4,7 @@ import VueI18n from 'vue-i18n'
 import {
   Aside, Autocomplete, Badge, Button, Card, Col, ColorPicker, Container, Divider, Form, FormItem, Image,
   Input, Main, Menu, MenuItem, Message, Option, OptionGroup, Radio, RadioGroup, Row, Select, Scrollbar,
-  Slider, Submenu, Switch, TabPane, Tabs, Tooltip
+  Slider, Submenu, Switch, TabPane, Tabs, Tooltip, Table, TableColumn
 } from 'element-ui'
 import axios from 'axios'
 
@@ -59,6 +59,9 @@ Vue.use(Switch)
 Vue.use(TabPane)
 Vue.use(Tabs)
 Vue.use(Tooltip)
+Vue.use(Table)
+Vue.use(TableColumn)
+
 Vue.prototype.$message = Message
 
 Vue.config.ignoredElements = [
