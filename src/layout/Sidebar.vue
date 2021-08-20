@@ -54,7 +54,7 @@ export default {
       window.localStorage.lang = this.$i18n.locale = locale
     },
     getUrl() {
-      return window.localStorage.imgTransformer == null ? '[{"from":"(来一拳)","target":"test1.jpg"}]' : window.localStorage.imgTransformer
+      return window.localStorage.imgTransformerV2 == null ? '[]' : window.localStorage.imgTransformerV2
     }
   }
 }

@@ -27,7 +27,7 @@
 </template>
 
 <script>
-const DEFAULT_IMG_TRANSFORMER = '[{"from":"(来一拳)","target":"test1.jpg"}]'
+const DEFAULT_IMG_TRANSFORMER = '[]'
 
 export default {
   name: 'ImgManager',
@@ -44,7 +44,7 @@ export default {
     getTransformList() {
       const list = []
       try {
-        const transformerStr = window.localStorage.imgTransformer == null ? DEFAULT_IMG_TRANSFORMER : window.localStorage.imgTransformer
+        const transformerStr = window.localStorage.imgTransformerV2 == null ? DEFAULT_IMG_TRANSFORMER : window.localStorage.imgTransformerV2
         const transformer = JSON.parse(transformerStr)
         transformer.forEach(target => {
           list.push(target)
@@ -56,19 +56,19 @@ export default {
     },
     resetImgTransformer() {
       this.imgTransformer = JSON.stringify(JSON.parse(DEFAULT_IMG_TRANSFORMER), null, " ")
-      window.localStorage.imgTransformer = DEFAULT_IMG_TRANSFORMER
+      window.localStorage.imgTransformerV2 = DEFAULT_IMG_TRANSFORMER
       location.reload()
     },
     saveImgTransformer() {
-      window.localStorage.imgTransformer = this.imgTransformer
+      window.localStorage.imgTransformerV2 = this.imgTransformer
       location.reload()
     },
     loadImgTransformer() {
-      if (window.localStorage.imgTransformer == null) {
+      if (window.localStorage.imgTransformerV2 == null) {
         return JSON.stringify(JSON.parse(DEFAULT_IMG_TRANSFORMER), null, " ")
       }
       try {
-        return JSON.stringify(JSON.parse(window.localStorage.imgTransformer), null, " ")
+        return JSON.stringify(JSON.parse(window.localStorage.imgTransformerV2), null, " ")
       } catch {
         return JSON.stringify(JSON.parse(DEFAULT_IMG_TRANSFORMER), null, " ")
       }

@@ -204,7 +204,7 @@ export default {
       }
       let query = {...this.form}
       delete query.roomId
-      query.imgTransformer = window.localStorage.imgTransformer == null ? '[{"from":"(来一拳)","target":"test1.jpg"}]' : window.localStorage.imgTransformer
+      query.imgTransformer = window.localStorage.imgTransformerV2 == null ? '[]' : window.localStorage.imgTransformerV2
       let resolved
       if (isTestRoom) {
         resolved = this.$router.resolve({name: 'test_room', query})
