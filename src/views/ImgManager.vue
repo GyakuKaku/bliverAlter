@@ -32,7 +32,7 @@
           </el-table-column>
           <el-table-column label="操作">
             <template slot-scope="scope">
-              <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+              <el-button size="mini" type="primary" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
               <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
             </template>
           </el-table-column>
@@ -71,8 +71,7 @@ export default {
       handleIndex : -1,
       form: {},
       dialogVisible: false,
-      imgTransformList: [],
-      fileList: []
+      imgTransformList: []
     }
   },
   mounted() {
@@ -108,13 +107,33 @@ export default {
       })
     },
     handleSave() {
-      console.log(this.form.target)
+      if (this.handleIndex === -1) {
+        const data = Object.assign({}, this.form)
+        this.form = {}
+        this.imgTransformList.push(data)
+      } else {
+        this.imgTransformList[this.handleIndex] = Object.assign({}, this.form)
+        this.form = {}
+      }
+      this.saveImgTransformer()
+      this.dialogVisible = false
     },
     handleEdit(index, row) {
-      console.log(row)
+      this.form = Object.assign({}, row)
+      this.handleIndex = index
+      this.$nextTick(() => {
+        this.dialogVisible = true
+      })
     },
-    handleDelete(index, row) {
-      console.log(row)
+    handleDelete(index) {
+      const neoList = []
+      for (let i = 0; i < this.imgTransformList.length; i++) {
+        if (i !== index) {
+          neoList.push(this.imgTransformList[i])
+        }
+      }
+      this.imgTransformList = Object.assign(neoList)
+      this.saveImgTransformer()
     }
   }
 }
