@@ -41,14 +41,14 @@
     </el-card>
 
     <el-dialog title="配置信息" :visible.sync="dialogVisible">
-      <el-form ref="form" :model="form" label-width="100px">
+      <el-form ref="form" :model="form" :rules="rules" label-width="120px">
         <el-row :gutter="20">
-          <el-form-item label="被替换文字">
+          <el-form-item label="被替换文字" prop="from">
             <el-input v-model="form.from"></el-input>
           </el-form-item>
         </el-row>
         <el-row :gutter="20">
-          <el-form-item label="图片">
+          <el-form-item label="图片名(带后缀)" prop="target">
             <el-input v-model="form.target"></el-input>
           </el-form-item>
         </el-row>
@@ -71,7 +71,27 @@ export default {
       handleIndex : -1,
       form: {},
       dialogVisible: false,
-      imgTransformList: []
+      imgTransformList: [],
+      rules: {
+        from: [
+          {
+            required: true,
+            message: '被替换文字是必须输入项目',
+            trigger: 'change'
+          }, {
+            validator: this.checkFrom,
+            message: '被替换文字不能重复',
+            trigger: 'change'
+          }
+        ],
+        target: [
+          {
+            required: true,
+            message: '图片名是必须输入项目',
+            trigger: 'change'
+          }
+        ]
+      }
     }
   },
   mounted() {
@@ -134,6 +154,14 @@ export default {
       }
       this.imgTransformList = Object.assign(neoList)
       this.saveImgTransformer()
+    },
+    checkFrom(rule, key, callback) {
+      for (let i = 0; i < this.imgTransformList.length; i++) {
+        if (this.imgTransformList[i].from === key && i !== this.handleIndex) {
+          callback(new Error('替换文字不能重复'))
+        }
+      }
+      callback()
     }
   }
 }
