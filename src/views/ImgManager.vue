@@ -3,26 +3,61 @@
     <h3>图片替换文字</h3>
     <el-card shadow="never">
       <el-row :gutter="20">
-        <el-col :xs="24" :sm="24">
-          <el-input type="textarea" :rows="12" v-model="imgTransformer"></el-input>
-        </el-col>
+        <el-button size="mini" type="primary" @click="handleCreate">新增</el-button>
+        <el-button size="mini" type="danger" @click="resetImgTransformer">删除所有</el-button>
       </el-row>
-      <el-row :gutter="20" style="margin-top: 8px;">
-        <el-col :xs="24" :sm="24">
-          <el-button @click="saveImgTransformer">保存</el-button>
-          <el-button @click="resetImgTransformer">重置</el-button>
-        </el-col>
-      </el-row>
-      <el-row :gutter="20" style="margin-top: 8px;">
-        <el-col :xs="24" :sm="24">
-          以下文字会被替换为对应图片:
-        </el-col>
-        <el-col :key="trans.from" v-for="trans in transformList" :xs="6" :sm="6" style="margin-top: 3px;">
-          <p>{{ trans.from }}</p>
-          <el-image :src="'/static/img/memes/' + trans.target" style="height: 64px;"></el-image>
-        </el-col>
+      <el-row :gutter="20">
+        <el-table :data="imgTransformList"
+            style="width: 100%">
+          <el-table-column
+              label="被替换文字"
+              width="180">
+            <template slot-scope="scope">
+              <span>{{ scope.row.from }}</span>
+            </template>
+          </el-table-column>
+          <el-table-column
+              label="图片路径"
+              width="180">
+            <template slot-scope="scope">
+              <span>{{ scope.row.target }}</span>
+            </template>
+          </el-table-column>
+          <el-table-column
+              label="图片预览"
+              width="180">
+            <template slot-scope="scope">
+              <el-image :src="'/static/img/memes/' + scope.row.target" style="height: 64px;"></el-image>
+            </template>
+          </el-table-column>
+          <el-table-column label="操作">
+            <template slot-scope="scope">
+              <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+              <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+            </template>
+          </el-table-column>
+        </el-table>
       </el-row>
     </el-card>
+
+    <el-dialog title="配置信息" :visible.sync="dialogVisible">
+      <el-form ref="form" :model="form" label-width="100px">
+        <el-row :gutter="20">
+          <el-form-item label="被替换文字">
+            <el-input v-model="form.from"></el-input>
+          </el-form-item>
+        </el-row>
+        <el-row :gutter="20">
+          <el-form-item label="图片">
+            <el-input v-model="form.target"></el-input>
+          </el-form-item>
+        </el-row>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogVisible = false">取消</el-button>
+        <el-button type="primary" @click="handleSave">保存</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
@@ -33,8 +68,11 @@ export default {
   name: 'ImgManager',
   data() {
     return {
-      imgTransformer: this.loadImgTransformer(),
-      transformList: []
+      handleIndex : -1,
+      form: {},
+      dialogVisible: false,
+      imgTransformList: [],
+      fileList: []
     }
   },
   mounted() {
@@ -50,29 +88,34 @@ export default {
           list.push(target)
         })
       } catch (e) {
-        return []
+        this.imgTransformList = []
       }
-      this.transformList = Object.assign([], list)
+      this.imgTransformList = Object.assign([], list)
     },
     resetImgTransformer() {
-      this.imgTransformer = JSON.stringify(JSON.parse(DEFAULT_IMG_TRANSFORMER), null, " ")
       window.localStorage.imgTransformerV2 = DEFAULT_IMG_TRANSFORMER
       location.reload()
     },
     saveImgTransformer() {
-      window.localStorage.imgTransformerV2 = this.imgTransformer
+      window.localStorage.imgTransformerV2 = JSON.stringify(this.imgTransformList)
       location.reload()
     },
-    loadImgTransformer() {
-      if (window.localStorage.imgTransformerV2 == null) {
-        return JSON.stringify(JSON.parse(DEFAULT_IMG_TRANSFORMER), null, " ")
-      }
-      try {
-        return JSON.stringify(JSON.parse(window.localStorage.imgTransformerV2), null, " ")
-      } catch {
-        return JSON.stringify(JSON.parse(DEFAULT_IMG_TRANSFORMER), null, " ")
-      }
+    handleCreate() {
+      this.form = {}
+      this.handleIndex = -1
+      this.$nextTick(() => {
+        this.dialogVisible = true
+      })
     },
+    handleSave() {
+      console.log(this.form.target)
+    },
+    handleEdit(index, row) {
+      console.log(row)
+    },
+    handleDelete(index, row) {
+      console.log(row)
+    }
   }
 }
 </script>

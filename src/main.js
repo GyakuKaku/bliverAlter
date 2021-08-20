@@ -2,9 +2,9 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import VueI18n from 'vue-i18n'
 import {
-  Aside, Autocomplete, Badge, Button, Card, Col, ColorPicker, Container, Divider, Form, FormItem, Image,
+  Aside, Autocomplete, Badge, Button, Card, Col, ColorPicker, Container, Divider, Dialog, Form, FormItem, Image,
   Input, Main, Menu, MenuItem, Message, Option, OptionGroup, Radio, RadioGroup, Row, Select, Scrollbar,
-  Slider, Submenu, Switch, TabPane, Tabs, Tooltip, Table, TableColumn
+  Slider, Submenu, Switch, TabPane, Tabs, Tooltip, Table, TableColumn, Upload
 } from 'element-ui'
 import axios from 'axios'
 
@@ -38,6 +38,7 @@ Vue.use(Card)
 Vue.use(Col)
 Vue.use(ColorPicker)
 Vue.use(Container)
+Vue.use(Dialog)
 Vue.use(Divider)
 Vue.use(Form)
 Vue.use(FormItem)
@@ -61,6 +62,7 @@ Vue.use(Tabs)
 Vue.use(Tooltip)
 Vue.use(Table)
 Vue.use(TableColumn)
+Vue.use(Upload)
 
 Vue.prototype.$message = Message
 
