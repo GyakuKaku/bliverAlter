@@ -8,18 +8,8 @@ const NAMES = [
   'Rick Astley'
 ]
 
-// const CONTENTS = [
-//   '草', 'kksk', '8888888888', '888888888888888888888888888888', '老板大气，老板身体健康',
-//   'The quick brown fox jumps over the lazy dog', "I can eat glass, it doesn't hurt me",
-//   '我不做人了，JOJO', '無駄無駄無駄無駄無駄無駄無駄無駄', '欧啦欧啦欧啦欧啦欧啦欧啦欧啦欧啦', '逃げるんだよォ！',
-//   '嚯，朝我走过来了吗，没有选择逃跑而是主动接近我么', '不要停下来啊', '(手机)',
-//   'I am the bone of my sword. Steel is my body, and fire is my blood.', '言いたいことがあるんだよ！',
-//   '(呆滞)', '如果不是知道了夏小姐，说不定我已经对这个世界没有留恋了', '迷えば、敗れる',
-//   'Farewell, ashen one. May the flame guide thee', '竜神の剣を喰らえ！', '竜が我が敌を喰らう！',
-//   '有一说一，这件事大家懂的都懂，不懂的，说了你也不明白，不如不说', '让我看看', '我柜子动了，我不玩了'
-// ]
 const CONTENTS = [
-  '(轴伊的肯定)', '(轴伊的否定)', '老板大气'
+  '草', 'kksk', '8888888888', '888888888888888888888888888888', '老板大气，老板身体健康'
 ]
 
 const AUTHOR_TYPES = [
