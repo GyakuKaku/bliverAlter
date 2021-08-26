@@ -18,7 +18,7 @@
       </yt-live-chat-author-chip>
       <span style="vertical-align: bottom;" id="message" class="style-scope yt-live-chat-text-message-renderer">
         <span v-if="!imgFlag">{{ content }}</span>
-        <el-image v-if="imgFlag" :src="img" style="height: 64px;" ></el-image>
+        <el-image v-if="imgFlag" :src="img" style="height: 210px;"></el-image>
         <el-badge :value="repeated" :max="99" v-show="repeated > 1" class="style-scope yt-live-chat-text-message-renderer"
           :style="{'--repeated-mark-color': repeatedMarkColor}"
         ></el-badge>
@@ -52,7 +52,7 @@ export default {
     privilegeType: Number,
     repeated: Number,
     imgFlag: Boolean,
-    img: String,
+    img: String
   },
   computed: {
     timeText() {
