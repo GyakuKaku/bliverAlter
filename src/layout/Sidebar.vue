@@ -54,7 +54,7 @@ export default {
       window.localStorage.lang = this.$i18n.locale = locale
     },
     getUrl() {
-      return window.localStorage.imgTransformerV2 == null ? '[{"from":"(真不是人)","target":"test1.jpg"}, {"from":"(悠亚画画)","target":"test2.jpg"}]' : window.localStorage.imgTransformerV2
+      return window.localStorage.imgTransformerV2 == null ? '[]' : window.localStorage.imgTransformerV2
     }
   }
 }
