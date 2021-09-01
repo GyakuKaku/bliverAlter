@@ -23,9 +23,10 @@
         </div>
       </div>
       <div id="content" class="style-scope yt-live-chat-paid-message-renderer">
-        <div id="message" dir="auto" class="style-scope yt-live-chat-paid-message-renderer">{{
-          content
-        }}</div>
+        <div id="message" dir="auto" class="style-scope yt-live-chat-paid-message-renderer">
+          <span v-if="!imgFlag">{{ content }}</span>
+          <el-image v-if="imgFlag" :src="img" style="height: 210px;"></el-image>
+        </div>
       </div>
     </div>
   </yt-live-chat-paid-message-renderer>
@@ -46,7 +47,9 @@ export default {
     authorName: String,
     price: Number, // 价格，人民币
     time: Date,
-    content: String
+    content: String,
+    imgFlag: Boolean,
+    img: String
   },
   computed: {
     color() {

@@ -9,17 +9,11 @@ const NAMES = [
 ]
 
 // const CONTENTS = [
-//   '草', 'kksk', '8888888888', '888888888888888888888888888888', '老板大气，老板身体健康',
-//   'The quick brown fox jumps over the lazy dog', "I can eat glass, it doesn't hurt me",
-//   '我不做人了，JOJO', '無駄無駄無駄無駄無駄無駄無駄無駄', '欧啦欧啦欧啦欧啦欧啦欧啦欧啦欧啦', '逃げるんだよォ！',
-//   '嚯，朝我走过来了吗，没有选择逃跑而是主动接近我么', '不要停下来啊', '(手机)',
-//   'I am the bone of my sword. Steel is my body, and fire is my blood.', '言いたいことがあるんだよ！',
-//   '(呆滞)', '如果不是知道了夏小姐，说不定我已经对这个世界没有留恋了', '迷えば、敗れる',
-//   'Farewell, ashen one. May the flame guide thee', '竜神の剣を喰らえ！', '竜が我が敌を喰らう！',
-//   '有一说一，这件事大家懂的都懂，不懂的，说了你也不明白，不如不说', '让我看看', '我柜子动了，我不玩了'
+//   '草', 'kksk', '8888888888', '888888888888888888888888888888', '老板大气，老板身体健康'
 // ]
+
 const CONTENTS = [
-  '(真不是人)', '(悠亚画画)', '老板大气'
+  '(真不是人)', '(悠亚画画)', '(test)'
 ]
 
 const AUTHOR_TYPES = [
@@ -40,18 +34,18 @@ function randGuardInfo () {
   return {authorType, privilegeType}
 }
 
-// const GIFT_INFO_LIST = [
-//   {giftName: 'B坷垃', totalCoin: 9900},
-//   {giftName: '礼花', totalCoin: 28000},
-//   {giftName: '花式夸夸', totalCoin: 39000},
-//   {giftName: '天空之翼', totalCoin: 100000},
-//   {giftName: '摩天大楼', totalCoin: 450000},
-//   {giftName: '小电视飞船', totalCoin: 1245000}
-// ]
+const GIFT_INFO_LIST = [
+  {giftName: 'B坷垃', totalCoin: 9900},
+  {giftName: '礼花', totalCoin: 28000},
+  {giftName: '花式夸夸', totalCoin: 39000},
+  {giftName: '天空之翼', totalCoin: 100000},
+  {giftName: '摩天大楼', totalCoin: 450000},
+  {giftName: '小电视飞船', totalCoin: 1245000}
+]
 
-// const SC_PRICES = [
-//   30, 50, 100, 200, 500, 1000
-// ]
+const SC_PRICES = [
+  30, 50, 100, 200, 500, 1000
+]
 
 const MESSAGE_GENERATORS = [
   // 文字
@@ -77,57 +71,57 @@ const MESSAGE_GENERATORS = [
       }
     }
   },
-  // // 礼物
-  // {
-  //   weight: 1,
-  //   value() {
-  //     return {
-  //       type: constants.MESSAGE_TYPE_GIFT,
-  //       message: {
-  //         ...randomChoose(GIFT_INFO_LIST),
-  //         id: getUuid4Hex(),
-  //         avatarUrl: avatar.DEFAULT_AVATAR_URL,
-  //         timestamp: new Date().getTime() / 1000,
-  //         authorName: randomChoose(NAMES),
-  //         num: 1
-  //       }
-  //     }
-  //   }
-  // },
-  // // SC
-  // {
-  //   weight: 3,
-  //   value() {
-  //     return {
-  //       type: constants.MESSAGE_TYPE_SUPER_CHAT,
-  //       message: {
-  //         id: getUuid4Hex(),
-  //         avatarUrl: avatar.DEFAULT_AVATAR_URL,
-  //         timestamp: new Date().getTime() / 1000,
-  //         authorName: randomChoose(NAMES),
-  //         price: randomChoose(SC_PRICES),
-  //         content: randomChoose(CONTENTS),
-  //         translation: ''
-  //       }
-  //     }
-  //   }
-  // },
-  // // 新舰长
-  // {
-  //   weight: 1,
-  //   value() {
-  //     return {
-  //       type: constants.MESSAGE_TYPE_MEMBER,
-  //       message: {
-  //         id: getUuid4Hex(),
-  //         avatarUrl: avatar.DEFAULT_AVATAR_URL,
-  //         timestamp: new Date().getTime() / 1000,
-  //         authorName: randomChoose(NAMES),
-  //         privilegeType: randInt(1, 3)
-  //       }
-  //     }
-  //   }
-  // }
+  // 礼物
+  {
+    weight: 1,
+    value() {
+      return {
+        type: constants.MESSAGE_TYPE_GIFT,
+        message: {
+          ...randomChoose(GIFT_INFO_LIST),
+          id: getUuid4Hex(),
+          avatarUrl: avatar.DEFAULT_AVATAR_URL,
+          timestamp: new Date().getTime() / 1000,
+          authorName: randomChoose(NAMES),
+          num: 1
+        }
+      }
+    }
+  },
+  // SC
+  {
+    weight: 3,
+    value() {
+      return {
+        type: constants.MESSAGE_TYPE_SUPER_CHAT,
+        message: {
+          id: getUuid4Hex(),
+          avatarUrl: avatar.DEFAULT_AVATAR_URL,
+          timestamp: new Date().getTime() / 1000,
+          authorName: randomChoose(NAMES),
+          price: randomChoose(SC_PRICES),
+          content: randomChoose(CONTENTS),
+          translation: ''
+        }
+      }
+    }
+  },
+  // 新舰长
+  {
+    weight: 1,
+    value() {
+      return {
+        type: constants.MESSAGE_TYPE_MEMBER,
+        message: {
+          id: getUuid4Hex(),
+          avatarUrl: avatar.DEFAULT_AVATAR_URL,
+          timestamp: new Date().getTime() / 1000,
+          authorName: randomChoose(NAMES),
+          privilegeType: randInt(1, 3)
+        }
+      }
+    }
+  }
 ]
 
 function randomChoose (nodes) {

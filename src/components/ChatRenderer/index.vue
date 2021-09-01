@@ -11,7 +11,7 @@
               <text-message :key="message.id" v-if="message.type === MESSAGE_TYPE_TEXT"
                 class="style-scope yt-live-chat-item-list-renderer"
                 :img-flag="message.imgFlag"
-                :img="`/static/img/memes/${message.img}`"
+                :img="'/static/img/memes/' + message.img"
                 :avatarUrl="message.avatarUrl" :time="message.time" :authorName="message.authorName"
                 :authorType="message.authorType" :content="getShowContent(message)" :privilegeType="message.privilegeType"
                 :repeated="message.repeated"
@@ -28,6 +28,8 @@
               ></membership-item>
               <paid-message :key="message.id" v-else-if="message.type === MESSAGE_TYPE_SUPER_CHAT"
                 class="style-scope yt-live-chat-item-list-renderer"
+                :img-flag="message.imgFlag"
+                :img="'/static/img/memes/' + message.img"
                 :price="message.price" :avatarUrl="message.avatarUrl" :authorName="getShowAuthorName(message)"
                 :time="message.time" :content="getShowContent(message)"
               ></paid-message>
@@ -382,7 +384,7 @@ export default {
           const transformerStr = String(this.$route.query.imgTransformer)
           const transformer = JSON.parse(transformerStr)
           for (let i = 0; i < transformer.length; i++) {
-            if (message.content === transformer[i].from) {
+            if (message.content.indexOf(transformer[i].from) > -1) {
               message.imgFlag = true
               message.img = transformer[i].target
               break
@@ -406,6 +408,21 @@ export default {
         if (this.paidMessages.length > MAX_PAID_MESSAGE_NUM) {
           this.paidMessages.splice(MAX_PAID_MESSAGE_NUM, this.paidMessages.length - MAX_PAID_MESSAGE_NUM)
         }
+      }
+      try {
+        if (this.$route.query.imgTransformer) {
+          const transformerStr = String(this.$route.query.imgTransformer)
+          const transformer = JSON.parse(transformerStr)
+          for (let i = 0; i < transformer.length; i++) {
+            if (message.content.indexOf(transformer[i].from) > -1) {
+              message.imgFlag = true
+              message.img = transformer[i].target
+              break
+            }
+          }
+        }
+      } catch (e) {
+        console.log('图片转换失败')
       }
     },
     handleDelMessage({id}) {
