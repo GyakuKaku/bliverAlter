@@ -4,7 +4,7 @@
     <el-card shadow="never">
       <el-row :gutter="20">
         <el-button size="mini" type="primary" @click="handleCreate">新增</el-button>
-        <el-button size="mini" type="danger" @click="resetImgTransformer">删除所有</el-button>
+        <el-button size="mini" type="danger" @click="resetImgTransformer">重置</el-button>
       </el-row>
       <el-row :gutter="20">
         <el-table :data="imgTransformList"
@@ -62,7 +62,7 @@
 </template>
 
 <script>
-const DEFAULT_IMG_TRANSFORMER = '[]'
+const DEFAULT_IMG_TRANSFORMER = '[{"from":"轴伊的肯定","target":"joiYES.jpg"},{"from":"轴伊的否定","target":"joiNO.jpg"},{"from":"傲娇","target":"aojiao.jpg"},{"from":"真不是人","target":"zbsr.png"}]'
 
 export default {
   name: 'ImgManager',
