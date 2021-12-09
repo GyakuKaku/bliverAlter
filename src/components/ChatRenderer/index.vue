@@ -15,6 +15,7 @@
                 :avatarUrl="message.avatarUrl" :time="message.time" :authorName="message.authorName"
                 :authorType="message.authorType" :content="getShowContent(message)" :privilegeType="message.privilegeType"
                 :repeated="message.repeated"
+                :imgContent="imgContentHandle(message.imgContent)"
               ></text-message>
               <paid-message :key="message.id" v-else-if="message.type === MESSAGE_TYPE_GIFT"
                 class="style-scope yt-live-chat-item-list-renderer"
@@ -590,6 +591,13 @@ export default {
       // 有鼠标事件时刷新，防止用户看弹幕时自动滚动
       if (this.cantScrollStartTime) {
         this.cantScrollStartTime = new Date()
+      }
+    },
+    imgContentHandle(info) {
+      if (info == null || info === '{}' || !(info instanceof Object)) {
+        return null
+      } else {
+        return info
       }
     }
   }

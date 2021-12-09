@@ -129,7 +129,8 @@ export default {
         content: data.content,
         privilegeType: data.privilegeType,
         repeated: 1,
-        translation: data.translation
+        translation: data.translation,
+        imgContent: data.imgContent
       }
       this.$refs.renderer.addMessage(message)
     },

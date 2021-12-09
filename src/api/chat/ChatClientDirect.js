@@ -290,7 +290,8 @@ export default class ChatClientDirect {
       isMobileVerified: !!info[2][6],
       medalLevel: roomId === this.roomId ? medalLevel : 0,
       id: getUuid4Hex(),
-      translation: ''
+      translation: '',
+      imgContent: info[0][13]
     }
     this.onAddText(data)
   }
