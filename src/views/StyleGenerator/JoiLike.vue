@@ -303,8 +303,8 @@ import {mergeConfig} from '@/utils'
 
 export const DEFAULT_CONFIG = {
   showAvatars: true,
-  avatarSize: 40,
-
+  avatarSize: 60,
+  avatarGiftSize: 40,
   showUserNames: true,
   userNameFont: 'Noto Sans SC',
   userNameFontSize: 20,
@@ -397,12 +397,13 @@ ${this.animationStyle}
       return `/* Reduce side padding */
 yt-live-chat-text-message-renderer {
   padding: 0 4px !important;
-  margin: 8px 0;
+  margin: 8px 0 8px ${this.form.avatarSize / 2}px;
   border-radius: 8px;
   overflow: visible;
 }
 yt-live-chat-text-message-renderer #content{
-  margin-left: ${this.form.avatarSize + 10}px !important;
+  margin-left: ${this.form.avatarSize / 2 + 10}px !important;
+  width: calc(100% - ${this.form.avatarSize / 2 + 10}px) !important;
 }
   ${this.getBgStyleForAuthorType('', this.form.messageBgColor)}
   ${this.getBgStyleForAuthorType('owner', this.form.ownerMessageBgColor)}
@@ -417,8 +418,7 @@ yt-live-chat-text-message-renderer #author-photo {
   height: ${this.form.avatarSize}px !important;
   border-radius: ${this.form.avatarSize}px !important;
   position: absolute;
-  top: 3px;
-  left: 3px;
+  left: -${this.form.avatarSize / 2}px !important;
 }
 yt-live-chat-text-message-renderer #author-photo img {
   ${this.form.showAvatars ? '' : 'display: none !important;'}
@@ -431,18 +431,19 @@ yt-live-chat-paid-message-renderer #author-photo img,
 yt-live-chat-membership-item-renderer #author-photo,
 yt-live-chat-membership-item-renderer #author-photo img {
   ${this.form.showAvatars ? '' : 'display: none !important;'}
-  width: ${this.form.avatarSize}px !important;
-  height: ${this.form.avatarSize}px !important;
-  border-radius: ${this.form.avatarSize}px !important;
-  margin-right: ${this.form.avatarSize / 4}px !important;
+  width: ${this.form.avatarGiftSize}px !important;
+  height: ${this.form.avatarGiftSize}px !important;
+  border-radius: ${this.form.avatarGiftSize}px !important;
+  margin-right: ${this.form.avatarGiftSize / 4}px !important;
 }`
     },
     userNameStyle() {
       return `/* Channel names */
 yt-live-chat-text-message-renderer yt-live-chat-author-chip {
-  margin-top: 3px;
-  height: ${this.form.avatarSize * 0.618}px !important;
-  line-height: ${this.form.avatarSize * 0.618}px !important;
+  display: block;
+  height: ${this.form.avatarSize * 0.5}px !important;
+  line-height: ${this.form.avatarSize * 0.5}px !important;
+  width: calc(100% - ${this.form.avatarSize + 10}px) !important;
 }
 
 yt-live-chat-text-message-renderer #author-name[type="owner"],
@@ -465,7 +466,8 @@ yt-live-chat-text-message-renderer #author-name {
   ${this.form.userNameColor ? `color: ${this.form.userNameColor} !important;` : ''}
   font-family: "${common.cssEscapeStr(this.form.userNameFont)}"${common.FALLBACK_FONTS};
   font-size: ${this.form.userNameFontSize}px !important;
-  line-height: ${this.form.userNameLineHeight || this.form.userNameFontSize}px !important;
+  height: ${this.form.avatarSize / 2}px !important;
+  line-height: ${this.form.avatarSize / 2}px !important;
 }
 
 /* Hide badges */
@@ -481,13 +483,13 @@ yt-live-chat-text-message-renderer #message * {
   ${this.form.messageColor ? `color: ${this.form.messageColor} !important;` : ''}
   font-family: "${common.cssEscapeStr(this.form.messageFont)}"${common.FALLBACK_FONTS};
   font-size: ${this.form.messageFontSize}px !important;
-  line-height: ${this.form.messageLineHeight || this.form.messageFontSize}px !important;
+  line-height: ${this.form.avatarSize / 2}px !important;
 }
 
 yt-live-chat-text-message-renderer #message {
   display: block !important;
   overflow: visible !important;
-  padding: 20px;
+  min-height: ${this.form.avatarSize / 2}px !important;
 }`
     },
     timeStyle() {
