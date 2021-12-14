@@ -355,7 +355,6 @@ export const DEFAULT_CONFIG = {
 
 export default {
   name: 'JoiLike',
-
   props: {
     value: String
   },
@@ -397,18 +396,53 @@ ${this.animationStyle}
     paddingStyle() {
       return `/* Reduce side padding */
 yt-live-chat-text-message-renderer {
-  padding-left: 4px !important;
-  padding-right: 4px !important;
-
-}`
+  padding: 0 4px !important;
+  margin: 8px 0;
+  border-radius: 8px;
+  overflow: visible;
+}
+yt-live-chat-text-message-renderer #content{
+  margin-left: ${this.form.avatarSize + 10}px !important;
+}
+  ${this.getBgStyleForAuthorType('', this.form.messageBgColor)}
+  ${this.getBgStyleForAuthorType('owner', this.form.ownerMessageBgColor)}
+  ${this.getBgStyleForAuthorType('moderator', this.form.moderatorMessageBgColor)}
+  ${this.getBgStyleForAuthorType('member', this.form.memberMessageBgColor)}`
     },
     avatarStyle() {
-      return common.getAvatarStyle(this.form)
+      return `/* Avatars */
+yt-live-chat-text-message-renderer #author-photo {
+  ${this.form.showAvatars ? '' : 'display: none !important;'}
+  width: ${this.form.avatarSize}px !important;
+  height: ${this.form.avatarSize}px !important;
+  border-radius: ${this.form.avatarSize}px !important;
+  position: absolute;
+  top: 3px;
+  left: 3px;
+}
+yt-live-chat-text-message-renderer #author-photo img {
+  ${this.form.showAvatars ? '' : 'display: none !important;'}
+  width: ${this.form.avatarSize}px !important;
+  height: ${this.form.avatarSize}px !important;
+  border-radius: ${this.form.avatarSize}px !important;
+}
+yt-live-chat-paid-message-renderer #author-photo,
+yt-live-chat-paid-message-renderer #author-photo img,
+yt-live-chat-membership-item-renderer #author-photo,
+yt-live-chat-membership-item-renderer #author-photo img {
+  ${this.form.showAvatars ? '' : 'display: none !important;'}
+  width: ${this.form.avatarSize}px !important;
+  height: ${this.form.avatarSize}px !important;
+  border-radius: ${this.form.avatarSize}px !important;
+  margin-right: ${this.form.avatarSize / 4}px !important;
+}`
     },
     userNameStyle() {
       return `/* Channel names */
 yt-live-chat-text-message-renderer yt-live-chat-author-chip {
-  margin-bottom: 5px;
+  margin-top: 3px;
+  height: ${this.form.avatarSize * 0.618}px !important;
+  line-height: ${this.form.avatarSize * 0.618}px !important;
 }
 
 yt-live-chat-text-message-renderer #author-name[type="owner"],
@@ -454,19 +488,6 @@ yt-live-chat-text-message-renderer #message {
   display: block !important;
   overflow: visible !important;
   padding: 20px;
-  border-radius: 30px;
-}
-
-/* The triangle beside dialog */
-yt-live-chat-text-message-renderer #message::before {
-  content: "";
-  display: inline-block;
-  position: absolute;
-  top: ${this.form.showUserNames ? ((this.form.userNameLineHeight || this.form.userNameFontSize) + 10) : 20}px;
-  left: ${this.form.showAvatars ? (this.form.avatarSize + this.form.avatarSize / 4 - 8) : -8}px;
-  border: 8px solid transparent;
-  border-right: 18px solid;
-  transform: rotate(35deg);
 }`
     },
     timeStyle() {
@@ -477,15 +498,7 @@ yt-live-chat-text-message-renderer #message::before {
 body {
   overflow: hidden;
   ${this.form.bgColor ? `background-color: ${this.form.bgColor};` : ''}
-}
-
-${this.getBgStyleForAuthorType('', this.form.messageBgColor)}
-
-${this.getBgStyleForAuthorType('owner', this.form.ownerMessageBgColor)}
-
-${this.getBgStyleForAuthorType('moderator', this.form.moderatorMessageBgColor)}
-
-${this.getBgStyleForAuthorType('member', this.form.memberMessageBgColor)}`
+}`
     },
     scAndNewMemberStyle() {
       return `/* SuperChat/Fan Funding Messages */
@@ -583,12 +596,8 @@ yt-live-chat-ticker-sponsor-item-renderer * {
         color = '#ffffff'
       }
       let typeSelector = authorType ? `[author-type="${authorType}"]` : ''
-      return `yt-live-chat-text-message-renderer${typeSelector} #message {
+      return `yt-live-chat-text-message-renderer${typeSelector}{
   background-color: ${color} !important;
-}
-
-yt-live-chat-text-message-renderer${typeSelector} #message::before {
-  border-right-color: ${color};
 }`
     }
   }
