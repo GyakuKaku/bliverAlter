@@ -25,6 +25,7 @@
         ></el-badge>
       </span>
     </div>
+    <img id="flower" class="joi-style" alt="" src="/static/img/common/flower.png" style="display: none;">
   </yt-live-chat-text-message-renderer>
 </template>
 

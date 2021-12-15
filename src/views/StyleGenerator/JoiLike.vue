@@ -307,18 +307,18 @@ export const DEFAULT_CONFIG = {
   avatarGiftSize: 40,
   showUserNames: true,
   userNameFont: 'Noto Sans SC',
-  userNameFontSize: 20,
+  userNameFontSize: 18,
   userNameLineHeight: 0,
-  userNameColor: '#cccccc',
-  ownerUserNameColor: '#ffd600',
-  moderatorUserNameColor: '#5e84f1',
-  memberUserNameColor: '#0f9d58',
+  userNameColor: '#ffffff',
+  ownerUserNameColor: '#ffffff',
+  moderatorUserNameColor: '#ffffff',
+  memberUserNameColor: '#ffffff',
   showBadges: true,
 
   messageFont: 'Noto Sans SC',
-  messageFontSize: 18,
+  messageFontSize: 16,
   messageLineHeight: 0,
-  messageColor: '#000000',
+  messageColor: '#ffffff',
 
   showTime: false,
   timeFont: 'Noto Sans SC',
@@ -327,10 +327,10 @@ export const DEFAULT_CONFIG = {
   timeColor: '#999999',
 
   bgColor: 'rgba(0, 0, 0, 0)',
-  messageBgColor: '#ffffff',
-  ownerMessageBgColor: 'rgba(231, 199, 30, 1)',
-  moderatorMessageBgColor: 'rgba(41, 95, 251, 1)',
-  memberMessageBgColor: 'rgba(43, 234, 43, 1)',
+  messageBgColor: 'rgba(255, 206, 101, 1)',
+  ownerMessageBgColor: 'rgba(255, 206, 101, 1)',
+  moderatorMessageBgColor: 'rgba(255, 206, 101, 1)',
+  memberMessageBgColor: 'rgba(255, 206, 101, 1)',
 
   firstLineFont: 'Noto Sans SC',
   firstLineFontSize: 20,
@@ -369,6 +369,8 @@ export default {
 
 ${common.COMMON_STYLE}
 
+${this.joiStyle}
+
 ${this.paddingStyle}
 
 ${this.avatarStyle}
@@ -392,6 +394,17 @@ ${this.animationStyle}
         allFonts.push(this.form[name])
       }
       return common.getImportStyle(allFonts)
+    },
+    joiStyle() {
+      return `/* extra style */
+.joi-style {
+  display: block !important;
+}
+yt-live-chat-text-message-renderer #flower{
+  position: absolute !important;
+  top: 0 !important;
+  right: 0 !important;
+}`
     },
     paddingStyle() {
       return `/* Reduce side padding */
@@ -443,7 +456,10 @@ yt-live-chat-text-message-renderer yt-live-chat-author-chip {
   display: block;
   height: ${this.form.avatarSize * 0.5}px !important;
   line-height: ${this.form.avatarSize * 0.5}px !important;
-  width: calc(100% - ${this.form.avatarSize + 10}px) !important;
+  width: calc(100% - ${this.form.avatarSize * 0.5 + 10}px) !important;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 yt-live-chat-text-message-renderer #author-name[type="owner"],
@@ -468,12 +484,15 @@ yt-live-chat-text-message-renderer #author-name {
   font-size: ${this.form.userNameFontSize}px !important;
   height: ${this.form.avatarSize / 2}px !important;
   line-height: ${this.form.avatarSize / 2}px !important;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 /* Hide badges */
 yt-live-chat-text-message-renderer #chat-badges {
   ${this.form.showBadges ? '' : 'display: none !important;'}
-  vertical-align: text-top !important;
+  height: ${this.form.avatarSize / 2}px !important;
+  line-height: ${this.form.avatarSize / 2}px !important;
 }`
     },
     messageStyle() {
@@ -489,7 +508,11 @@ yt-live-chat-text-message-renderer #message * {
 yt-live-chat-text-message-renderer #message {
   display: block !important;
   overflow: visible !important;
+  padding-left: 8px !important;
   min-height: ${this.form.avatarSize / 2}px !important;
+}
+yt-live-chat-text-message-renderer #message .el-image {
+  margin-top:8px;
 }`
     },
     timeStyle() {
