@@ -1,303 +1,272 @@
 <template>
   <div>
-    <!--    <el-form label-width="150px" size="mini">-->
-    <!--      <h3>{{$t('stylegen.avatars')}}</h3>-->
-    <!--      <el-card shadow="never">-->
-    <!--        <el-row :gutter="20">-->
-    <!--          <el-col :xs="24" :sm="12">-->
-    <!--            <el-form-item :label="$t('stylegen.showAvatars')">-->
-    <!--              <el-switch v-model="form.showAvatars"></el-switch>-->
-    <!--            </el-form-item>-->
-    <!--          </el-col>-->
-    <!--          <el-col :xs="24" :sm="12">-->
-    <!--            <el-form-item :label="$t('stylegen.avatarSize')">-->
-    <!--              <el-input v-model.number="form.avatarSize" type="number" min="0"></el-input>-->
-    <!--            </el-form-item>-->
-    <!--          </el-col>-->
-    <!--        </el-row>-->
-    <!--      </el-card>-->
+        <el-form label-width="150px" size="mini">
+          <h3>{{$t('stylegen.avatars')}}</h3>
+          <el-card shadow="never">
+            <el-row :gutter="20">
+              <el-col :xs="24" :sm="12">
+                <el-form-item :label="$t('stylegen.showAvatars')">
+                  <el-switch v-model="form.showAvatars"></el-switch>
+                </el-form-item>
+              </el-col>
+              <el-col :xs="24" :sm="12">
+                <el-form-item :label="$t('stylegen.avatarSize')">
+                  <el-input v-model.number="form.avatarSize" type="number" min="0"></el-input>
+                </el-form-item>
+              </el-col>
+            </el-row>
+          </el-card>
 
-    <!--      <h3>{{$t('stylegen.userNames')}}</h3>-->
-    <!--      <el-card shadow="never">-->
-    <!--        <el-row :gutter="20">-->
-    <!--          <el-col :xs="24" :sm="12">-->
-    <!--            <el-form-item :label="$t('stylegen.showUserNames')">-->
-    <!--              <el-switch v-model="form.showUserNames"></el-switch>-->
-    <!--            </el-form-item>-->
-    <!--          </el-col>-->
-    <!--          <el-col :xs="24" :sm="12">-->
-    <!--            <el-form-item :label="$t('stylegen.font')">-->
-    <!--              <font-select v-model="form.userNameFont"></font-select>-->
-    <!--            </el-form-item>-->
-    <!--          </el-col>-->
-    <!--        </el-row>-->
-    <!--        <el-row :gutter="20">-->
-    <!--          <el-col :xs="24" :sm="12">-->
-    <!--            <el-form-item :label="$t('stylegen.fontSize')">-->
-    <!--              <el-input v-model.number="form.userNameFontSize" type="number" min="0"></el-input>-->
-    <!--            </el-form-item>-->
-    <!--          </el-col>-->
-    <!--          <el-col :xs="24" :sm="12">-->
-    <!--            <el-form-item :label="$t('stylegen.lineHeight')">-->
-    <!--              <el-input v-model.number="form.userNameLineHeight" type="number" min="0"></el-input>-->
-    <!--            </el-form-item>-->
-    <!--          </el-col>-->
-    <!--        </el-row>-->
-    <!--        <el-row :gutter="20">-->
-    <!--          <el-col :xs="24" :sm="12">-->
-    <!--            <el-form-item :label="$t('stylegen.normalColor')">-->
-    <!--              <el-color-picker v-model="form.userNameColor"></el-color-picker>-->
-    <!--            </el-form-item>-->
-    <!--          </el-col>-->
-    <!--          <el-col :xs="24" :sm="12">-->
-    <!--            <el-form-item :label="$t('stylegen.memberColor')">-->
-    <!--              <el-color-picker v-model="form.memberUserNameColor"></el-color-picker>-->
-    <!--            </el-form-item>-->
-    <!--          </el-col>-->
-    <!--        </el-row>-->
-    <!--        <el-row :gutter="20">-->
-    <!--          <el-col :xs="24" :sm="12">-->
-    <!--            <el-form-item :label="$t('stylegen.moderatorColor')">-->
-    <!--              <el-color-picker v-model="form.moderatorUserNameColor"></el-color-picker>-->
-    <!--            </el-form-item>-->
-    <!--          </el-col>-->
-    <!--          <el-col :xs="24" :sm="12">-->
-    <!--            <el-form-item :label="$t('stylegen.ownerColor')">-->
-    <!--              <el-color-picker v-model="form.ownerUserNameColor"></el-color-picker>-->
-    <!--            </el-form-item>-->
-    <!--          </el-col>-->
-    <!--        </el-row>-->
-    <!--        <el-row :gutter="20">-->
-    <!--          <el-col :xs="24" :sm="12">-->
-    <!--            <el-form-item :label="$t('stylegen.showBadges')">-->
-    <!--              <el-switch v-model="form.showBadges"></el-switch>-->
-    <!--            </el-form-item>-->
-    <!--          </el-col>-->
-    <!--        </el-row>-->
-    <!--      </el-card>-->
+          <h3>{{$t('stylegen.userNames')}}</h3>
+          <el-card shadow="never">
+            <el-row :gutter="20">
+              <el-col :xs="24" :sm="12">
+                <el-form-item :label="$t('stylegen.showUserNames')">
+                  <el-switch v-model="form.showUserNames"></el-switch>
+                </el-form-item>
+              </el-col>
+              <el-col :xs="24" :sm="12">
+                <el-form-item :label="$t('stylegen.font')">
+                  <font-select v-model="form.userNameFont"></font-select>
+                </el-form-item>
+              </el-col>
+            </el-row>
+            <el-row :gutter="20">
+              <el-col :xs="24" :sm="12">
+                <el-form-item :label="$t('stylegen.fontSize')">
+                  <el-input v-model.number="form.userNameFontSize" type="number" min="0"></el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :xs="24" :sm="12">
+                <el-form-item :label="$t('stylegen.lineHeight')">
+                  <el-input v-model.number="form.userNameLineHeight" type="number" min="0"></el-input>
+                </el-form-item>
+              </el-col>
+            </el-row>
+            <el-row :gutter="20">
+              <el-col :xs="24" :sm="12">
+                <el-form-item :label="$t('stylegen.normalColor')">
+                  <el-color-picker v-model="form.userNameColor"></el-color-picker>
+                </el-form-item>
+              </el-col>
+              <el-col :xs="24" :sm="12">
+                <el-form-item :label="$t('stylegen.memberColor')">
+                  <el-color-picker v-model="form.memberUserNameColor"></el-color-picker>
+                </el-form-item>
+              </el-col>
+            </el-row>
+            <el-row :gutter="20">
+              <el-col :xs="24" :sm="12">
+                <el-form-item :label="$t('stylegen.moderatorColor')">
+                  <el-color-picker v-model="form.moderatorUserNameColor"></el-color-picker>
+                </el-form-item>
+              </el-col>
+              <el-col :xs="24" :sm="12">
+                <el-form-item :label="$t('stylegen.ownerColor')">
+                  <el-color-picker v-model="form.ownerUserNameColor"></el-color-picker>
+                </el-form-item>
+              </el-col>
+            </el-row>
+            <el-row :gutter="20">
+              <el-col :xs="24" :sm="12">
+                <el-form-item :label="$t('stylegen.showBadges')">
+                  <el-switch v-model="form.showBadges"></el-switch>
+                </el-form-item>
+              </el-col>
+            </el-row>
+          </el-card>
 
-    <!--      <h3>{{$t('stylegen.messages')}}</h3>-->
-    <!--      <el-card shadow="never">-->
-    <!--        <el-row :gutter="20">-->
-    <!--          <el-col :xs="24" :sm="12">-->
-    <!--            <el-form-item :label="$t('stylegen.font')">-->
-    <!--              <font-select v-model="form.messageFont"></font-select>-->
-    <!--            </el-form-item>-->
-    <!--          </el-col>-->
-    <!--          <el-col :xs="24" :sm="12">-->
-    <!--            <el-form-item :label="$t('stylegen.color')">-->
-    <!--              <el-color-picker v-model="form.messageColor"></el-color-picker>-->
-    <!--            </el-form-item>-->
-    <!--          </el-col>-->
-    <!--        </el-row>-->
-    <!--        <el-row :gutter="20">-->
-    <!--          <el-col :xs="24" :sm="12">-->
-    <!--            <el-form-item :label="$t('stylegen.fontSize')">-->
-    <!--              <el-input v-model.number="form.messageFontSize" type="number" min="0"></el-input>-->
-    <!--            </el-form-item>-->
-    <!--          </el-col>-->
-    <!--          <el-col :xs="24" :sm="12">-->
-    <!--            <el-form-item :label="$t('stylegen.lineHeight')">-->
-    <!--              <el-input v-model.number="form.messageLineHeight" type="number" min="0"></el-input>-->
-    <!--            </el-form-item>-->
-    <!--          </el-col>-->
-    <!--        </el-row>-->
-    <!--      </el-card>-->
+          <h3>{{$t('stylegen.messages')}}</h3>
+          <el-card shadow="never">
+            <el-row :gutter="20">
+              <el-col :xs="24" :sm="12">
+                <el-form-item :label="$t('stylegen.font')">
+                  <font-select v-model="form.messageFont"></font-select>
+                </el-form-item>
+              </el-col>
+              <el-col :xs="24" :sm="12">
+                <el-form-item :label="$t('stylegen.color')">
+                  <el-color-picker v-model="form.messageColor"></el-color-picker>
+                </el-form-item>
+              </el-col>
+            </el-row>
+            <el-row :gutter="20">
+              <el-col :xs="24" :sm="12">
+                <el-form-item :label="$t('stylegen.fontSize')">
+                  <el-input v-model.number="form.messageFontSize" type="number" min="0"></el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :xs="24" :sm="12">
+                <el-form-item :label="$t('stylegen.lineHeight')">
+                  <el-input v-model.number="form.messageLineHeight" type="number" min="0"></el-input>
+                </el-form-item>
+              </el-col>
+            </el-row>
+          </el-card>
 
-    <!--      <h3>{{$t('stylegen.time')}}</h3>-->
-    <!--      <el-card shadow="never">-->
-    <!--        <el-form-item :label="$t('stylegen.showTime')">-->
-    <!--          <el-switch v-model="form.showTime"></el-switch>-->
-    <!--        </el-form-item>-->
-    <!--        <el-row :gutter="20">-->
-    <!--          <el-col :xs="24" :sm="12">-->
-    <!--            <el-form-item :label="$t('stylegen.font')">-->
-    <!--              <font-select v-model="form.timeFont"></font-select>-->
-    <!--            </el-form-item>-->
-    <!--          </el-col>-->
-    <!--          <el-col :xs="24" :sm="12">-->
-    <!--            <el-form-item :label="$t('stylegen.color')">-->
-    <!--              <el-color-picker v-model="form.timeColor"></el-color-picker>-->
-    <!--            </el-form-item>-->
-    <!--          </el-col>-->
-    <!--        </el-row>-->
-    <!--        <el-row :gutter="20">-->
-    <!--          <el-col :xs="24" :sm="12">-->
-    <!--            <el-form-item :label="$t('stylegen.fontSize')">-->
-    <!--              <el-input v-model.number="form.timeFontSize" type="number" min="0"></el-input>-->
-    <!--            </el-form-item>-->
-    <!--          </el-col>-->
-    <!--          <el-col :xs="24" :sm="12">-->
-    <!--            <el-form-item :label="$t('stylegen.lineHeight')">-->
-    <!--              <el-input v-model.number="form.timeLineHeight" type="number" min="0"></el-input>-->
-    <!--            </el-form-item>-->
-    <!--          </el-col>-->
-    <!--        </el-row>-->
-    <!--      </el-card>-->
+          <h3>{{$t('stylegen.backgrounds')}}</h3>
+          <el-card shadow="never">
+            <el-row :gutter="20">
+              <el-col :xs="24" :sm="12">
+                <el-form-item :label="$t('stylegen.bgColor')">
+                  <el-color-picker v-model="form.bgColor" show-alpha></el-color-picker>
+                </el-form-item>
+              </el-col>
+            </el-row>
+            <el-row :gutter="20">
+              <el-col :xs="24" :sm="12">
+                <el-form-item :label="$t('stylegen.messageBgColor')">
+                  <el-color-picker v-model="form.messageBgColor" show-alpha></el-color-picker>
+                </el-form-item>
+              </el-col>
+              <el-col :xs="24" :sm="12">
+                <el-form-item :label="$t('stylegen.memberMessageBgColor')">
+                  <el-color-picker v-model="form.memberMessageBgColor" show-alpha></el-color-picker>
+                </el-form-item>
+              </el-col>
+            </el-row>
+            <el-row :gutter="20">
+              <el-col :xs="24" :sm="12">
+                <el-form-item :label="$t('stylegen.moderatorMessageBgColor')">
+                  <el-color-picker v-model="form.moderatorMessageBgColor" show-alpha></el-color-picker>
+                </el-form-item>
+              </el-col>
+              <el-col :xs="24" :sm="12">
+                <el-form-item :label="$t('stylegen.ownerMessageBgColor')">
+                  <el-color-picker v-model="form.ownerMessageBgColor" show-alpha></el-color-picker>
+                </el-form-item>
+              </el-col>
+            </el-row>
+          </el-card>
 
-    <!--      <h3>{{$t('stylegen.backgrounds')}}</h3>-->
-    <!--      <el-card shadow="never">-->
-    <!--        <el-row :gutter="20">-->
-    <!--          <el-col :xs="24" :sm="12">-->
-    <!--            <el-form-item :label="$t('stylegen.bgColor')">-->
-    <!--              <el-color-picker v-model="form.bgColor" show-alpha></el-color-picker>-->
-    <!--            </el-form-item>-->
-    <!--          </el-col>-->
-    <!--        </el-row>-->
-    <!--        <el-row :gutter="20">-->
-    <!--          <el-col :xs="24" :sm="12">-->
-    <!--            <el-form-item :label="$t('stylegen.messageBgColor')">-->
-    <!--              <el-color-picker v-model="form.messageBgColor" show-alpha></el-color-picker>-->
-    <!--            </el-form-item>-->
-    <!--          </el-col>-->
-    <!--          <el-col :xs="24" :sm="12">-->
-    <!--            <el-form-item :label="$t('stylegen.memberMessageBgColor')">-->
-    <!--              <el-color-picker v-model="form.memberMessageBgColor" show-alpha></el-color-picker>-->
-    <!--            </el-form-item>-->
-    <!--          </el-col>-->
-    <!--        </el-row>-->
-    <!--        <el-row :gutter="20">-->
-    <!--          <el-col :xs="24" :sm="12">-->
-    <!--            <el-form-item :label="$t('stylegen.moderatorMessageBgColor')">-->
-    <!--              <el-color-picker v-model="form.moderatorMessageBgColor" show-alpha></el-color-picker>-->
-    <!--            </el-form-item>-->
-    <!--          </el-col>-->
-    <!--          <el-col :xs="24" :sm="12">-->
-    <!--            <el-form-item :label="$t('stylegen.ownerMessageBgColor')">-->
-    <!--              <el-color-picker v-model="form.ownerMessageBgColor" show-alpha></el-color-picker>-->
-    <!--            </el-form-item>-->
-    <!--          </el-col>-->
-    <!--        </el-row>-->
-    <!--      </el-card>-->
+          <h3>{{$t('stylegen.scAndNewMember')}}</h3>
+          <el-card shadow="never">
+            <el-row :gutter="20">
+              <el-col :xs="24" :sm="12">
+                <el-form-item :label="$t('stylegen.firstLineFont')">
+                  <font-select v-model="form.firstLineFont"></font-select>
+                </el-form-item>
+              </el-col>
+            </el-row>
+            <el-row :gutter="20">
+              <el-col :xs="24" :sm="12">
+                <el-form-item :label="$t('stylegen.firstLineFontSize')">
+                  <el-input v-model.number="form.firstLineFontSize" type="number" min="0"></el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :xs="24" :sm="12">
+                <el-form-item :label="$t('stylegen.firstLineLineHeight')">
+                  <el-input v-model.number="form.firstLineLineHeight" type="number" min="0"></el-input>
+                </el-form-item>
+              </el-col>
+            </el-row>
+            <el-divider></el-divider>
 
-    <!--      <h3>{{$t('stylegen.scAndNewMember')}}</h3>-->
-    <!--      <el-card shadow="never">-->
-    <!--        <el-row :gutter="20">-->
-    <!--          <el-col :xs="24" :sm="12">-->
-    <!--            <el-form-item :label="$t('stylegen.firstLineFont')">-->
-    <!--              <font-select v-model="form.firstLineFont"></font-select>-->
-    <!--            </el-form-item>-->
-    <!--          </el-col>-->
-    <!--        </el-row>-->
-    <!--        <el-row :gutter="20">-->
-    <!--          <el-col :xs="24" :sm="12">-->
-    <!--            <el-form-item :label="$t('stylegen.firstLineFontSize')">-->
-    <!--              <el-input v-model.number="form.firstLineFontSize" type="number" min="0"></el-input>-->
-    <!--            </el-form-item>-->
-    <!--          </el-col>-->
-    <!--          <el-col :xs="24" :sm="12">-->
-    <!--            <el-form-item :label="$t('stylegen.firstLineLineHeight')">-->
-    <!--              <el-input v-model.number="form.firstLineLineHeight" type="number" min="0"></el-input>-->
-    <!--            </el-form-item>-->
-    <!--          </el-col>-->
-    <!--        </el-row>-->
-    <!--        <el-divider></el-divider>-->
+            <el-row :gutter="20">
+              <el-col :xs="24" :sm="12">
+                <el-form-item :label="$t('stylegen.secondLineFont')">
+                  <font-select v-model="form.secondLineFont"></font-select>
+                </el-form-item>
+              </el-col>
+            </el-row>
+            <el-row :gutter="20">
+              <el-col :xs="24" :sm="12">
+                <el-form-item :label="$t('stylegen.secondLineFontSize')">
+                  <el-input v-model.number="form.secondLineFontSize" type="number" min="0"></el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :xs="24" :sm="12">
+                <el-form-item :label="$t('stylegen.secondLineLineHeight')">
+                  <el-input v-model.number="form.secondLineLineHeight" type="number" min="0"></el-input>
+                </el-form-item>
+              </el-col>
+            </el-row>
+            <el-divider></el-divider>
 
-    <!--        <el-row :gutter="20">-->
-    <!--          <el-col :xs="24" :sm="12">-->
-    <!--            <el-form-item :label="$t('stylegen.secondLineFont')">-->
-    <!--              <font-select v-model="form.secondLineFont"></font-select>-->
-    <!--            </el-form-item>-->
-    <!--          </el-col>-->
-    <!--        </el-row>-->
-    <!--        <el-row :gutter="20">-->
-    <!--          <el-col :xs="24" :sm="12">-->
-    <!--            <el-form-item :label="$t('stylegen.secondLineFontSize')">-->
-    <!--              <el-input v-model.number="form.secondLineFontSize" type="number" min="0"></el-input>-->
-    <!--            </el-form-item>-->
-    <!--          </el-col>-->
-    <!--          <el-col :xs="24" :sm="12">-->
-    <!--            <el-form-item :label="$t('stylegen.secondLineLineHeight')">-->
-    <!--              <el-input v-model.number="form.secondLineLineHeight" type="number" min="0"></el-input>-->
-    <!--            </el-form-item>-->
-    <!--          </el-col>-->
-    <!--        </el-row>-->
-    <!--        <el-divider></el-divider>-->
+            <el-row :gutter="20">
+              <el-col :xs="24" :sm="12">
+                <el-form-item :label="$t('stylegen.scContentLineFont')">
+                  <font-select v-model="form.scContentFont"></font-select>
+                </el-form-item>
+              </el-col>
+            </el-row>
+            <el-row :gutter="20">
+              <el-col :xs="24" :sm="12">
+                <el-form-item :label="$t('stylegen.scContentLineFontSize')">
+                  <el-input v-model.number="form.scContentFontSize" type="number" min="0"></el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :xs="24" :sm="12">
+                <el-form-item :label="$t('stylegen.scContentLineLineHeight')">
+                  <el-input v-model.number="form.scContentLineHeight" type="number" min="0"></el-input>
+                </el-form-item>
+              </el-col>
+            </el-row>
+            <el-divider></el-divider>
 
-    <!--        <el-row :gutter="20">-->
-    <!--          <el-col :xs="24" :sm="12">-->
-    <!--            <el-form-item :label="$t('stylegen.scContentLineFont')">-->
-    <!--              <font-select v-model="form.scContentFont"></font-select>-->
-    <!--            </el-form-item>-->
-    <!--          </el-col>-->
-    <!--        </el-row>-->
-    <!--        <el-row :gutter="20">-->
-    <!--          <el-col :xs="24" :sm="12">-->
-    <!--            <el-form-item :label="$t('stylegen.scContentLineFontSize')">-->
-    <!--              <el-input v-model.number="form.scContentFontSize" type="number" min="0"></el-input>-->
-    <!--            </el-form-item>-->
-    <!--          </el-col>-->
-    <!--          <el-col :xs="24" :sm="12">-->
-    <!--            <el-form-item :label="$t('stylegen.scContentLineLineHeight')">-->
-    <!--              <el-input v-model.number="form.scContentLineHeight" type="number" min="0"></el-input>-->
-    <!--            </el-form-item>-->
-    <!--          </el-col>-->
-    <!--        </el-row>-->
-    <!--        <el-divider></el-divider>-->
+            <el-row :gutter="20">
+              <el-col :xs="24" :sm="12">
+                <el-form-item :label="$t('stylegen.showScTicker')">
+                  <el-switch v-model="form.showScTicker"></el-switch>
+                </el-form-item>
+              </el-col>
+              <el-col :xs="24" :sm="12">
+                <el-form-item :label="$t('stylegen.showOtherThings')">
+                  <el-switch v-model="form.showOtherThings"></el-switch>
+                </el-form-item>
+              </el-col>
+            </el-row>
+          </el-card>
 
-    <!--        <el-row :gutter="20">-->
-    <!--          <el-col :xs="24" :sm="12">-->
-    <!--            <el-form-item :label="$t('stylegen.showScTicker')">-->
-    <!--              <el-switch v-model="form.showScTicker"></el-switch>-->
-    <!--            </el-form-item>-->
-    <!--          </el-col>-->
-    <!--          <el-col :xs="24" :sm="12">-->
-    <!--            <el-form-item :label="$t('stylegen.showOtherThings')">-->
-    <!--              <el-switch v-model="form.showOtherThings"></el-switch>-->
-    <!--            </el-form-item>-->
-    <!--          </el-col>-->
-    <!--        </el-row>-->
-    <!--      </el-card>-->
-
-    <!--      <h3>{{$t('stylegen.animation')}}</h3>-->
-    <!--      <el-card shadow="never">-->
-    <!--        <el-row :gutter="20">-->
-    <!--          <el-col :xs="24" :sm="12">-->
-    <!--            <el-form-item :label="$t('stylegen.animateIn')">-->
-    <!--              <el-switch v-model="form.animateIn"></el-switch>-->
-    <!--            </el-form-item>-->
-    <!--          </el-col>-->
-    <!--          <el-col :xs="24" :sm="12">-->
-    <!--            <el-form-item :label="$t('stylegen.fadeInTime')">-->
-    <!--              <el-input v-model.number="form.fadeInTime" type="number" min="0"></el-input>-->
-    <!--            </el-form-item>-->
-    <!--          </el-col>-->
-    <!--        </el-row>-->
-    <!--        <el-row :gutter="20">-->
-    <!--          <el-col :xs="24" :sm="12">-->
-    <!--            <el-form-item :label="$t('stylegen.animateOut')">-->
-    <!--              <el-switch v-model="form.animateOut"></el-switch>-->
-    <!--            </el-form-item>-->
-    <!--          </el-col>-->
-    <!--          <el-col :xs="24" :sm="12">-->
-    <!--            <el-form-item :label="$t('stylegen.fadeOutTime')">-->
-    <!--              <el-input v-model.number="form.fadeOutTime" type="number" min="0"></el-input>-->
-    <!--            </el-form-item>-->
-    <!--          </el-col>-->
-    <!--        </el-row>-->
-    <!--        <el-form-item :label="$t('stylegen.animateOutWaitTime')">-->
-    <!--          <el-input v-model.number="form.animateOutWaitTime" type="number" min="0"></el-input>-->
-    <!--        </el-form-item>-->
-    <!--        <el-row :gutter="20">-->
-    <!--          <el-col :xs="24" :sm="12">-->
-    <!--            <el-form-item :label="$t('stylegen.slide')">-->
-    <!--              <el-switch v-model="form.slide"></el-switch>-->
-    <!--            </el-form-item>-->
-    <!--          </el-col>-->
-    <!--          <el-col :xs="24" :sm="12">-->
-    <!--            <el-form-item :label="$t('stylegen.reverseSlide')">-->
-    <!--              <el-switch v-model="form.reverseSlide"></el-switch>-->
-    <!--            </el-form-item>-->
-    <!--          </el-col>-->
-    <!--        </el-row>-->
-    <!--      </el-card>-->
-    <!--    </el-form>-->
+          <h3>{{$t('stylegen.animation')}}</h3>
+          <el-card shadow="never">
+            <el-row :gutter="20">
+              <el-col :xs="24" :sm="12">
+                <el-form-item :label="$t('stylegen.animateIn')">
+                  <el-switch v-model="form.animateIn"></el-switch>
+                </el-form-item>
+              </el-col>
+              <el-col :xs="24" :sm="12">
+                <el-form-item :label="$t('stylegen.fadeInTime')">
+                  <el-input v-model.number="form.fadeInTime" type="number" min="0"></el-input>
+                </el-form-item>
+              </el-col>
+            </el-row>
+            <el-row :gutter="20">
+              <el-col :xs="24" :sm="12">
+                <el-form-item :label="$t('stylegen.animateOut')">
+                  <el-switch v-model="form.animateOut"></el-switch>
+                </el-form-item>
+              </el-col>
+              <el-col :xs="24" :sm="12">
+                <el-form-item :label="$t('stylegen.fadeOutTime')">
+                  <el-input v-model.number="form.fadeOutTime" type="number" min="0"></el-input>
+                </el-form-item>
+              </el-col>
+            </el-row>
+            <el-form-item :label="$t('stylegen.animateOutWaitTime')">
+              <el-input v-model.number="form.animateOutWaitTime" type="number" min="0"></el-input>
+            </el-form-item>
+            <el-row :gutter="20">
+              <el-col :xs="24" :sm="12">
+                <el-form-item :label="$t('stylegen.slide')">
+                  <el-switch v-model="form.slide"></el-switch>
+                </el-form-item>
+              </el-col>
+              <el-col :xs="24" :sm="12">
+                <el-form-item :label="$t('stylegen.reverseSlide')">
+                  <el-switch v-model="form.reverseSlide"></el-switch>
+                </el-form-item>
+              </el-col>
+            </el-row>
+          </el-card>
+        </el-form>
   </div>
 </template>
 
 <script>
 import _ from 'lodash'
-
+import FontSelect from './FontSelect'
 import * as common from './common'
 import {mergeConfig} from '@/utils'
 
@@ -355,6 +324,9 @@ export const DEFAULT_CONFIG = {
 
 export default {
   name: 'JoiLike',
+  components: {
+    FontSelect
+  },
   props: {
     value: String
   },
@@ -397,10 +369,18 @@ ${this.animationStyle}
     },
     joiStyle() {
       return `/* extra style */
-.joi-style {
-  display: block !important;
+yt-live-chat-text-message-renderer #hat{
+  ${this.form.showAvatars ? 'display: block !important;' : 'display: none !important;'}
+  position: absolute !important;
+  top: 0 !important;
+  z-index: 10;
+  top: -5px !important;
+  left: -${this.form.avatarSize / 2 + 5}px !important;
+  width: ${this.form.avatarSize * 0.618}px !important;
 }
+
 yt-live-chat-text-message-renderer #flower{
+  display: block !important;
   position: absolute !important;
   top: 0 !important;
   right: 0 !important;
@@ -410,13 +390,13 @@ yt-live-chat-text-message-renderer #flower{
       return `/* Reduce side padding */
 yt-live-chat-text-message-renderer {
   padding: 0 4px !important;
-  margin: 8px 0 8px ${this.form.avatarSize / 2}px;
+  margin: 8px 0 8px ${this.form.avatarSize / 2 + 12}px;
   border-radius: 8px;
   overflow: visible;
 }
 yt-live-chat-text-message-renderer #content{
-  margin-left: ${this.form.avatarSize / 2 + 10}px !important;
-  width: calc(100% - ${this.form.avatarSize / 2 + 10}px) !important;
+  margin-left: ${this.form.avatarSize / 2 + 22}px !important;
+  width: calc(100% - ${this.form.avatarSize / 2 + 22}px) !important;
 }
   ${this.getBgStyleForAuthorType('', this.form.messageBgColor)}
   ${this.getBgStyleForAuthorType('owner', this.form.ownerMessageBgColor)}
@@ -430,7 +410,7 @@ yt-live-chat-text-message-renderer #author-photo {
   width: ${this.form.avatarSize}px !important;
   height: ${this.form.avatarSize}px !important;
   border-radius: ${this.form.avatarSize}px !important;
-  position: absolute;
+  position: absolute !important;
   left: -${this.form.avatarSize / 2}px !important;
 }
 yt-live-chat-text-message-renderer #author-photo img {
@@ -454,9 +434,9 @@ yt-live-chat-membership-item-renderer #author-photo img {
       return `/* Channel names */
 yt-live-chat-text-message-renderer yt-live-chat-author-chip {
   display: block;
-  height: ${this.form.avatarSize * 0.5}px !important;
-  line-height: ${this.form.avatarSize * 0.5}px !important;
-  width: calc(100% - ${this.form.avatarSize * 0.5 + 10}px) !important;
+  height: ${this.form.avatarSize / 2}px !important;
+  line-height: ${this.form.avatarSize / 2}px !important;
+  width: calc(100% - ${this.form.avatarSize / 2 + 22}px) !important;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
