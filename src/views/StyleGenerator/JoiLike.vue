@@ -382,7 +382,7 @@ yt-live-chat-text-message-renderer #star{
   display: block !important;
   position: absolute !important;
   bottom: 0 !important;
-  right: 0 !important;
+  right: 18px !important;
   height: 100% !important;
 }
 yt-live-chat-text-message-renderer #flower{
