@@ -282,7 +282,7 @@ export const DEFAULT_CONFIG = {
   ownerUserNameColor: '#ffffff',
   moderatorUserNameColor: '#ffffff',
   memberUserNameColor: '#ffffff',
-  showBadges: true,
+  showBadges: false,
 
   messageFont: 'Noto Sans SC',
   messageFontSize: 16,
@@ -551,8 +551,7 @@ yt-live-chat-paid-message-renderer #content * {
 }`
     },
     showNewMemberBgStyle() {
-      return `background-color: ${this.form.memberUserNameColor} !important;
-  margin: 4px 0 !important;`
+      return `margin: 4px 0 !important;`
     },
     scTickerStyle() {
       return `${this.form.showScTicker ? '' : `yt-live-chat-ticker-renderer {
