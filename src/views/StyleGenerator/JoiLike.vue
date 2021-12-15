@@ -378,7 +378,13 @@ yt-live-chat-text-message-renderer #hat{
   left: -${this.form.avatarSize / 2 + 5}px !important;
   width: ${this.form.avatarSize * 0.618}px !important;
 }
-
+yt-live-chat-text-message-renderer #star{
+  display: block !important;
+  position: absolute !important;
+  bottom: 0 !important;
+  right: 0 !important;
+  height: 100% !important;
+}
 yt-live-chat-text-message-renderer #flower{
   display: block !important;
   position: absolute !important;
