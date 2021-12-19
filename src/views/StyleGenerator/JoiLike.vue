@@ -383,7 +383,11 @@ yt-live-chat-text-message-renderer #star{
   position: absolute !important;
   bottom: 0 !important;
   right: 18px !important;
+  width: 60px !important;
   height: 100% !important;
+  background: url('./static/img/common/star.png');
+  background-size: 60px 60px;
+  background-repeat: repeat-y;
 }
 yt-live-chat-text-message-renderer #flower{
   display: block !important;
