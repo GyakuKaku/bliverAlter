@@ -401,14 +401,14 @@ ${this.animationStyle}
     joiStyle() {
       return `/* extra style */
 @keyframes fade-in {
-  0% {opacity: 0;}/*初始状态 透明度为0*/
-  40% {opacity: 0;}/*过渡状态 透明度为0*/
-  100% {opacity: 1;}/*结束状态 透明度为1*/
+  0% {opacity: 0.2;transform:rotate(90deg);}
+  40% {opacity: 0.2;transform:rotate(60deg);}
+  100% {opacity: 1;transform:rotate(0deg);}
 }
 @-webkit-keyframes fade-in {/*针对webkit内核*/
-  0% {opacity: 0;}
-  40% {opacity: 0;}
-  100% {opacity: 1;}
+  0% {opacity: 0.2;transform:rotate(90deg);}
+  40% {opacity: 0.2;transform:rotate(60deg);}
+  100% {opacity: 1;transform:rotate(0deg);}
 }
 yt-live-chat-text-message-renderer #hat{
   ${this.form.showAvatars && this.form.showHat ? 'display: block !important;' : 'display: none !important;'}
@@ -426,6 +426,7 @@ yt-live-chat-text-message-renderer #ear{
   left: ${this.form.avatarSize * 0.118}px !important;
   height: ${this.form.avatarSize * 0.4}px !important;
   width: ${this.form.avatarSize * 0.25}px !important;
+  transform-origin: left;
   ${this.form.earAnime ? 'animation: fade-in;animation-duration: 1s;-webkit-animation:fade-in 1s;' : ''}
 }
 yt-live-chat-text-message-renderer #flower{
