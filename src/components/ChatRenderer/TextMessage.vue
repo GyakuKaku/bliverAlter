@@ -1,6 +1,7 @@
 <template>
   <yt-live-chat-text-message-renderer :author-type="authorTypeText">
     <img id="hat" class="joi-style" alt="" src="/static/img/common/hat.png" style="display: none;">
+    <img id="ear" class="joi-style" alt="" src="/static/img/common/ear.png" style="display: none;">
     <img-shadow id="author-photo" height="24" width="24" class="style-scope yt-live-chat-text-message-renderer"
       :imgUrl="avatarUrl"
     ></img-shadow>

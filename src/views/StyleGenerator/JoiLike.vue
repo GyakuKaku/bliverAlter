@@ -274,6 +274,16 @@
               <el-switch v-model="form.showFlower"></el-switch>
             </el-form-item>
           </el-col>
+          <el-col :xs="24" :sm="12">
+            <el-form-item label="显示耳朵">
+              <el-switch v-model="form.showEar"></el-switch>
+            </el-form-item>
+          </el-col>
+          <el-col :xs="24" :sm="12">
+            <el-form-item label="耳朵弹出动画">
+              <el-switch v-model="form.earAnime"></el-switch>
+            </el-form-item>
+          </el-col>
         </el-row>
       </el-card>
     </el-form>
@@ -338,7 +348,9 @@ export const DEFAULT_CONFIG = {
   reverseSlide: false,
 
   showHat: true,
-  showFlower: true
+  showFlower: true,
+  showEar: true,
+  earAnime: true
 }
 
 export default {
@@ -388,14 +400,35 @@ ${this.animationStyle}
     },
     joiStyle() {
       return `/* extra style */
+@keyframes fade-in {
+  0% {opacity: 0;}/*初始状态 透明度为0*/
+  40% {opacity: 0;}/*过渡状态 透明度为0*/
+  100% {opacity: 1;}/*结束状态 透明度为1*/
+}
+@-webkit-keyframes fade-in {/*针对webkit内核*/
+  0% {opacity: 0;}
+  40% {opacity: 0;}
+  100% {opacity: 1;}
+}
 yt-live-chat-text-message-renderer #hat{
   ${this.form.showAvatars && this.form.showHat ? 'display: block !important;' : 'display: none !important;'}
   position: absolute !important;
-  top: 0 !important;
   z-index: 10;
   top: -5px !important;
   left: -${this.form.avatarSize / 2 + 5}px !important;
   width: ${this.form.avatarSize * 0.618}px !important;
+}
+yt-live-chat-text-message-renderer #ear{
+  ${this.form.showAvatars && this.form.showEar ? 'display: block !important;' : 'display: none !important;'}
+  position: absolute !important;
+  z-index: 10;
+  top: -${this.form.avatarSize * 0.2}px !important;
+  left: ${this.form.avatarSize * 0.118}px !important;
+  height: ${this.form.avatarSize * 0.4}px !important;
+  width: ${this.form.avatarSize * 0.25}px !important;
+  animation: fade-in;
+  animation-duration: 1s;
+  -webkit-animation:fade-in 1s;
 }
 yt-live-chat-text-message-renderer #flower{
   ${this.form.showFlower ? 'display: block !important;' : 'display: none !important;'}
@@ -419,7 +452,7 @@ yt-live-chat-text-message-renderer #star{
       return `/* Reduce side padding */
 yt-live-chat-text-message-renderer {
   padding: 0 4px !important;
-  margin: 8px 0 8px ${this.form.avatarSize / 2 + 12}px;
+  margin: 15px 0 15px ${this.form.avatarSize / 2 + 12}px;
   border-radius: 8px;
   overflow: visible;
 }
