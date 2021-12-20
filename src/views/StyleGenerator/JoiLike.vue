@@ -426,9 +426,7 @@ yt-live-chat-text-message-renderer #ear{
   left: ${this.form.avatarSize * 0.118}px !important;
   height: ${this.form.avatarSize * 0.4}px !important;
   width: ${this.form.avatarSize * 0.25}px !important;
-  animation: fade-in;
-  animation-duration: 1s;
-  -webkit-animation:fade-in 1s;
+  ${this.form.earAnime ? 'animation: fade-in;animation-duration: 1s;-webkit-animation:fade-in 1s;' : ''}
 }
 yt-live-chat-text-message-renderer #flower{
   ${this.form.showFlower ? 'display: block !important;' : 'display: none !important;'}
@@ -443,9 +441,10 @@ yt-live-chat-text-message-renderer #star{
   right: 18px !important;
   width: 60px !important;
   height: 100% !important;
-  background: url('./static/img/common/star.png');
-  background-size: 60px 60px;
-  background-repeat: repeat-y;
+  z-index: 1005 !important;
+  background-image: url('/static/img/common/star.png') !important;
+  background-size: 60px 60px !important;
+  background-repeat: repeat-y !important;
 }`
     },
     paddingStyle() {
