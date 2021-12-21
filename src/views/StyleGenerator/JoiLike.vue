@@ -328,8 +328,8 @@ export const DEFAULT_CONFIG = {
 
   bgColor: 'rgba(0, 0, 0, 0)',
   messageBgColor: 'rgba(255, 206, 101, 1)',
-  ownerMessageBgColor: 'rgba(255, 206, 101, 1)',
-  moderatorMessageBgColor: 'rgba(255, 206, 101, 1)',
+  ownerMessageBgColor: 'rgba(184, 168, 227, 1)',
+  moderatorMessageBgColor: 'rgba(55, 80, 154, 1)',
   memberMessageBgColor: 'rgba(255, 206, 101, 1)',
 
   firstLineFont: 'Noto Sans SC',
