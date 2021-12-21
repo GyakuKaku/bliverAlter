@@ -270,6 +270,11 @@
             </el-form-item>
           </el-col>
           <el-col :xs="24" :sm="12">
+            <el-form-item label="显示领结">
+              <el-switch v-model="form.showScarf"></el-switch>
+            </el-form-item>
+          </el-col>
+          <el-col :xs="24" :sm="12">
             <el-form-item label="显示花">
               <el-switch v-model="form.showFlower"></el-switch>
             </el-form-item>
@@ -348,6 +353,7 @@ export const DEFAULT_CONFIG = {
   reverseSlide: false,
 
   showHat: true,
+  showScarf: true,
   showFlower: true,
   showEar: true,
   earAnime: true
@@ -417,6 +423,14 @@ yt-live-chat-text-message-renderer #hat{
   top: -5px !important;
   left: -${this.form.avatarSize / 2 + 5}px !important;
   width: ${this.form.avatarSize * 0.618}px !important;
+}
+yt-live-chat-text-message-renderer #scarf{
+  ${this.form.showAvatars && this.form.showScarf ? 'display: block !important;' : 'display: none !important;'}
+  position: absolute !important;
+  z-index: 10;
+  top: ${this.form.avatarSize * 0.8}px !important;
+  left: -${this.form.avatarSize * 0.21}px !important;
+  width: ${this.form.avatarSize * 0.42}px !important;
 }
 yt-live-chat-text-message-renderer #ear{
   ${this.form.showAvatars && this.form.showEar ? 'display: block !important;' : 'display: none !important;'}
