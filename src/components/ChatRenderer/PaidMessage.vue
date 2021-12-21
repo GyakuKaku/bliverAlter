@@ -25,7 +25,7 @@
       <div id="content" class="style-scope yt-live-chat-paid-message-renderer">
         <div id="message" dir="auto" class="style-scope yt-live-chat-paid-message-renderer">
           <span v-if="!imgFlag">{{ content }}</span>
-          <el-image v-if="imgFlag" :src="img" style="height: 120px;"></el-image>
+          <el-image v-if="imgFlag" :src="img" style="width: 120px;"></el-image>
         </div>
       </div>
     </div>
