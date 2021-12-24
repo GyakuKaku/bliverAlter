@@ -472,7 +472,7 @@ yt-live-chat-text-message-renderer {
 }
 yt-live-chat-text-message-renderer #content{
   margin-left: ${this.form.avatarSize / 2 + 8}px !important;
-  width: calc(100% - ${this.form.avatarSize / 2 + 8}px) !important;
+  width: calc(100% - ${this.form.avatarSize / 2 + 94}px) !important;
   z-index: 1000;
 }
   ${this.getBgStyleForAuthorType('', this.form.messageBgColor)}
@@ -513,7 +513,7 @@ yt-live-chat-text-message-renderer yt-live-chat-author-chip {
   display: block;
   height: ${this.form.avatarSize / 2}px !important;
   line-height: ${this.form.avatarSize / 2}px !important;
-  width: calc(100% - ${this.form.avatarSize / 2 + 22}px) !important;
+  width: 100% !important;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
