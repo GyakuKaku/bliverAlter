@@ -3,12 +3,10 @@
 </template>
 
 <script>
-import {mergeConfig, toBool, toInt} from '@/utils'
+import {toBool, toInt} from '@/utils'
 import * as pronunciation from '@/utils/pronunciation'
 import * as chatConfig from '@/api/chatConfig'
-import ChatClientTest from '@/api/chat/ChatClientTest'
 import ChatClientDirect from '@/api/chat/ChatClientDirect'
-import ChatClientRelay from '@/api/chat/ChatClientRelay'
 import ChatRenderer from '@/components/ChatRenderer'
 import * as constants from '@/components/ChatRenderer/constants'
 
@@ -70,8 +68,7 @@ export default {
           cfg[i] = this.strConfig[i]
         }
       }
-      cfg = mergeConfig(cfg, chatConfig.DEFAULT_CONFIG)
-
+      cfg = chatConfig.DEFAULT_CONFIG
       cfg.minGiftPrice = toInt(cfg.minGiftPrice, chatConfig.DEFAULT_CONFIG.minGiftPrice)
       cfg.showDanmaku = toBool(cfg.showDanmaku)
       cfg.showGift = toBool(cfg.showGift)
@@ -90,15 +87,7 @@ export default {
       this.config = cfg
     },
     initChatClient() {
-      if (this.roomId === null) {
-        this.chatClient = new ChatClientTest()
-      } else {
-        if (!this.config.relayMessagesByServer) {
-          this.chatClient = new ChatClientDirect(this.roomId)
-        } else {
-          this.chatClient = new ChatClientRelay(this.roomId, this.config.autoTranslate)
-        }
-      }
+      this.chatClient = new ChatClientDirect(this.roomId)
       this.chatClient.onAddText = this.onAddText
       this.chatClient.onAddGift = this.onAddGift
       this.chatClient.onAddMember = this.onAddMember
