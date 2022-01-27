@@ -199,12 +199,12 @@ export default {
       if (this.form.roomId === '') {
         return
       }
-      let query = {...this.form}
-      delete query.roomId
-      query.imgTransformer = window.localStorage.imgTransformerV2 == null ? '[{"from":"轴伊的肯定","target":"joiYES.jpg"},{"from":"轴伊的否定","target":"joiNO.jpg"},{"from":"傲娇","target":"aojiao.jpg"},{"from":"真不是人","target":"zbsr.png"}]' : window.localStorage.imgTransformerV2
+      let query = {
+        imgTransformer: window.localStorage.imgTransformerV2 == null ? '[{"from":"轴伊的肯定","target":"joiYES.jpg"},{"from":"轴伊的否定","target":"joiNO.jpg"},{"from":"傲娇","target":"aojiao.jpg"},{"from":"真不是人","target":"zbsr.png"}]' : window.localStorage.imgTransformerV2
+      }
       let resolved = this.$router.resolve({name: 'supervision', params: {roomId: this.form.roomId}, query})
 
-      window.open(`${window.location.protocol}//${window.location.host}${resolved.href}`, `room ${this.form.roomId}`, 'menubar=0,location=0,scrollbars=0,toolbar=0,width=600,height=600')
+      window.open(`${window.location.protocol}//${window.location.host}${resolved.href}`, `room ${this.form.roomId}`, 'menubar=0,location=0,scrollbars=0,toolbar=0,width=970,height=600')
     },
     enterTestRoom() {
       window.open(this.getRoomUrl(true), 'test room', 'menubar=0,location=0,scrollbars=0,toolbar=0,width=600,height=600')
