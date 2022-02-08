@@ -483,7 +483,34 @@ yt-live-chat-text-message-renderer #star{
   background-repeat: repeat-y !important;
 }
 ${this.form.showMemberStyle ?
-`yt-live-chat-membership-item-renderer #author-photo{
+`
+@keyframes member-anime0 {
+  0% {width: 60px;left: calc(50% - 30px)}
+  20% {width: 60px;left: calc(50% - 30px)}
+  40% {width: 0;left: calc(50%)}
+  100% {width: 0;}
+}
+@keyframes member-anime1 {
+  0% {opacity: 0}
+  40% {opacity: 0}
+  100% {opacity: 1}
+}
+yt-live-chat-membership-item-renderer #author-front {
+  display: block !important;
+  position: absolute;
+  height: 60px;
+  width: 0;
+  border-radius: 100% !important;
+  animation: member-anime0;animation-duration: 1.5s;
+  overflow: hidden;
+}
+yt-live-chat-membership-item-renderer #author-front #img {
+  height: 100% !important;
+}
+yt-live-chat-membership-item-renderer #card {
+  animation: member-anime1;animation-duration: 1.5s;
+}
+yt-live-chat-membership-item-renderer #author-photo{
   position: relative !important;
   overflow: visible !important;
 }
