@@ -10,23 +10,23 @@ const CONTENTS = [
   '草', 'kksk', '8888888888', '888888888888888888888888888888', '老板大气，老板身体健康', '呆子来咯', 'laile'
 ]
 
-const AUTHOR_TYPES = [
-  {weight: 10, value: constants.AUTHRO_TYPE_NORMAL},
-  {weight: 5, value: constants.AUTHRO_TYPE_MEMBER},
-  {weight: 2, value: constants.AUTHRO_TYPE_ADMIN},
-  {weight: 1, value: constants.AUTHRO_TYPE_OWNER}
-]
+// const AUTHOR_TYPES = [
+//   {weight: 10, value: constants.AUTHRO_TYPE_NORMAL},
+//   {weight: 5, value: constants.AUTHRO_TYPE_MEMBER},
+//   {weight: 2, value: constants.AUTHRO_TYPE_ADMIN},
+//   {weight: 1, value: constants.AUTHRO_TYPE_OWNER}
+// ]
 
-function randGuardInfo () {
-  let authorType = randomChoose(AUTHOR_TYPES)
-  let privilegeType
-  if (authorType === constants.AUTHRO_TYPE_MEMBER || authorType === constants.AUTHRO_TYPE_ADMIN) {
-    privilegeType = randInt(1, 3)
-  } else {
-    privilegeType = 0
-  }
-  return {authorType, privilegeType}
-}
+// function randGuardInfo () {
+//   let authorType = randomChoose(AUTHOR_TYPES)
+//   let privilegeType
+//   if (authorType === constants.AUTHRO_TYPE_MEMBER || authorType === constants.AUTHRO_TYPE_ADMIN) {
+//     privilegeType = randInt(1, 3)
+//   } else {
+//     privilegeType = 0
+//   }
+//   return {authorType, privilegeType}
+// }
 
 const GIFT_INFO_LIST = [
   {giftName: 'B坷垃', totalCoin: 9900},
@@ -43,28 +43,28 @@ const SC_PRICES = [
 
 const MESSAGE_GENERATORS = [
   // 文字
-  {
-    weight: 20,
-    value() {
-      return {
-        type: constants.MESSAGE_TYPE_TEXT,
-        message: {
-          ...randGuardInfo(),
-          avatarUrl: avatar.DEFAULT_AVATAR_URL,
-          timestamp: new Date().getTime() / 1000,
-          authorName: randomChoose(NAMES),
-          content: randomChoose(CONTENTS),
-          isGiftDanmaku: randInt(1, 10) <= 1,
-          authorLevel: randInt(0, 60),
-          isNewbie: randInt(1, 10) <= 9,
-          isMobileVerified: randInt(1, 10) <= 9,
-          medalLevel: randInt(0, 40),
-          id: getUuid4Hex(),
-          translation: ''
-        }
-      }
-    }
-  },
+  // {
+  //   weight: 20,
+  //   value() {
+  //     return {
+  //       type: constants.MESSAGE_TYPE_TEXT,
+  //       message: {
+  //         ...randGuardInfo(),
+  //         avatarUrl: avatar.DEFAULT_AVATAR_URL,
+  //         timestamp: new Date().getTime() / 1000,
+  //         authorName: randomChoose(NAMES),
+  //         content: randomChoose(CONTENTS),
+  //         isGiftDanmaku: randInt(1, 10) <= 1,
+  //         authorLevel: randInt(0, 60),
+  //         isNewbie: randInt(1, 10) <= 9,
+  //         isMobileVerified: randInt(1, 10) <= 9,
+  //         medalLevel: randInt(0, 40),
+  //         id: getUuid4Hex(),
+  //         translation: ''
+  //       }
+  //     }
+  //   }
+  // },
   // 礼物
   {
     weight: 1,

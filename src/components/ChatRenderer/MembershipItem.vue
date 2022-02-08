@@ -2,6 +2,9 @@
   <yt-live-chat-membership-item-renderer class="style-scope yt-live-chat-item-list-renderer" show-only-header>
     <div id="card" class="style-scope yt-live-chat-membership-item-renderer">
       <div id="header" class="style-scope yt-live-chat-membership-item-renderer">
+        <img id="hat" class="joi-style" alt="" src="/static/img/common/hat.png" style="display: none;">
+        <img id="ear" class="joi-style" alt="" src="/static/img/common/ear.png" style="display: none;">
+        <img id="scarf" class="joi-style" alt="" src="/static/img/common/scarf.png" style="display: none;">
         <img-shadow id="author-photo" height="40" width="40" class="style-scope yt-live-chat-membership-item-renderer"
           :imgUrl="avatarUrl"
         ></img-shadow>

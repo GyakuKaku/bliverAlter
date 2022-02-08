@@ -289,6 +289,16 @@
               <el-switch v-model="form.earAnime"></el-switch>
             </el-form-item>
           </el-col>
+          <el-col :xs="24" :sm="12">
+            <el-form-item label="显示舰长定制样式">
+              <el-switch v-model="form.showMemberStyle"></el-switch>
+            </el-form-item>
+          </el-col>
+          <el-col :xs="24" :sm="12">
+            <el-form-item label="显示礼物定制样式">
+              <el-switch v-model="form.showGiftStyle"></el-switch>
+            </el-form-item>
+          </el-col>
         </el-row>
       </el-card>
     </el-form>
@@ -356,7 +366,9 @@ export const DEFAULT_CONFIG = {
   showScarf: true,
   showFlower: true,
   showEar: true,
-  earAnime: true
+  earAnime: true,
+  showGiftStyle: true,
+  showMemberStyle: true
 }
 
 export default {
@@ -395,6 +407,10 @@ ${this.backgroundStyle}
 ${this.scAndNewMemberStyle}
 
 ${this.animationStyle}
+
+${this.getSpecialMemberStyle}
+
+${this.getSpecialGiftStyle}
 `
     },
     importStyle() {
@@ -642,6 +658,17 @@ yt-live-chat-ticker-sponsor-item-renderer,
 yt-live-chat-ticker-sponsor-item-renderer * {
   font-family: "${common.cssEscapeStr(this.form.secondLineFont)}"${common.FALLBACK_FONTS};
 }`
+    },
+    getSpecialMemberStyle() {
+      return this.form.showMemberStyle ?
+`yt-live-chat-membership-item-renderer #card {
+
+}
+` : ``
+    },
+    getSpecialGiftStyle() {
+      return this.form.showGiftStyle ?
+`` : ``
     },
     animationStyle() {
       return common.getAnimationStyle(this.form)
