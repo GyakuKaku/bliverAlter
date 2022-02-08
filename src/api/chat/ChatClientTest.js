@@ -3,17 +3,11 @@ import * as constants from '@/components/ChatRenderer/constants'
 import * as avatar from './avatar'
 
 const NAMES = [
-  'xfgryujk', 'Simon', 'Il Harper', 'Kinori', 'shugen', 'yuyuyzl', '3Shain', '光羊', '黑炎', 'Misty', '孤梦星影',
-  'ジョナサン・ジョースター', 'ジョセフ・ジョースター', 'ディオ・ブランドー', '空條承太郎', '博丽灵梦', '雾雨魔理沙',
-  'Rick Astley'
+  '轴芯001', '轴芯002', '轴芯003', '轴芯004', '轴芯005', '轴芯006', '轴芯007', '名字特别特别特别长的轴芯', '短', '轴芯_zhouxin'
 ]
 
-// const CONTENTS = [
-//   '草', 'kksk', '8888888888', '888888888888888888888888888888', '老板大气，老板身体健康'
-// ]
-
 const CONTENTS = [
-  '草', 'kksk', '8888888888', '888888888888888888888888888888', '老板大气，老板身体健康', '(test)'
+  '草', 'kksk', '8888888888', '888888888888888888888888888888', '老板大气，老板身体健康', '呆子来咯', 'laile'
 ]
 
 const AUTHOR_TYPES = [
