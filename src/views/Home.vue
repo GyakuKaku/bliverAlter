@@ -117,7 +117,6 @@
         </el-tabs>
       </el-form>
     </p>
-
     <p>
       <el-card>
         <el-form :model="form" label-width="150px">
@@ -130,6 +129,7 @@
             <el-button :disabled="!roomUrl" @click="enterTestRoom">{{$t('home.enterTestRoom')}}</el-button>
             <el-button @click="exportConfig">{{$t('home.exportConfig')}}</el-button>
             <el-button @click="importConfig">{{$t('home.importConfig')}}</el-button>
+            <el-button type="primary" :disabled="!roomUrl" @click="enterSupervision">监控礼物弹幕</el-button>
           </el-form-item>
         </el-form>
       </el-card>
@@ -194,6 +194,17 @@ export default {
     },
     enterRoom() {
       window.open(this.roomUrl, `room ${this.form.roomId}`, 'menubar=0,location=0,scrollbars=0,toolbar=0,width=600,height=600')
+    },
+    enterSupervision() {
+      if (this.form.roomId === '') {
+        return
+      }
+      let query = {...this.form}
+      delete query.roomId
+      query.imgTransformer = window.localStorage.imgTransformerV2 == null ? '[{"from":"轴伊的肯定","target":"joiYES.jpg"},{"from":"轴伊的否定","target":"joiNO.jpg"},{"from":"傲娇","target":"aojiao.jpg"},{"from":"真不是人","target":"zbsr.png"}]' : window.localStorage.imgTransformerV2
+      let resolved = this.$router.resolve({name: 'supervision', params: {roomId: this.form.roomId}, query})
+
+      window.open(`${window.location.protocol}//${window.location.host}${resolved.href}`, `room ${this.form.roomId}`, 'menubar=0,location=0,scrollbars=0,toolbar=0,width=800,height=600')
     },
     enterTestRoom() {
       window.open(this.getRoomUrl(true), 'test room', 'menubar=0,location=0,scrollbars=0,toolbar=0,width=600,height=600')
