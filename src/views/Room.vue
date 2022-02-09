@@ -1,12 +1,5 @@
 <template>
-  <el-row :gutter="20" style="height: 100%;">
-    <el-col :xs="24" :sm="12">
-      <chat-renderer ref="renderer" :maxNumber="config.maxNumber" :showGiftName="config.showGiftName"></chat-renderer>
-    </el-col>
-    <el-col :xs="24" :sm="12">
-      <chat-renderer ref="renderer" :maxNumber="config.maxNumber" :showGiftName="config.showGiftName"></chat-renderer>
-    </el-col>
-  </el-row>
+  <chat-renderer ref="renderer" :maxNumber="config.maxNumber" :showGiftName="config.showGiftName"></chat-renderer>
 </template>
 
 <script>
