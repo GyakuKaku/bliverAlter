@@ -1,10 +1,10 @@
 <template>
   <el-row :gutter="20" style="height: 100%;">
     <el-col :xs="24" :sm="12">
-      <chat-renderer ref="renderer" :maxNumber="config.maxNumber" :showGiftName="config.showGiftName"></chat-renderer>
+      <chat-renderer ref="message" :maxNumber="config.maxNumber" :showGiftName="config.showGiftName"></chat-renderer>
     </el-col>
     <el-col :xs="24" :sm="12">
-      <chat-renderer ref="renderer" :maxNumber="config.maxNumber" :showGiftName="config.showGiftName"></chat-renderer>
+      <chat-renderer ref="gift" :maxNumber="config.maxNumber" :showGiftName="config.showGiftName"></chat-renderer>
     </el-col>
   </el-row>
 </template>
@@ -128,7 +128,7 @@ export default {
         translation: data.translation,
         imgContent: data.imgContent
       }
-      this.$refs.renderer.addMessage(message)
+      this.$refs.message.addMessage(message)
     },
     onAddGift(data) {
       if (!this.config.showGift) {
@@ -152,7 +152,7 @@ export default {
         giftName: data.giftName,
         num: data.num
       }
-      this.$refs.renderer.addMessage(message)
+      this.$refs.gift.addMessage(message)
     },
     onAddMember(data) {
       if (!this.config.showGift || !this.filterNewMemberMessage(data)) {
@@ -168,7 +168,7 @@ export default {
         privilegeType: data.privilegeType,
         title: 'New member'
       }
-      this.$refs.renderer.addMessage(message)
+      this.$refs.gift.addMessage(message)
     },
     onAddSuperChat(data) {
       if (!this.config.showGift || !this.filterSuperChatMessage(data)) {
@@ -188,18 +188,18 @@ export default {
         content: data.content.trim(),
         translation: data.translation
       }
-      this.$refs.renderer.addMessage(message)
+      this.$refs.gift.addMessage(message)
     },
     onDelSuperChat(data) {
       for (let id of data.ids) {
-        this.$refs.renderer.delMessage(id)
+        this.$refs.gift.delMessage(id)
       }
     },
     onUpdateTranslation(data) {
       if (!this.config.autoTranslate) {
         return
       }
-      this.$refs.renderer.updateMessage(data.id, {translation: data.translation})
+      this.$refs.message.updateMessage(data.id, {translation: data.translation})
     },
 
     filterTextMessage(data) {
@@ -236,13 +236,13 @@ export default {
       if (!this.config.mergeSimilarDanmaku) {
         return false
       }
-      return this.$refs.renderer.mergeSimilarText(content)
+      return this.$refs.message.mergeSimilarText(content)
     },
     mergeSimilarGift(authorName, price, giftName, num) {
       if (!this.config.mergeGift) {
         return false
       }
-      return this.$refs.renderer.mergeSimilarGift(authorName, price, giftName, num)
+      return this.$refs.gift.mergeSimilarGift(authorName, price, giftName, num)
     },
     getPronunciation(text) {
       if (this.pronunciationConverter === null) {
