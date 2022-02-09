@@ -1,10 +1,10 @@
 <template>
   <el-row :gutter="20" style="height: 100%;">
-    <el-col :xs="24" :sm="12">
-      <chat-renderer ref="message" :maxNumber="config.maxNumber" :showGiftName="config.showGiftName"></chat-renderer>
+    <el-col :xs="12" :sm="12" style="height: 100%">
+      <chat-renderer ref="message" :maxNumber="60" :showGiftName="0"></chat-renderer>
     </el-col>
-    <el-col :xs="24" :sm="12">
-      <chat-renderer ref="gift" :maxNumber="config.maxNumber" :showGiftName="config.showGiftName"></chat-renderer>
+    <el-col :xs="12" :sm="12" style="height: 100%">
+      <chat-renderer ref="gift" :maxNumber="0" :showGiftName="60"></chat-renderer>
     </el-col>
   </el-row>
 </template>
@@ -13,6 +13,7 @@
 import {toBool, toInt} from '@/utils'
 import * as pronunciation from '@/utils/pronunciation'
 import * as chatConfig from '@/api/chatConfig'
+import ChatClientTest from '@/api/chat/ChatClientTest'
 import ChatClientDirect from '@/api/chat/ChatClientDirect'
 import ChatRenderer from '@/components/ChatRenderer'
 import * as constants from '@/components/ChatRenderer/constants'
@@ -94,7 +95,11 @@ export default {
       this.config = cfg
     },
     initChatClient() {
-      this.chatClient = new ChatClientDirect(this.roomId)
+      if (this.roomId === null) {
+        this.chatClient = new ChatClientTest()
+      } else {
+        this.chatClient = new ChatClientDirect(this.roomId)
+      }
       this.chatClient.onAddText = this.onAddText
       this.chatClient.onAddGift = this.onAddGift
       this.chatClient.onAddMember = this.onAddMember

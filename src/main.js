@@ -85,6 +85,7 @@ const router = new VueRouter({
       ]
     },
     {path: '/room/test', name: 'test_room', component: Room, props: route => ({strConfig: route.query})},
+    {path: '/supervision/test', name: 'test_supervision', component: Supervision, props: route => ({strConfig: route.query})},
     {
       path: '/room/:roomId',
       name: 'room',
