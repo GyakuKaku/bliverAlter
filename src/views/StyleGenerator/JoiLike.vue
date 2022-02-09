@@ -375,8 +375,8 @@ export const DEFAULT_CONFIG = {
   showFlower: true,
   showEar: true,
   earAnime: true,
-  showGiftStyle: true,
-  showMemberStyle: true,
+  showGiftStyle: false,
+  showMemberStyle: false,
   neoMemberBgColor: '#0f9d58'
 }
 
