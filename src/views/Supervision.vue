@@ -4,7 +4,7 @@
       <chat-renderer ref="message" :maxNumber="60" :showGiftName="0"></chat-renderer>
     </el-col>
     <el-col :xs="12" :sm="12" style="height: 100%">
-      <chat-renderer ref="gift" :maxNumber="0" :showGiftName="60"></chat-renderer>
+      <chat-renderer ref="gift" :maxNumber="60" :showGiftName="60"></chat-renderer>
     </el-col>
   </el-row>
 </template>
