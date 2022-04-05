@@ -11,6 +11,9 @@
         <el-tab-pane label="轴" name="joiLike">
           <joi-like ref="joiLike" v-model="subComponentResults.joiLike"></joi-like>
         </el-tab-pane>
+        <el-tab-pane label="书房" name="study">
+          <study ref="study" v-model="subComponentResults.study"></study>
+        </el-tab-pane>
       </el-tabs>
 
       <el-form label-width="150px" size="mini">
@@ -53,12 +56,13 @@ import _ from 'lodash'
 import Legacy from './Legacy'
 import LineLike from './LineLike'
 import JoiLike from "./JoiLike";
+import Study from "./Study";
 import Room from '@/views/Room'
 
 export default {
   name: 'StyleGenerator',
   components: {
-    Legacy, LineLike, JoiLike, Room
+    Legacy, LineLike, JoiLike, Study, Room
   },
   data() {
     let styleElement = document.createElement('style')
@@ -71,7 +75,8 @@ export default {
       subComponentResults: {
         legacy: '',
         lineLike: '',
-        joiLike: ''
+        joiLike: '',
+        study: ''
       },
       activeTab: 'legacy',
       // 输入框的结果
