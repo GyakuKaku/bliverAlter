@@ -353,31 +353,31 @@ import * as common from './common'
 import {mergeConfig} from '@/utils'
 
 export const DEFAULT_CONFIG = {
-  showOutlines: true,
+  showOutlines: false,
   outlineSize: 2,
   outlineColor: '#000000',
 
-  showAvatars: true,
+  showAvatars: false,
   avatarSize: 24,
 
   showUserNames: true,
   userNameFont: 'Changa One',
   userNameFontSize: 20,
   userNameLineHeight: 0,
-  userNameColor: '#cccccc',
+  userNameColor: '#332a1b',
   ownerUserNameColor: '#ffd600',
   moderatorUserNameColor: '#5e84f1',
   memberUserNameColor: '#0f9d58',
-  showBadges: true,
+  showBadges: false,
   showColon: true,
 
   messageFont: 'Imprima',
   messageFontSize: 18,
   messageLineHeight: 0,
-  messageColor: '#ffffff',
+  messageColor: '#332a1b',
   messageOnNewLine: false,
 
-  showTime: false,
+  showTime: true,
   timeFont: 'Imprima',
   timeFontSize: 16,
   timeLineHeight: 0,
