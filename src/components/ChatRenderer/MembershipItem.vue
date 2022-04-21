@@ -1,8 +1,5 @@
 <template>
   <yt-live-chat-membership-item-renderer class="style-scope yt-live-chat-item-list-renderer" show-only-header>
-    <div id="author-front" style="display: none;">
-      <img-shadow style="width: 100%; height: 100%;" :imgUrl="avatarUrl"></img-shadow>
-    </div>
     <div id="card" class="style-scope yt-live-chat-membership-item-renderer">
       <div id="header" class="style-scope yt-live-chat-membership-item-renderer">
         <img-shadow id="author-photo" height="40" width="40" class="style-scope yt-live-chat-membership-item-renderer"
