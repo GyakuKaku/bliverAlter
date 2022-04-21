@@ -30,6 +30,9 @@
     </div>
     <div id="star" class="joi-style" style="display: none;"></div>
     <img id="flower" class="joi-style" alt="" src="/static/img/common/flower.png" style="display: none;">
+    <div id="winter-only" style="display: none;">
+
+    </div>
   </yt-live-chat-text-message-renderer>
 </template>
 
