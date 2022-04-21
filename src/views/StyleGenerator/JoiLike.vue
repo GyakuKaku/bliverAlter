@@ -336,7 +336,7 @@ export const DEFAULT_CONFIG = {
   messageFont: 'Noto Sans SC',
   messageFontSize: 16,
   messageLineHeight: 0,
-  messageColor: '#ffffff',
+  messageColor: '#333333',
 
   showTime: false,
   timeFont: 'Noto Sans SC',
@@ -347,7 +347,7 @@ export const DEFAULT_CONFIG = {
   bgColor: 'rgba(0, 0, 0, 0)',
   messageBgColor: 'rgba(255, 206, 101, 1)',
   ownerMessageBgColor: 'rgba(184, 168, 227, 1)',
-  moderatorMessageBgColor: 'rgba(55, 80, 154, 1)',
+  moderatorMessageBgColor: 'rgba(138, 164, 255, 1)',
   memberMessageBgColor: 'rgba(255, 206, 101, 1)',
 
   firstLineFont: 'Noto Sans SC',
