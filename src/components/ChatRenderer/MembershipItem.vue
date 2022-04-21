@@ -5,13 +5,9 @@
     </div>
     <div id="card" class="style-scope yt-live-chat-membership-item-renderer">
       <div id="header" class="style-scope yt-live-chat-membership-item-renderer">
-        <div id="author-photo" class="style-scope yt-live-chat-membership-item-renderer">
-          <img id="hat-member" class="joi-style" alt="" src="/static/img/common/hat.png" style="display: none;">
-          <img id="ear-member" class="joi-style" alt="" src="/static/img/common/ear.png" style="display: none;">
-          <img id="scarf-member" class="joi-style" alt="" src="/static/img/common/scarf.png" style="display: none;">
-          <img-shadow height="40" width="40"  style="height: 100%;width: 100%;" :imgUrl="avatarUrl"
-          ></img-shadow>
-        </div>
+        <img-shadow id="author-photo" height="40" width="40" class="style-scope yt-live-chat-membership-item-renderer"
+          :imgUrl="avatarUrl"
+        ></img-shadow>
         <div id="header-content" class="style-scope yt-live-chat-membership-item-renderer">
           <div id="header-content-primary-column" class="style-scope yt-live-chat-membership-item-renderer">
             <div id="header-content-inner-column" class="style-scope yt-live-chat-membership-item-renderer">

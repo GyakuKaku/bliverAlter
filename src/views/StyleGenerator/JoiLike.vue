@@ -205,9 +205,6 @@
         <el-divider></el-divider>
 
         <el-row :gutter="20">
-          <el-form-item :label="$t('stylegen.showNewMemberBg')">
-            <el-switch v-model="form.showNewMemberBg"></el-switch>
-          </el-form-item>
           <el-col :xs="24" :sm="12">
             <el-form-item :label="$t('stylegen.showScTicker')">
               <el-switch v-model="form.showScTicker"></el-switch>
@@ -292,21 +289,6 @@
               <el-switch v-model="form.earAnime"></el-switch>
             </el-form-item>
           </el-col>
-          <el-col :xs="24" :sm="12">
-            <el-form-item label="显示舰长定制样式">
-              <el-switch v-model="form.showMemberStyle"></el-switch>
-            </el-form-item>
-          </el-col>
-          <el-col :xs="24" :sm="12">
-            <el-form-item label="显示礼物定制样式">
-              <el-switch v-model="form.showGiftStyle"></el-switch>
-            </el-form-item>
-          </el-col>
-          <el-col :xs="24" :sm="12">
-            <el-form-item label="舰长礼物背景色">
-              <el-color-picker v-model="form.neoMemberBgColor"></el-color-picker>
-            </el-form-item>
-          </el-col>
         </el-row>
       </el-card>
     </el-form>
@@ -373,11 +355,8 @@ export const DEFAULT_CONFIG = {
   showHat: true,
   showScarf: true,
   showFlower: true,
-  showEar: true,
-  earAnime: true,
-  showGiftStyle: false,
-  showMemberStyle: false,
-  neoMemberBgColor: '#0f9d58'
+  showEar: false,
+  earAnime: false
 }
 
 export default {
@@ -481,69 +460,7 @@ yt-live-chat-text-message-renderer #star{
   background-image: url('/static/img/common/star.png') !important;
   background-size: 60px 60px !important;
   background-repeat: repeat-y !important;
-}
-${this.form.showMemberStyle ?
-`
-@keyframes member-anime0 {
-  0% {width: 60px;left: calc(50% - 30px)}
-  20% {width: 60px;left: calc(50% - 30px)}
-  40% {width: 0;left: calc(50%)}
-  100% {width: 0;}
-}
-@keyframes member-anime1 {
-  0% {opacity: 0}
-  40% {opacity: 0}
-  100% {opacity: 1}
-}
-yt-live-chat-membership-item-renderer #author-front {
-  display: block !important;
-  position: absolute;
-  height: 60px;
-  width: 0;
-  border-radius: 100% !important;
-  animation: member-anime0;animation-duration: 1.5s;
-  overflow: hidden;
-}
-yt-live-chat-membership-item-renderer #author-front #img {
-  height: 100% !important;
-}
-yt-live-chat-membership-item-renderer #card {
-  animation: member-anime1;animation-duration: 1.5s;
-}
-yt-live-chat-membership-item-renderer #author-photo{
-  position: relative !important;
-  overflow: visible !important;
-}
-yt-live-chat-membership-item-renderer #hat-member{
-  ${this.form.showAvatars && this.form.showHat ? 'display: block !important;' : 'display: none !important;'}
-  position: absolute !important;
-  z-index: 1000;
-  top: -3px !important;
-  left: -3px !important;
-  width: ${this.form.avatarGiftSize * 0.618}px !important;
-}
-yt-live-chat-membership-item-renderer #scarf-member{
-  ${this.form.showAvatars && this.form.showScarf ? 'display: block !important;' : 'display: none !important;'}
-  position: absolute !important;
-  z-index: 10;
-  top: ${this.form.avatarGiftSize * 0.8}px !important;
-  left: ${this.form.avatarGiftSize * 0.29}px !important;
-  width: ${this.form.avatarGiftSize * 0.42}px !important;
-}
-yt-live-chat-membership-item-renderer #ear-member{
-  ${this.form.showAvatars && this.form.showEar ? 'display: block !important;' : 'display: none !important;'}
-  position: absolute !important;
-  z-index: 10;
-  top: -${this.form.avatarGiftSize * 0.2}px !important;
-  left: ${this.form.avatarGiftSize * 0.618}px !important;
-  height: ${this.form.avatarGiftSize * 0.4}px !important;
-  width: ${this.form.avatarGiftSize * 0.25}px !important;
-  transform-origin: left;
-  ${this.form.earAnime ? 'animation: fade-in;animation-duration: 1s;-webkit-animation:fade-in 1s;' : ''}
-}
-` : ``}
-
-`
+}`
     },
     paddingStyle() {
       return `/* Reduce side padding */
@@ -582,7 +499,7 @@ yt-live-chat-text-message-renderer #author-photo img {
 yt-live-chat-paid-message-renderer #author-photo,
 yt-live-chat-paid-message-renderer #author-photo img,
 yt-live-chat-membership-item-renderer #author-photo,
-yt-live-chat-membership-item-renderer #author-photo #img {
+yt-live-chat-membership-item-renderer #author-photo img {
   ${this.form.showAvatars ? '' : 'display: none !important;'}
   width: ${this.form.avatarGiftSize}px !important;
   height: ${this.form.avatarGiftSize}px !important;
@@ -711,8 +628,7 @@ yt-live-chat-paid-message-renderer #content * {
 }`
     },
     showNewMemberBgStyle() {
-      return `background-color: ${this.form.neoMemberBgColor} !important;
-  margin: 4px 0 !important;`
+      return `margin: 4px 0 !important;`
     },
     scTickerStyle() {
       return `${this.form.showScTicker ? '' : `yt-live-chat-ticker-renderer {
