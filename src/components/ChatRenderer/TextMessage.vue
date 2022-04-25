@@ -32,9 +32,7 @@
     <img id="flower" class="joi-style" alt="" src="/static/img/common/flower.png" style="display: none;">
     <div id="winter-only" class="style-scope yt-live-chat-text-message-renderer" style="display: none;">
       <div id="model">
-        <span v-if="!imgFlag && imgContent == null">{{ content }}</span>
-        <el-image v-if="imgFlag && imgContent == null" :src="img" style="width: 120px;"></el-image>
-        <el-image v-if="imgContent != null" :src="imgContent.url" :style="'width:' + imgContent.width + 'px;height:' + imgContent.height + 'px;'"></el-image>
+        <span>{{ content }}</span>
       </div>
     </div>
   </yt-live-chat-text-message-renderer>

@@ -402,7 +402,7 @@ yt-live-chat-text-message-renderer {
   line-height: ${this.form.messageLineHeight || this.form.messageFontSize}px !important;
 }
 #model {
-  background-image: url('/static/img/common/bg.png') !important;
+  background-image: url('/static/img/common/rabbit.png') !important;
   background-size: auto 100% !important;
   display: block !important;
   overflow: visible !important;
