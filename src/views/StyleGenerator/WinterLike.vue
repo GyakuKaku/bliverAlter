@@ -371,7 +371,8 @@ export default {
     result() {
       return `${this.importStyle}
       ${common.COMMON_STYLE}
-      ${this.paddingStyle}`
+      ${this.paddingStyle}
+      ${this.messageStyle}`
     },
     importStyle() {
       let allFonts = []
@@ -390,7 +391,24 @@ yt-live-chat-text-message-renderer {
 #content {display:none !important;}
 #winter-only {display:block !important;}
 `
-    }
+    },
+    messageStyle() {
+      return `/* Messages */
+#model,
+#model * {
+  ${this.form.messageColor ? `color: ${this.form.messageColor} !important;` : ''}
+  font-family: "${common.cssEscapeStr(this.form.messageFont)}"${common.FALLBACK_FONTS};
+  font-size: ${this.form.messageFontSize}px !important;
+  line-height: ${this.form.messageLineHeight || this.form.messageFontSize}px !important;
+}
+#model {
+  background-image: url('/static/img/common/bg.png') !important;
+  background-size: auto 100% !important;
+  display: block !important;
+  overflow: visible !important;
+  padding: 20px;
+}`
+    },
   },
   watch: {
     result(val) {
