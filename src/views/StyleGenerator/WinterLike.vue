@@ -454,12 +454,14 @@ yt-live-chat-text-message-renderer #message * {
 
 yt-live-chat-text-message-renderer #message {
   min-width: 84px !important;
-  display: block !important;
+  min-height: 120px !important;
+  align-items: center;
+  display: flex !important;
   border: 1px solid transparent;
   overflow: visible !important;
   border-width: 0 86px 0 52px !important;
   border-image-slice: 0 258 0 157 fill !important;
-  padding: 90px 0 66px 0;
+  padding: 34px 0 0 0;
   border-image-source: url('/static/img/common/rabbitBody.png') !important;
 }`
     },
