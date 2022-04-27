@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-form label-width="150px" size="mini">
-      <h3>{{$t('stylegen.avatars')}}</h3>
+      <h3>{{ $t('stylegen.avatars') }}</h3>
       <el-card shadow="never">
         <el-row :gutter="20">
           <el-col :xs="24" :sm="12">
@@ -17,7 +17,7 @@
         </el-row>
       </el-card>
 
-      <h3>{{$t('stylegen.userNames')}}</h3>
+      <h3>{{ $t('stylegen.userNames') }}</h3>
       <el-card shadow="never">
         <el-row :gutter="20">
           <el-col :xs="24" :sm="12">
@@ -76,7 +76,7 @@
         </el-row>
       </el-card>
 
-      <h3>{{$t('stylegen.messages')}}</h3>
+      <h3>{{ $t('stylegen.messages') }}</h3>
       <el-card shadow="never">
         <el-row :gutter="20">
           <el-col :xs="24" :sm="12">
@@ -104,7 +104,7 @@
         </el-row>
       </el-card>
 
-      <h3>{{$t('stylegen.time')}}</h3>
+      <h3>{{ $t('stylegen.time') }}</h3>
       <el-card shadow="never">
         <el-form-item :label="$t('stylegen.showTime')">
           <el-switch v-model="form.showTime"></el-switch>
@@ -135,7 +135,7 @@
         </el-row>
       </el-card>
 
-      <h3>{{$t('stylegen.backgrounds')}}</h3>
+      <h3>{{ $t('stylegen.backgrounds') }}</h3>
       <el-card shadow="never">
         <el-row :gutter="20">
           <el-col :xs="24" :sm="12">
@@ -170,7 +170,7 @@
         </el-row>
       </el-card>
 
-      <h3>{{$t('stylegen.scAndNewMember')}}</h3>
+      <h3>{{ $t('stylegen.scAndNewMember') }}</h3>
       <el-card shadow="never">
         <el-row :gutter="20">
           <el-col :xs="24" :sm="12">
@@ -249,7 +249,7 @@
         </el-row>
       </el-card>
 
-      <h3>{{$t('stylegen.animation')}}</h3>
+      <h3>{{ $t('stylegen.animation') }}</h3>
       <el-card shadow="never">
         <el-row :gutter="20">
           <el-col :xs="24" :sm="12">
@@ -370,9 +370,25 @@ export default {
   computed: {
     result() {
       return `${this.importStyle}
-      ${common.COMMON_STYLE}
-      ${this.paddingStyle}
-      ${this.messageStyle}`
+
+${common.COMMON_STYLE}
+
+${this.paddingStyle}
+
+${this.avatarStyle}
+
+${this.userNameStyle}
+
+${this.messageStyle}
+
+${this.timeStyle}
+
+${this.backgroundStyle}
+
+${this.scAndNewMemberStyle}
+
+${this.animationStyle}
+`
     },
     importStyle() {
       let allFonts = []
@@ -386,29 +402,151 @@ export default {
 yt-live-chat-text-message-renderer {
   padding-left: 4px !important;
   padding-right: 4px !important;
+}`
+    },
+    avatarStyle() {
+      return common.getAvatarStyle(this.form)
+    },
+    userNameStyle() {
+      return `/* Channel names */
+yt-live-chat-text-message-renderer yt-live-chat-author-chip {
+  margin-bottom: 5px;
 }
-#author-photo {display:none !important;}
-#content {display:none !important;}
-#winter-only {display:block !important;}
-`
+
+yt-live-chat-text-message-renderer #author-name[type="owner"],
+yt-live-chat-text-message-renderer yt-live-chat-author-badge-renderer[type="owner"] {
+  ${this.form.ownerUserNameColor ? `color: ${this.form.ownerUserNameColor} !important;` : ''}
+}
+
+yt-live-chat-text-message-renderer #author-name[type="moderator"],
+yt-live-chat-text-message-renderer yt-live-chat-author-badge-renderer[type="moderator"] {
+  ${this.form.moderatorUserNameColor ? `color: ${this.form.moderatorUserNameColor} !important;` : ''}
+}
+
+yt-live-chat-text-message-renderer #author-name[type="member"],
+yt-live-chat-text-message-renderer yt-live-chat-author-badge-renderer[type="member"] {
+  ${this.form.memberUserNameColor ? `color: ${this.form.memberUserNameColor} !important;` : ''}
+}
+
+yt-live-chat-text-message-renderer #author-name {
+  ${this.form.showUserNames ? '' : 'display: none !important;'}
+  ${this.form.userNameColor ? `color: ${this.form.userNameColor} !important;` : ''}
+  font-family: "${common.cssEscapeStr(this.form.userNameFont)}"${common.FALLBACK_FONTS};
+  font-size: ${this.form.userNameFontSize}px !important;
+  line-height: ${this.form.userNameLineHeight || this.form.userNameFontSize}px !important;
+}
+
+/* Hide badges */
+yt-live-chat-text-message-renderer #chat-badges {
+  ${this.form.showBadges ? '' : 'display: none !important;'}
+  vertical-align: text-top !important;
+}`
     },
     messageStyle() {
       return `/* Messages */
-#model,
-#model * {
+yt-live-chat-text-message-renderer #message,
+yt-live-chat-text-message-renderer #message * {
   ${this.form.messageColor ? `color: ${this.form.messageColor} !important;` : ''}
   font-family: "${common.cssEscapeStr(this.form.messageFont)}"${common.FALLBACK_FONTS};
   font-size: ${this.form.messageFontSize}px !important;
   line-height: ${this.form.messageLineHeight || this.form.messageFontSize}px !important;
 }
-#model {
-  background-image: url('/static/img/common/rabbit.png') !important;
-  background-size: auto 100% !important;
+
+yt-live-chat-text-message-renderer #message {
+  min-width: 84px !important;
   display: block !important;
+  border: 1px solid transparent;
   overflow: visible !important;
-  padding: 20px;
+  border-width: 90px 86px 0 52px !important;
+  border-image-slice: 270 258 0 157 fill !important;
+  padding: 0 0 66px 0;
+  border-image-source: url('/static/img/common/rabbitBody.png') !important;
 }`
     },
+    timeStyle() {
+      return common.getTimeStyle(this.form)
+    },
+    backgroundStyle() {
+      return `/* Background colors */
+body {
+  overflow: hidden;
+  ${this.form.bgColor ? `background-color: ${this.form.bgColor};` : ''}
+}
+`
+// ${this.getBgStyleForAuthorType('', this.form.messageBgColor)}
+//
+// ${this.getBgStyleForAuthorType('owner', this.form.ownerMessageBgColor)}
+//
+// ${this.getBgStyleForAuthorType('moderator', this.form.moderatorMessageBgColor)}
+//
+// ${this.getBgStyleForAuthorType('member', this.form.memberMessageBgColor)}
+// `
+    },
+    scAndNewMemberStyle() {
+      return `/* SuperChat/Fan Funding Messages */
+yt-live-chat-paid-message-renderer {
+  margin: 4px 0 !important;
+}
+
+${this.scAndNewMemberFontStyle}
+
+yt-live-chat-membership-item-renderer #card,
+yt-live-chat-membership-item-renderer #header {
+  ${this.showNewMemberBgStyle}
+}
+
+${this.scTickerStyle}
+
+${this.form.showOtherThings ? '' : `yt-live-chat-item-list-renderer {
+  display: none !important;
+}`}`
+    },
+    scAndNewMemberFontStyle() {
+      return `yt-live-chat-paid-message-renderer #author-name,
+yt-live-chat-paid-message-renderer #author-name *,
+yt-live-chat-membership-item-renderer #header-content-inner-column,
+yt-live-chat-membership-item-renderer #header-content-inner-column * {
+  font-family: "${common.cssEscapeStr(this.form.firstLineFont)}"${common.FALLBACK_FONTS};
+  font-size: ${this.form.firstLineFontSize}px !important;
+  line-height: ${this.form.firstLineLineHeight || this.form.firstLineFontSize}px !important;
+}
+
+yt-live-chat-paid-message-renderer #purchase-amount,
+yt-live-chat-paid-message-renderer #purchase-amount *,
+yt-live-chat-membership-item-renderer #header-subtext,
+yt-live-chat-membership-item-renderer #header-subtext * {
+  font-family: "${common.cssEscapeStr(this.form.secondLineFont)}"${common.FALLBACK_FONTS};
+  font-size: ${this.form.secondLineFontSize}px !important;
+  line-height: ${this.form.secondLineLineHeight || this.form.secondLineFontSize}px !important;
+}
+
+yt-live-chat-paid-message-renderer #content,
+yt-live-chat-paid-message-renderer #content * {
+  font-family: "${common.cssEscapeStr(this.form.scContentFont)}"${common.FALLBACK_FONTS};
+  font-size: ${this.form.scContentFontSize}px !important;
+  line-height: ${this.form.scContentLineHeight || this.form.scContentFontSize}px !important;
+}`
+    },
+    showNewMemberBgStyle() {
+      return `background-color: ${this.form.memberUserNameColor} !important;
+  margin: 4px 0 !important;`
+    },
+    scTickerStyle() {
+      return `${this.form.showScTicker ? '' : `yt-live-chat-ticker-renderer {
+  display: none !important;
+}`}
+
+/* SuperChat Ticker */
+yt-live-chat-ticker-paid-message-item-renderer,
+yt-live-chat-ticker-paid-message-item-renderer *,
+yt-live-chat-ticker-sponsor-item-renderer,
+yt-live-chat-ticker-sponsor-item-renderer * {
+  font-family: "${common.cssEscapeStr(this.form.secondLineFont)}"${common.FALLBACK_FONTS};
+}`
+    },
+    animationStyle() {
+      return common.getAnimationStyle(this.form)
+    }
   },
   watch: {
     result(val) {
@@ -420,19 +558,33 @@ yt-live-chat-text-message-renderer {
     this.$emit('input', this.result)
   },
   methods: {
-    saveConfig: _.debounce(function() {
+    saveConfig: _.debounce(function () {
       let config = mergeConfig(this.form, DEFAULT_CONFIG)
-      window.localStorage.stylegenWinterLikeConfig = JSON.stringify(config)
+      window.localStorage.stylegenLineLikeConfig = JSON.stringify(config)
     }, 500),
     loadConfig() {
       try {
-        return mergeConfig(JSON.parse(window.localStorage.stylegenWinterLikeConfig), DEFAULT_CONFIG)
+        return mergeConfig(JSON.parse(window.localStorage.stylegenLineLikeConfig), DEFAULT_CONFIG)
       } catch {
         return {...DEFAULT_CONFIG}
       }
     },
     resetConfig() {
       this.form = {...DEFAULT_CONFIG}
+    },
+
+    getBgStyleForAuthorType(authorType, color) {
+      if (!color) {
+        color = '#ffffff'
+      }
+      let typeSelector = authorType ? `[author-type="${authorType}"]` : ''
+      return `yt-live-chat-text-message-renderer${typeSelector} #message {
+  background-color: ${color} !important;
+}
+
+yt-live-chat-text-message-renderer${typeSelector} #message::before {
+  border-right-color: ${color};
+}`
     }
   }
 }
