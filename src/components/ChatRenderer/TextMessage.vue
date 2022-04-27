@@ -19,14 +19,13 @@
           ></author-badge>
         </span>
       </yt-live-chat-author-chip>
-      <span style="vertical-align: bottom;" id="message" class="style-scope yt-live-chat-text-message-renderer">
-        <span v-if="!imgFlag && imgContent == null">{{ content }}</span>
-        <el-image v-if="imgFlag && imgContent == null" :src="img" style="width: 120px;"></el-image>
-        <el-image v-if="imgContent != null" :src="imgContent.url" :style="'width:' + imgContent.width + 'px;height:' + imgContent.height + 'px;'"></el-image>
-        <el-badge :value="repeated" :max="99" v-show="repeated > 1" class="style-scope yt-live-chat-text-message-renderer"
-          :style="{'--repeated-mark-color': repeatedMarkColor}"
+      <span v-if="!imgFlag && imgContent == null" style="vertical-align: bottom;" id="message" class="style-scope yt-live-chat-text-message-renderer">
+        <span>{{ content }}</span>
+        <el-badge :value="repeated" :max="99" v-show="repeated > 1" class="style-scope yt-live-chat-text-message-renderer" :style="{'--repeated-mark-color': repeatedMarkColor}"
         ></el-badge>
       </span>
+      <el-image v-if="imgFlag && imgContent == null" :src="img" style="width: 120px;"></el-image>
+      <el-image v-if="imgContent != null" :src="imgContent.url" :style="'width:' + imgContent.width + 'px;height:' + imgContent.height + 'px;'"></el-image>
     </div>
     <div id="star" class="joi-style" style="display: none;"></div>
     <img id="flower" class="joi-style" alt="" src="/static/img/common/flower.png" style="display: none;">
