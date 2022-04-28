@@ -333,7 +333,7 @@ export const DEFAULT_CONFIG = {
   timeColor: '#999999',
 
   bgColor: 'rgba(0, 0, 0, 0)',
-  neoMemberBgColor: '#0f9d58',
+  neoMemberBgColor: '#ffffff',
   messageBgColor: '#ffffff',
   ownerMessageBgColor: 'rgba(231, 199, 30, 1)',
   moderatorMessageBgColor: 'rgba(41, 95, 251, 1)',
@@ -440,7 +440,7 @@ yt-live-chat-text-message-renderer #author-photo {
 yt-live-chat-text-message-renderer #author-photo img {
   margin: 0 !important;
 }
-#author-border {
+yt-live-chat-text-message-renderer #author-border {
   ${this.form.showAvatars ? 'display: block !important;' : 'display: none !important;'}
   position: absolute !important;
   top: ${85 - this.form.avatarSize / 2}px !important;
@@ -449,7 +449,6 @@ yt-live-chat-text-message-renderer #author-photo img {
   height: ${this.form.avatarSize + 2}px !important;
   background-size: ${this.form.avatarSize + 2}px ${this.form.avatarSize + 2}px !important;
 }
-
 
 yt-live-chat-text-message-renderer[author-type=""] #author-border {
   background-image: url('/static/img/common/borderNormal.png') !important;
@@ -575,9 +574,33 @@ yt-live-chat-paid-message-renderer {
 
 ${this.scAndNewMemberFontStyle}
 
-yt-live-chat-membership-item-renderer #card,
+yt-live-chat-membership-item-renderer #card {
+  background-color: ${this.form.neoMemberBgColor} !important;
+  border-radius: 8px !important;
+  margin: 4px 0 !important;s
+}
 yt-live-chat-membership-item-renderer #header {
-  ${this.showNewMemberBgStyle}
+  background-color: ${this.form.neoMemberBgColor} !important;
+  margin: 4px !important;
+  border-radius: 8px !important;
+  border: 3px dashed #333333 !important;
+  color: #000000 !important;
+}
+yt-live-chat-membership-item-renderer #header .yt-live-chat-author-chip {
+  color: #333333 !important;
+}
+yt-live-chat-membership-item-renderer #header-subtext {
+  color: #333333 !important;
+}
+yt-live-chat-membership-item-renderer #author-border {
+  ${this.form.showAvatars ? 'display: block !important;' : 'display: none !important;'}
+  position: absolute !important;
+  top: 7px !important;
+  left: 15px !important;
+  width: ${this.form.avatarSize + 2}px !important;
+  height: ${this.form.avatarSize + 2}px !important;
+  background-size: ${this.form.avatarSize + 2}px ${this.form.avatarSize + 2}px !important;
+  background-image: url('/static/img/common/borderMember.png') !important;
 }
 
 ${this.scTickerStyle}
@@ -611,10 +634,6 @@ yt-live-chat-paid-message-renderer #content * {
   font-size: ${this.form.scContentFontSize}px !important;
   line-height: ${this.form.scContentLineHeight || this.form.scContentFontSize}px !important;
 }`
-    },
-    showNewMemberBgStyle() {
-      return `background-color: ${this.form.neoMemberBgColor} !important;
-      margin: 4px 0 !important;`
     },
     scTickerStyle() {
       return `${this.form.showScTicker ? '' : `yt-live-chat-ticker-renderer {
