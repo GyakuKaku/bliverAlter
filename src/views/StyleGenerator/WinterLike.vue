@@ -37,11 +37,11 @@
               <el-input v-model.number="form.userNameFontSize" type="number" min="0"></el-input>
             </el-form-item>
           </el-col>
-          <el-col :xs="24" :sm="12">
-            <el-form-item :label="$t('stylegen.lineHeight')">
-              <el-input v-model.number="form.userNameLineHeight" type="number" min="0"></el-input>
-            </el-form-item>
-          </el-col>
+<!--          <el-col :xs="24" :sm="12">-->
+<!--            <el-form-item :label="$t('stylegen.lineHeight')">-->
+<!--              <el-input v-model.number="form.userNameLineHeight" type="number" min="0"></el-input>-->
+<!--            </el-form-item>-->
+<!--          </el-col>-->
         </el-row>
         <el-row :gutter="20">
           <el-col :xs="24" :sm="12">
@@ -67,13 +67,13 @@
             </el-form-item>
           </el-col>
         </el-row>
-        <el-row :gutter="20">
-          <el-col :xs="24" :sm="12">
-            <el-form-item :label="$t('stylegen.showBadges')">
-              <el-switch v-model="form.showBadges"></el-switch>
-            </el-form-item>
-          </el-col>
-        </el-row>
+<!--        <el-row :gutter="20">-->
+<!--          <el-col :xs="24" :sm="12">-->
+<!--            <el-form-item :label="$t('stylegen.showBadges')">-->
+<!--              <el-switch v-model="form.showBadges"></el-switch>-->
+<!--            </el-form-item>-->
+<!--          </el-col>-->
+<!--        </el-row>-->
       </el-card>
 
       <h3>{{ $t('stylegen.messages') }}</h3>
@@ -144,30 +144,30 @@
             </el-form-item>
           </el-col>
         </el-row>
-        <el-row :gutter="20">
-          <el-col :xs="24" :sm="12">
-            <el-form-item :label="$t('stylegen.messageBgColor')">
-              <el-color-picker v-model="form.messageBgColor" show-alpha></el-color-picker>
-            </el-form-item>
-          </el-col>
-          <el-col :xs="24" :sm="12">
-            <el-form-item :label="$t('stylegen.memberMessageBgColor')">
-              <el-color-picker v-model="form.memberMessageBgColor" show-alpha></el-color-picker>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row :gutter="20">
-          <el-col :xs="24" :sm="12">
-            <el-form-item :label="$t('stylegen.moderatorMessageBgColor')">
-              <el-color-picker v-model="form.moderatorMessageBgColor" show-alpha></el-color-picker>
-            </el-form-item>
-          </el-col>
-          <el-col :xs="24" :sm="12">
-            <el-form-item :label="$t('stylegen.ownerMessageBgColor')">
-              <el-color-picker v-model="form.ownerMessageBgColor" show-alpha></el-color-picker>
-            </el-form-item>
-          </el-col>
-        </el-row>
+<!--        <el-row :gutter="20">-->
+<!--          <el-col :xs="24" :sm="12">-->
+<!--            <el-form-item :label="$t('stylegen.messageBgColor')">-->
+<!--              <el-color-picker v-model="form.messageBgColor" show-alpha></el-color-picker>-->
+<!--            </el-form-item>-->
+<!--          </el-col>-->
+<!--          <el-col :xs="24" :sm="12">-->
+<!--            <el-form-item :label="$t('stylegen.memberMessageBgColor')">-->
+<!--              <el-color-picker v-model="form.memberMessageBgColor" show-alpha></el-color-picker>-->
+<!--            </el-form-item>-->
+<!--          </el-col>-->
+<!--        </el-row>-->
+<!--        <el-row :gutter="20">-->
+<!--          <el-col :xs="24" :sm="12">-->
+<!--            <el-form-item :label="$t('stylegen.moderatorMessageBgColor')">-->
+<!--              <el-color-picker v-model="form.moderatorMessageBgColor" show-alpha></el-color-picker>-->
+<!--            </el-form-item>-->
+<!--          </el-col>-->
+<!--          <el-col :xs="24" :sm="12">-->
+<!--            <el-form-item :label="$t('stylegen.ownerMessageBgColor')">-->
+<!--              <el-color-picker v-model="form.ownerMessageBgColor" show-alpha></el-color-picker>-->
+<!--            </el-form-item>-->
+<!--          </el-col>-->
+<!--        </el-row>-->
       </el-card>
 
       <h3>{{ $t('stylegen.scAndNewMember') }}</h3>
@@ -304,7 +304,7 @@ import {mergeConfig} from '@/utils'
 
 export const DEFAULT_CONFIG = {
   showAvatars: true,
-  avatarSize: 40,
+  avatarSize: 50,
 
   showUserNames: true,
   userNameFont: 'Noto Sans SC',
@@ -314,7 +314,7 @@ export const DEFAULT_CONFIG = {
   ownerUserNameColor: '#ffd600',
   moderatorUserNameColor: '#5e84f1',
   memberUserNameColor: '#0f9d58',
-  showBadges: true,
+  showBadges: false,
 
   messageFont: 'Noto Sans SC',
   messageFontSize: 18,
@@ -350,7 +350,7 @@ export const DEFAULT_CONFIG = {
   animateOut: false,
   animateOutWaitTime: 30, // s
   fadeOutTime: 200, // ms
-  slide: true,
+  slide: false,
   reverseSlide: false
 }
 
@@ -388,6 +388,8 @@ ${this.backgroundStyle}
 ${this.scAndNewMemberStyle}
 
 ${this.animationStyle}
+
+${this.imgStyle}
 `
     },
     importStyle() {
@@ -411,6 +413,7 @@ yt-live-chat-text-message-renderer {
       return `/* Channel names */
 yt-live-chat-text-message-renderer yt-live-chat-author-chip {
   margin-bottom: 5px;
+  height: ${this.form.userNameFontSize + 12}px;
 }
 
 yt-live-chat-text-message-renderer #author-name[type="owner"],
@@ -438,8 +441,9 @@ yt-live-chat-text-message-renderer #author-name {
 
 /* Hide badges */
 yt-live-chat-text-message-renderer #chat-badges {
-  ${this.form.showBadges ? '' : 'display: none !important;'}
+  display: none !important;
   vertical-align: text-top !important;
+  margin: 0 !important;
 }`
     },
     messageStyle() {
@@ -548,6 +552,15 @@ yt-live-chat-ticker-sponsor-item-renderer * {
     },
     animationStyle() {
       return common.getAnimationStyle(this.form)
+    },
+    imgStyle() {
+      return `
+yt-live-chat-text-message-renderer #message .el-image  {
+  height: 66px;
+  margin-top: 6px;
+  width: auto !important;
+}
+      `
     }
   },
   watch: {

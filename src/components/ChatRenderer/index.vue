@@ -393,7 +393,8 @@ export default {
           }
         }
       } catch (e) {
-        console.log('图片转换失败')
+        console.log(e)
+        console.log('图片转换失败handleImgMessage')
       }
     },
     handleAddMessage(message) {
@@ -402,7 +403,6 @@ export default {
         addTime: new Date() // 添加一个本地时间给Ticker用，防止本地时间和服务器时间相差很大的情况
       }
       this.messagesBuffer.push(message)
-
       if (message.type !== constants.MESSAGE_TYPE_TEXT) {
         this.paidMessages.unshift(message)
         const MAX_PAID_MESSAGE_NUM = 100
@@ -411,7 +411,7 @@ export default {
         }
       }
       try {
-        if (this.$route.query.imgTransformer) {
+        if (this.$route.query.imgTransformer && message.content) {
           const transformerStr = String(this.$route.query.imgTransformer)
           const transformer = JSON.parse(transformerStr)
           for (let i = 0; i < transformer.length; i++) {
@@ -423,7 +423,7 @@ export default {
           }
         }
       } catch (e) {
-        console.log('图片转换失败')
+        console.log('图片转换失败handleAddMessage')
       }
     },
     handleDelMessage({id}) {
