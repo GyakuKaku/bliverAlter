@@ -10,7 +10,7 @@
       <span id="timestamp" class="style-scope yt-live-chat-text-message-renderer">{{timeText}}</span>
       <yt-live-chat-author-chip style="vertical-align: top;" class="style-scope yt-live-chat-text-message-renderer">
         <span id="author-name" dir="auto" class="style-scope yt-live-chat-author-chip" :type="authorTypeText">
-          <span>{{ authorName }}</span>
+          <span id="author-name-text">{{ authorName }}</span>
           <span id="chip-badges" class="style-scope yt-live-chat-author-chip"></span>
         </span>
         <span id="chat-badges" class="style-scope yt-live-chat-author-chip">

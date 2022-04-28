@@ -307,13 +307,13 @@ export const DEFAULT_CONFIG = {
   avatarSize: 50,
 
   showUserNames: true,
-  userNameFont: 'Noto Sans SC',
-  userNameFontSize: 20,
+  userNameFont: 'Source Han Sans',
+  userNameFontSize: 14,
   userNameLineHeight: 0,
-  userNameColor: '#cccccc',
-  ownerUserNameColor: '#ffd600',
-  moderatorUserNameColor: '#5e84f1',
-  memberUserNameColor: '#0f9d58',
+  userNameColor: '#333333',
+  ownerUserNameColor: '#333333',
+  moderatorUserNameColor: '#333333',
+  memberUserNameColor: '#333333',
   showBadges: false,
 
   messageFont: 'Noto Sans SC',
@@ -404,16 +404,60 @@ ${this.imgStyle}
 yt-live-chat-text-message-renderer {
   padding-left: 4px !important;
   padding-right: 4px !important;
+}
+yt-live-chat-text-message-renderer #content{
+  position: relative !important;
 }`
     },
     avatarStyle() {
-      return common.getAvatarStyle(this.form)
+      return `/* Avatars */
+yt-live-chat-paid-message-renderer #author-photo,
+yt-live-chat-paid-message-renderer #author-photo img,
+yt-live-chat-membership-item-renderer #author-photo,
+yt-live-chat-membership-item-renderer #author-photo img {
+  ${this.form.showAvatars ? '' : 'display: none !important;'}
+  width: ${this.form.avatarSize}px !important;
+  height: ${this.form.avatarSize}px !important;
+  border-radius: ${this.form.avatarSize}px !important;
+  margin-right: ${this.form.avatarSize / 4}px !important;
+}
+yt-live-chat-text-message-renderer #author-photo,
+yt-live-chat-text-message-renderer #author-photo img {
+  ${this.form.showAvatars ? '' : 'display: none !important;'}
+  width: ${this.form.avatarSize}px !important;
+  height: ${this.form.avatarSize}px !important;
+  border-radius: ${this.form.avatarSize}px !important;
+  margin-right: 0px !important;
+}
+`
     },
     userNameStyle() {
       return `/* Channel names */
 yt-live-chat-text-message-renderer yt-live-chat-author-chip {
-  margin-bottom: 5px;
-  height: ${this.form.userNameFontSize + 12}px;
+  height: 48px;
+  line-height: ${this.form.userNameFontSize + 6}px;
+  position: absolute;
+  top: 0 !important;
+  left: 18px;
+  margin: 0 !important;
+  display: flex;
+  align-items: flex-end;
+  width: 100% !important;
+}
+
+yt-live-chat-text-message-renderer #author-name {
+  min-width: 56px !important;
+  max-width: calc(100% - 96px) !important;
+}
+
+yt-live-chat-text-message-renderer #author-name-text{
+  display: block !important;
+  border-radius: 8px !important;
+  padding: 6px 0px !important;
+  border-image-source: url('/static/img/common/name.png') !important;
+  border: 1px solid transparent;
+  border-image-slice: 0 380 fill !important;
+  border-width: 0 12px 0 12px !important;
 }
 
 yt-live-chat-text-message-renderer #author-name[type="owner"],
@@ -457,7 +501,7 @@ yt-live-chat-text-message-renderer #message * {
 }
 
 yt-live-chat-text-message-renderer #message {
-  min-width: 84px !important;
+  min-width: 90px !important;
   min-height: 78px !important;
   align-items: center;
   display: flex !important;
@@ -560,7 +604,7 @@ yt-live-chat-text-message-renderer #message .el-image  {
   margin-top: 6px;
   width: auto !important;
 }
-      `
+`
     }
   },
   watch: {
