@@ -106,9 +106,9 @@
 
       <h3>{{ $t('stylegen.time') }}</h3>
       <el-card shadow="never">
-        <el-form-item :label="$t('stylegen.showTime')">
-          <el-switch v-model="form.showTime"></el-switch>
-        </el-form-item>
+<!--        <el-form-item :label="$t('stylegen.showTime')">-->
+<!--          <el-switch v-model="form.showTime"></el-switch>-->
+<!--        </el-form-item>-->
         <el-row :gutter="20">
           <el-col :xs="24" :sm="12">
             <el-form-item :label="$t('stylegen.font')">
@@ -141,6 +141,11 @@
           <el-col :xs="24" :sm="12">
             <el-form-item :label="$t('stylegen.bgColor')">
               <el-color-picker v-model="form.bgColor" show-alpha></el-color-picker>
+            </el-form-item>
+          </el-col>
+          <el-col :xs="24" :sm="12">
+            <el-form-item label="上舰背景色">
+              <el-color-picker v-model="form.neoMemberBgColor"></el-color-picker>
             </el-form-item>
           </el-col>
         </el-row>
@@ -328,6 +333,7 @@ export const DEFAULT_CONFIG = {
   timeColor: '#999999',
 
   bgColor: 'rgba(0, 0, 0, 0)',
+  neoMemberBgColor: '#0f9d58',
   messageBgColor: '#ffffff',
   ownerMessageBgColor: 'rgba(231, 199, 30, 1)',
   moderatorMessageBgColor: 'rgba(41, 95, 251, 1)',
@@ -607,8 +613,8 @@ yt-live-chat-paid-message-renderer #content * {
 }`
     },
     showNewMemberBgStyle() {
-      return `background-color: ${this.form.memberUserNameColor} !important;
-  margin: 4px 0 !important;`
+      return `background-color: ${this.form.neoMemberBgColor} !important;
+      margin: 4px 0 !important;`
     },
     scTickerStyle() {
       return `${this.form.showScTicker ? '' : `yt-live-chat-ticker-renderer {
