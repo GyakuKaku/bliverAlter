@@ -11,10 +11,10 @@
         <el-tab-pane label="公式轴" name="joiLike">
           <joi-like ref="joiLike" v-model="subComponentResults.joiLike"></joi-like>
         </el-tab-pane>
-        <el-tab-pane label="冬装轴(在做了)" name="winterLike">
+        <el-tab-pane label="冬装轴" name="winterLike">
           <winter-like ref="winterLike" v-model="subComponentResults.winterLike"></winter-like>
         </el-tab-pane>
-        <el-tab-pane label="书房轴(还没做)" name="study">
+        <el-tab-pane label="书房轴(在做了)" name="study">
           <study ref="study" v-model="subComponentResults.study"></study>
         </el-tab-pane>
       </el-tabs>
