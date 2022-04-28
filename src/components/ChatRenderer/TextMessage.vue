@@ -3,9 +3,9 @@
     <img id="hat" class="joi-style" alt="" src="/static/img/common/hat.png" style="display: none;">
     <img id="ear" class="joi-style" alt="" src="/static/img/common/ear.png" style="display: none;">
     <img id="scarf" class="joi-style" alt="" src="/static/img/common/scarf.png" style="display: none;">
-    <img-shadow id="author-photo" height="24" width="24" class="style-scope yt-live-chat-text-message-renderer"
-      :imgUrl="avatarUrl"
-    ></img-shadow>
+    <div id="author-border" style="display: none;"></div>
+    <img-shadow id="author-photo" height="24" width="24" class="style-scope yt-live-chat-text-message-renderer" :imgUrl="avatarUrl">
+    </img-shadow>
     <div id="content" class="style-scope yt-live-chat-text-message-renderer">
       <span id="timestamp" class="style-scope yt-live-chat-text-message-renderer">{{timeText}}</span>
       <yt-live-chat-author-chip style="vertical-align: top;" class="style-scope yt-live-chat-text-message-renderer">

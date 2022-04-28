@@ -304,7 +304,7 @@ import {mergeConfig} from '@/utils'
 
 export const DEFAULT_CONFIG = {
   showAvatars: true,
-  avatarSize: 50,
+  avatarSize: 60,
 
   showUserNames: true,
   userNameFont: 'Source Han Sans',
@@ -427,7 +427,35 @@ yt-live-chat-text-message-renderer #author-photo img {
   width: ${this.form.avatarSize}px !important;
   height: ${this.form.avatarSize}px !important;
   border-radius: ${this.form.avatarSize}px !important;
-  margin-right: 0px !important;
+}
+yt-live-chat-text-message-renderer #author-photo {
+  margin: ${82 - this.form.avatarSize / 2}px 0 0 0 !important;
+}
+yt-live-chat-text-message-renderer #author-photo img {
+  margin: 0 !important;
+}
+#author-border {
+  ${this.form.showAvatars ? 'display: block !important;' : 'display: none !important;'}
+  position: absolute !important;
+  top: ${85 - this.form.avatarSize / 2}px !important;
+  left: 3px !important;
+  width: ${this.form.avatarSize + 2}px !important;
+  height: ${this.form.avatarSize + 2}px !important;
+  background-size: ${this.form.avatarSize + 2}px ${this.form.avatarSize + 2}px !important;
+}
+
+
+yt-live-chat-text-message-renderer[author-type=""] #author-border {
+  background-image: url('/static/img/common/borderNormal.png') !important;
+}
+yt-live-chat-text-message-renderer[author-type="moderator"] #author-border {
+  background-image: url('/static/img/common/borderStaff.png') !important;
+}
+yt-live-chat-text-message-renderer[author-type="owner"] #author-border {
+  background-image: url('/static/img/common/borderOwner.png') !important;
+}
+yt-live-chat-text-message-renderer[author-type="member"] #author-border {
+  background-image: url('/static/img/common/borderMember.png') !important;
 }
 `
     },
@@ -459,6 +487,7 @@ yt-live-chat-text-message-renderer #author-name-text{
   border-image-slice: 0 380 fill !important;
   border-width: 0 12px 0 12px !important;
 }
+
 
 yt-live-chat-text-message-renderer #author-name[type="owner"],
 yt-live-chat-text-message-renderer yt-live-chat-author-badge-renderer[type="owner"] {
