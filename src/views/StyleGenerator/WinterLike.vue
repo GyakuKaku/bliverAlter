@@ -544,8 +544,21 @@ yt-live-chat-text-message-renderer #message {
   border-width: 0 86px 0 52px !important;
   border-image-slice: 0 258 0 157 fill !important;
   padding: 58px 0 18px 0;
+  border-image-source: url('/static/img/common/rabbitBody.png');
+}
+yt-live-chat-text-message-renderer[author-type=""] #message {
+  border-image-source: url('/static/img/common/rabbitBodyNormal.png') !important;
+}
+yt-live-chat-text-message-renderer[author-type="moderator"] #message {
+  border-image-source: url('/static/img/common/rabbitBodyStaff.png') !important;
+}
+yt-live-chat-text-message-renderer[author-type="owner"] #message {
+  border-image-source: url('/static/img/common/rabbitBodyOwner.png') !important;
+}
+yt-live-chat-text-message-renderer[author-type="member"] #message {
   border-image-source: url('/static/img/common/rabbitBody.png') !important;
-}`
+}
+`
     },
     timeStyle() {
       return common.getTimeStyle(this.form)
