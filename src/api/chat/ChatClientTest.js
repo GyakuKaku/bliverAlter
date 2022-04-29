@@ -3,7 +3,7 @@ import * as constants from '@/components/ChatRenderer/constants'
 import * as avatar from './avatar'
 
 const NAMES = [
-  '轴芯001', '轴芯002', '轴芯003', '轴芯004', '轴芯005', '轴芯006', '轴芯007', '名字特别特别特别长的轴芯', '短', '轴芯_zhouxin'
+  '轴芯001', '轴芯002', '轴芯003', '轴芯004', '轴芯005', '名字特别特别特别长的轴芯', '短', '轴芯_zhouxin'
 ]
 
 const CONTENTS = [
