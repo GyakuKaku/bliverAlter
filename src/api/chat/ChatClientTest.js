@@ -166,7 +166,10 @@ export default class ChatClientTest {
   }
 
   start () {
+    // 随机生成弹幕
     this.refreshTimer()
+    // 展示用固定弹幕
+    // this.showExample()
   }
 
   stop () {
@@ -174,6 +177,81 @@ export default class ChatClientTest {
       window.clearTimeout(this.timerId)
       this.timerId = null
     }
+  }
+
+  showExample () {
+    const simpleUserText = {
+      authorType: constants.AUTHRO_TYPE_NORMAL,
+      privilegeType: 0,
+      avatarUrl: avatar.DEFAULT_AVATAR_URL,
+      timestamp: new Date().getTime() / 1000,
+      authorName: randomChoose(NAMES),
+      content: '普通观众的一条弹幕',
+      isGiftDanmaku: false,
+      authorLevel: randInt(0, 60),
+      isNewbie: randInt(1, 10) <= 9,
+      isMobileVerified: randInt(1, 10) <= 9,
+      medalLevel: randInt(0, 40),
+      id: getUuid4Hex(),
+      translation: ''
+    }
+    this.onAddText(simpleUserText)
+    const memberUserText = {
+      authorType: constants.AUTHRO_TYPE_MEMBER,
+      privilegeType: randInt(1, 3),
+      avatarUrl: avatar.DEFAULT_AVATAR_URL,
+      timestamp: new Date().getTime() / 1000,
+      authorName: randomChoose(NAMES),
+      content: '大航海观众的一条弹幕',
+      isGiftDanmaku: false,
+      authorLevel: randInt(0, 60),
+      isNewbie: randInt(1, 10) <= 9,
+      isMobileVerified: randInt(1, 10) <= 9,
+      medalLevel: randInt(0, 40),
+      id: getUuid4Hex(),
+      translation: ''
+    }
+    this.onAddText(memberUserText)
+    const adminUserText = {
+      authorType: constants.AUTHRO_TYPE_ADMIN,
+      privilegeType: randInt(1, 3),
+      avatarUrl: avatar.DEFAULT_AVATAR_URL,
+      timestamp: new Date().getTime() / 1000,
+      authorName: randomChoose(NAMES),
+      content: '房管观众的一条弹幕',
+      isGiftDanmaku: false,
+      authorLevel: randInt(0, 60),
+      isNewbie: randInt(1, 10) <= 9,
+      isMobileVerified: randInt(1, 10) <= 9,
+      medalLevel: randInt(0, 40),
+      id: getUuid4Hex(),
+      translation: ''
+    }
+    this.onAddText(adminUserText)
+    const ownerUserText = {
+      authorType: constants.AUTHRO_TYPE_OWNER,
+      privilegeType: 0,
+      avatarUrl: avatar.DEFAULT_AVATAR_URL,
+      timestamp: new Date().getTime() / 1000,
+      authorName: randomChoose(NAMES),
+      content: '主播的一条弹幕',
+      isGiftDanmaku: false,
+      authorLevel: randInt(0, 60),
+      isNewbie: randInt(1, 10) <= 9,
+      isMobileVerified: randInt(1, 10) <= 9,
+      medalLevel: randInt(0, 40),
+      id: getUuid4Hex(),
+      translation: ''
+    }
+    this.onAddText(ownerUserText)
+    const neoMember = {
+      id: getUuid4Hex(),
+      avatarUrl: avatar.DEFAULT_AVATAR_URL,
+      timestamp: new Date().getTime() / 1000,
+      authorName: randomChoose(NAMES),
+      privilegeType: randInt(1, 3)
+    }
+    this.onAddMember(neoMember)
   }
 
   refreshTimer () {
