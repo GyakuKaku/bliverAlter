@@ -653,11 +653,9 @@ yt-live-chat-ticker-sponsor-item-renderer * {
     },
     imgStyle() {
       return `
-yt-live-chat-text-message-renderer #message .el-image  {
-  height: 66px !important;
-  margin-top: 6px !important;
-  width: auto !important;
-}
+      yt-live-chat-text-message-renderer #content .el-image  {
+        margin: 58px 50px 0 12px !important;
+      }
 `
     }
   },
