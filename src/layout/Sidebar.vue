@@ -54,7 +54,7 @@ export default {
       window.localStorage.lang = this.$i18n.locale = locale
     },
     getUrl() {
-      return window.localStorage.imgTransformerV2 == null ? '[{"from":"轴伊的肯定","target":"joiYES.jpg"},{"from":"轴伊的否定","target":"joiNO.jpg"},{"from":"傲娇","target":"aojiao.jpg"},{"from":"真不是人","target":"zbsr.png"}]' : window.localStorage.imgTransformerV2
+      return window.localStorage.imgTransformerV2 == null ? '[{"from":"呆子来咯","target":"dzll.jpg"}]' : window.localStorage.imgTransformerV2
     }
   }
 }
