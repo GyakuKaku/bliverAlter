@@ -667,7 +667,7 @@ yt-live-chat-ticker-sponsor-item-renderer * {
     imgStyle() {
       return `
       yt-live-chat-text-message-renderer #content .el-image  {
-        margin: 58px 50px 0 12px !important;
+        width: 80px !important;
       }
 `
     }
