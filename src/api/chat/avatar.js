@@ -24,5 +24,16 @@ export async function getAvatarUrl (uid) {
   } catch {
     return DEFAULT_AVATAR_URL
   }
+  if (res.avatarUrl.endsWith('noface.gif')) {
+    for (let i = 0; i < 3 && res.avatarUrl.endsWith('noface.gif'); i++) {
+      try {
+        res = (await axios.get('/api/avatar_url', {params: {
+            uid: uid
+          }})).data
+      } catch {
+        return DEFAULT_AVATAR_URL
+      }
+    }
+  }
   return res.avatarUrl
 }
