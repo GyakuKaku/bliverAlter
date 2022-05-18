@@ -164,15 +164,16 @@ export default {
       return this.getRoomUrl(false)
     },
     obsRoomUrl() {
-      if (this.roomUrl === '') {
-        return ''
-      }
-      if (this.serverConfig.loaderUrl === '') {
-        return this.roomUrl
-      }
-      let url = new URL(this.serverConfig.loaderUrl)
-      url.searchParams.append('url', this.roomUrl)
-      return url.href
+      return  this.getRoomUrl(false)
+      // if (this.roomUrl === '') {
+      //   return ''
+      // }
+      // if (this.serverConfig.loaderUrl === '') {
+      //   return this.roomUrl
+      // }
+      // let url = new URL(this.serverConfig.loaderUrl)
+      // url.searchParams.append('url', this.roomUrl)
+      // return url.href
     }
   },
   watch: {
