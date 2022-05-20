@@ -459,7 +459,7 @@ yt-live-chat-text-message-renderer #paw{
   bottom: 0 !important;
   width: 100% !important;
   height: 100% !important;
-  background-image: url('/static/img/common/paw.png') !important;
+  background-image: url('/static/img/common/kiti/paw.png') !important;
   background-size: 90px 90px !important;
   background-repeat: repeat !important;
 }`
