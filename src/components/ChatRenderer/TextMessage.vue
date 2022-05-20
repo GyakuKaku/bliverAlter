@@ -3,6 +3,10 @@
     <img id="hat" class="joi-style" alt="" src="/static/img/common/hat.png" style="display: none;">
     <img id="ear" class="joi-style" alt="" src="/static/img/common/ear.png" style="display: none;">
     <img id="scarf" class="joi-style" alt="" src="/static/img/common/scarf.png" style="display: none;">
+    <img id="leftEar" class="kiti-style" alt="" src="/static/img/common/kiti/leftEar.png" style="display: none;">
+    <img id="rightEar" class="kiti-style" alt="" src="/static/img/common/kiti/rightEar.png" style="display: none;">
+    <img id="kiti-scarf" class="kiti-style" alt="" src="/static/img/common/kiti/scarf.png" style="display: none;">
+    <img id="tail" class="kiti-style" alt="" src="/static/img/common/kiti/tail.png" style="display: none;">
     <div id="author-border" style="display: none;"></div>
     <img-shadow id="author-photo" height="24" width="24" class="style-scope yt-live-chat-text-message-renderer" :imgUrl="avatarUrl">
     </img-shadow>
@@ -28,6 +32,7 @@
         ></el-badge>
       </span>
     </div>
+    <div id="paw" class="joi-style" style="display: none;"></div>
     <div id="star" class="joi-style" style="display: none;"></div>
     <img id="flower" class="joi-style" alt="" src="/static/img/common/flower.png" style="display: none;">
   </yt-live-chat-text-message-renderer>

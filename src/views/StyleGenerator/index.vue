@@ -14,7 +14,10 @@
         <el-tab-pane label="冬装轴" name="winterLike">
           <winter-like ref="winterLike" v-model="subComponentResults.winterLike"></winter-like>
         </el-tab-pane>
-        <el-tab-pane label="书房轴(在做了)" name="study">
+        <el-tab-pane label="公式吉" name="kitiLike">
+          <kiti-like ref="kitiLike" v-model="subComponentResults.kitiLike"></kiti-like>
+        </el-tab-pane>
+        <el-tab-pane label="公式桃(在做了)" name="study">
           <study ref="study" v-model="subComponentResults.study"></study>
         </el-tab-pane>
       </el-tabs>
@@ -60,13 +63,14 @@ import Legacy from './Legacy'
 import LineLike from './LineLike'
 import JoiLike from "./JoiLike";
 import WinterLike from "./WinterLike";
+import KitiLike from "./KitiLike";
 import Study from "./Study";
 import Room from '@/views/Room'
 
 export default {
   name: 'StyleGenerator',
   components: {
-    Legacy, LineLike, JoiLike, WinterLike, Study, Room
+    Legacy, LineLike, JoiLike, WinterLike, KitiLike, Study, Room
   },
   data() {
     let styleElement = document.createElement('style')
@@ -81,6 +85,7 @@ export default {
         lineLike: '',
         joiLike: '',
         winterLike: '',
+        kitiLike: '',
         study: ''
       },
       activeTab: 'legacy',
