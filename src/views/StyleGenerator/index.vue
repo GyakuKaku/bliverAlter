@@ -17,8 +17,8 @@
         <el-tab-pane label="公式吉" name="kitiLike">
           <kiti-like ref="kitiLike" v-model="subComponentResults.kitiLike"></kiti-like>
         </el-tab-pane>
-        <el-tab-pane label="公式桃(在做了)" name="study">
-          <study ref="study" v-model="subComponentResults.study"></study>
+        <el-tab-pane label="公式桃" name="tocciLike">
+          <tocci-like ref="tocciLike" v-model="subComponentResults.tocciLike"></tocci-like>
         </el-tab-pane>
       </el-tabs>
 
@@ -64,13 +64,13 @@ import LineLike from './LineLike'
 import JoiLike from "./JoiLike";
 import WinterLike from "./WinterLike";
 import KitiLike from "./KitiLike";
-import Study from "./Study";
+import TocciLike from "./TocciLike";
 import Room from '@/views/Room'
 
 export default {
   name: 'StyleGenerator',
   components: {
-    Legacy, LineLike, JoiLike, WinterLike, KitiLike, Study, Room
+    Legacy, LineLike, JoiLike, WinterLike, KitiLike, TocciLike, Room
   },
   data() {
     let styleElement = document.createElement('style')
@@ -86,7 +86,7 @@ export default {
         joiLike: '',
         winterLike: '',
         kitiLike: '',
-        study: ''
+        tocciLike: ''
       },
       activeTab: 'legacy',
       // 输入框的结果
