@@ -328,7 +328,7 @@ export const DEFAULT_CONFIG = {
 
   bgColor: 'rgba(0, 0, 0, 0)',
   messageBgColor: 'rgba(251, 163, 62, 1)',
-  ownerMessageBgColor: 'rgba(136, 140, 209, 1)',
+  ownerMessageBgColor: 'rgba(205, 0, 14, 1)',
   moderatorMessageBgColor: 'rgba(251, 103, 52, 1)',
   memberMessageBgColor: 'rgba(245, 124, 0, 1)',
 
@@ -462,6 +462,19 @@ yt-live-chat-text-message-renderer #paw{
   background-image: url('/static/img/common/kiti/paw.png') !important;
   background-size: 90px 90px !important;
   background-repeat: repeat !important;
+}
+yt-live-chat-text-message-renderer #star{
+  display: block !important;
+  position: absolute !important;
+  bottom: 0 !important;
+  right: 0 !important;
+  width: 60px !important;
+  height: calc(100% - 60px) !important;
+  z-index: 999 !important;
+  border-image-source: url('/static/img/common/kiti/block.png') !important;
+  border: 1px solid transparent;
+  border-image-slice: 72 0 52 0 fill !important;
+  border-width: 43px 0 31px 0 !important;
 }`
     },
     paddingStyle() {
@@ -475,7 +488,7 @@ yt-live-chat-text-message-renderer {
 }
 yt-live-chat-text-message-renderer #content{
   margin-left: ${this.form.avatarSize / 2 + 16}px !important;
-  width: calc(100% - ${this.form.avatarSize / 2 + 16}px) !important;
+  width: calc(100% - ${this.form.avatarSize / 2 + 76}px) !important;
   z-index:1006 !important;
 }
   ${this.getBgStyleForAuthorType('', this.form.messageBgColor)}
@@ -517,7 +530,6 @@ yt-live-chat-text-message-renderer yt-live-chat-author-chip {
   display: block;
   height: ${this.form.avatarSize / 2}px !important;
   line-height: ${this.form.avatarSize / 2}px !important;
-  width: calc(100% - ${this.form.avatarSize / 2 + 16}px) !important;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
