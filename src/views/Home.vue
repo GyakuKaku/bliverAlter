@@ -134,6 +134,15 @@
         </el-form>
       </el-card>
     </p>
+    <p>
+      <el-card>
+        此服务是基于开源项目blivechat二次开发的弹幕姬服务。
+        <br/>
+        原项目地址：https://github.com/xfgryujk/blivechat
+        <br/>
+        原作者专栏：https://www.bilibili.com/read/cv4594365
+      </el-card>
+    </p>
   </div>
 </template>
 
@@ -202,7 +211,7 @@ export default {
       }
       let query = {...this.form}
       delete query.roomId
-      query.imgTransformer = window.localStorage.imgTransformerV2 == null ? '[{"from":"呆子来咯","target":"dzll.jpg"}]' : window.localStorage.imgTransformerV2
+      query.imgTransformer = window.localStorage.imgTransformerV2 == null ? '[]' : window.localStorage.imgTransformerV2
       let resolved = this.$router.resolve({name: 'supervision', params: {roomId: this.form.roomId}, query})
 
       window.open(`${window.location.protocol}//${window.location.host}${resolved.href}`, `room ${this.form.roomId}`, 'menubar=0,location=0,scrollbars=0,toolbar=0,width=800,height=600')
@@ -216,7 +225,7 @@ export default {
       }
       let query = {...this.form}
       delete query.roomId
-      query.imgTransformer = window.localStorage.imgTransformerV2 == null ? '[{"from":"呆子来咯","target":"dzll.jpg"}]' : window.localStorage.imgTransformerV2
+      query.imgTransformer = window.localStorage.imgTransformerV2 == null ? '[]' : window.localStorage.imgTransformerV2
       let resolved
       if (isTestRoom) {
         resolved = this.$router.resolve({name: 'test_room', query})

@@ -20,16 +20,6 @@
       <el-menu-item :index="$router.resolve({name: 'help'}).href">
         <i class="el-icon-question"></i>{{$t('sidebar.help')}}
       </el-menu-item>
-      <a href="https://github.com/xfgryujk/blivechat" target="_blank">
-        <el-menu-item>
-          <i class="el-icon-share"></i>{{$t('sidebar.projectAddress')}}
-        </el-menu-item>
-      </a>
-      <a href="http://link.bilibili.com/ctool/vtuber" target="_blank">
-        <el-menu-item>
-          <i class="el-icon-link"></i>{{$t('sidebar.giftRecordOfficial')}}
-        </el-menu-item>
-      </a>
       <el-submenu index="null">
         <template slot="title">
           <i class="el-icon-chat-line-square"></i>Language
@@ -54,7 +44,7 @@ export default {
       window.localStorage.lang = this.$i18n.locale = locale
     },
     getUrl() {
-      return window.localStorage.imgTransformerV2 == null ? '[{"from":"呆子来咯","target":"dzll.jpg"}]' : window.localStorage.imgTransformerV2
+      return window.localStorage.imgTransformerV2 == null ? '[]' : window.localStorage.imgTransformerV2
     }
   }
 }

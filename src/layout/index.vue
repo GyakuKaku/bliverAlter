@@ -5,7 +5,7 @@
       <div class="logo-container">
         <router-link to="/">
           <img src="@/assets/img/logo.png" class="sidebar-logo">
-          <h1 class="sidebar-title">blivechat</h1>
+          <h1 class="sidebar-title">blivechat 修改版</h1>
         </router-link>
       </div>
       <div class="version">

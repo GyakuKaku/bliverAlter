@@ -62,7 +62,7 @@
 </template>
 
 <script>
-const DEFAULT_IMG_TRANSFORMER = '[{"from":"呆子来咯","target":"dzll.jpg"}]'
+const DEFAULT_IMG_TRANSFORMER = '[]'
 
 export default {
   name: 'ImgManager',
