@@ -2,7 +2,7 @@
    Distributed under MIT license.
    See file LICENSE for detail or copy at https://opensource.org/licenses/MIT
 */
-
+/* eslint-disable */
 /**
  * @typedef {Object} Options
  * @property {?Int8Array} customDictionary
