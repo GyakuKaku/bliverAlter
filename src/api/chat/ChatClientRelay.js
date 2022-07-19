@@ -29,18 +29,18 @@ export default class ChatClientRelay {
     this.receiveTimeoutTimerId = null
   }
 
-  start () {
+  start() {
     this.wsConnect()
   }
 
-  stop () {
+  stop() {
     this.isDestroying = true
     if (this.websocket) {
       this.websocket.close()
     }
   }
 
-  wsConnect () {
+  wsConnect() {
     if (this.isDestroying) {
       return
     }
@@ -54,7 +54,7 @@ export default class ChatClientRelay {
     this.websocket.onmessage = this.onWsMessage.bind(this)
   }
 
-  onWsOpen () {
+  onWsOpen() {
     this.retryCount = 0
     this.websocket.send(JSON.stringify({
       cmd: COMMAND_JOIN_ROOM,
@@ -69,7 +69,7 @@ export default class ChatClientRelay {
     this.refreshReceiveTimeoutTimer()
   }
 
-  sendHeartbeat () {
+  sendHeartbeat() {
     this.websocket.send(JSON.stringify({
       cmd: COMMAND_HEARTBEAT
     }))
@@ -83,7 +83,7 @@ export default class ChatClientRelay {
   }
 
   onReceiveTimeout() {
-    window.console.warn('接收消息超时')
+    console.warn('接收消息超时')
     this.receiveTimeoutTimerId = null
 
     // 直接丢弃阻塞的websocket，不等onclose回调了
@@ -92,7 +92,7 @@ export default class ChatClientRelay {
     this.onWsClose()
   }
 
-  onWsClose () {
+  onWsClose() {
     this.websocket = null
     if (this.heartbeatTimerId) {
       window.clearInterval(this.heartbeatTimerId)
@@ -106,14 +106,14 @@ export default class ChatClientRelay {
     if (this.isDestroying) {
       return
     }
-    window.console.warn(`掉线重连中${++this.retryCount}`)
+    console.warn(`掉线重连中${++this.retryCount}`)
     window.setTimeout(this.wsConnect.bind(this), 1000)
   }
 
-  onWsMessage (event) {
+  onWsMessage(event) {
     this.refreshReceiveTimeoutTimer()
 
-    let {cmd, data} = JSON.parse(event.data)
+    let { cmd, data } = JSON.parse(event.data)
     switch (cmd) {
     case COMMAND_HEARTBEAT: {
       break
@@ -129,10 +129,10 @@ export default class ChatClientRelay {
         authorType: data[3],
         content: data[4],
         privilegeType: data[5],
-        isGiftDanmaku: !!data[6],
+        isGiftDanmaku: Boolean(data[6]),
         authorLevel: data[7],
-        isNewbie: !!data[8],
-        isMobileVerified: !!data[9],
+        isNewbie: Boolean(data[8]),
+        isMobileVerified: Boolean(data[9]),
         medalLevel: data[10],
         id: data[11],
         translation: data[12]
