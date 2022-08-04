@@ -20,7 +20,7 @@
         <el-tab-pane label="公式桃" name="tocciLike">
           <tocci-like ref="tocciLike" v-model="subComponentResults.tocciLike"></tocci-like>
         </el-tab-pane>
-        <el-tab-pane label="施工中" name="waveLike">
+        <el-tab-pane label="波浪" name="waveLike">
           <wave-like ref="waveLike" v-model="subComponentResults.waveLike"></wave-like>
         </el-tab-pane>
       </el-tabs>

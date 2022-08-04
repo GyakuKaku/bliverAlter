@@ -9,22 +9,12 @@
               <el-switch v-model="form.showAvatars"></el-switch>
             </el-form-item>
           </el-col>
-          <el-col :xs="24" :sm="12">
-            <el-form-item :label="$t('stylegen.avatarSize')">
-              <el-input v-model.number="form.avatarSize" type="number" min="0"></el-input>
-            </el-form-item>
-          </el-col>
         </el-row>
       </el-card>
 
       <h3>{{ $t('stylegen.userNames') }}</h3>
       <el-card shadow="never">
         <el-row :gutter="20">
-          <el-col :xs="24" :sm="12">
-            <el-form-item :label="$t('stylegen.showUserNames')">
-              <el-switch v-model="form.showUserNames"></el-switch>
-            </el-form-item>
-          </el-col>
           <el-col :xs="24" :sm="12">
             <el-form-item :label="$t('stylegen.font')">
               <font-select v-model="form.userNameFont"></font-select>
@@ -38,39 +28,8 @@
             </el-form-item>
           </el-col>
           <el-col :xs="24" :sm="12">
-            <el-form-item :label="$t('stylegen.lineHeight')">
-              <el-input v-model.number="form.userNameLineHeight" type="number" min="0"></el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row :gutter="20">
-          <el-col :xs="24" :sm="12">
-            <el-form-item :label="$t('stylegen.normalColor')">
+            <el-form-item label="文字颜色">
               <el-color-picker v-model="form.userNameColor"></el-color-picker>
-            </el-form-item>
-          </el-col>
-          <el-col :xs="24" :sm="12">
-            <el-form-item :label="$t('stylegen.memberColor')">
-              <el-color-picker v-model="form.memberUserNameColor"></el-color-picker>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row :gutter="20">
-          <el-col :xs="24" :sm="12">
-            <el-form-item :label="$t('stylegen.moderatorColor')">
-              <el-color-picker v-model="form.moderatorUserNameColor"></el-color-picker>
-            </el-form-item>
-          </el-col>
-          <el-col :xs="24" :sm="12">
-            <el-form-item :label="$t('stylegen.ownerColor')">
-              <el-color-picker v-model="form.ownerUserNameColor"></el-color-picker>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row :gutter="20">
-          <el-col :xs="24" :sm="12">
-            <el-form-item :label="$t('stylegen.showBadges')">
-              <el-switch v-model="form.showBadges"></el-switch>
             </el-form-item>
           </el-col>
         </el-row>
@@ -96,168 +55,6 @@
               <el-input v-model.number="form.messageFontSize" type="number" min="0"></el-input>
             </el-form-item>
           </el-col>
-          <el-col :xs="24" :sm="12">
-            <el-form-item :label="$t('stylegen.lineHeight')">
-              <el-input v-model.number="form.messageLineHeight" type="number" min="0"></el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-      </el-card>
-
-      <h3>{{ $t('stylegen.backgrounds') }}</h3>
-      <el-card shadow="never">
-        <el-row :gutter="20">
-          <el-col :xs="24" :sm="12">
-            <el-form-item :label="$t('stylegen.bgColor')">
-              <el-color-picker v-model="form.bgColor" show-alpha></el-color-picker>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row :gutter="20">
-          <el-col :xs="24" :sm="12">
-            <el-form-item :label="$t('stylegen.messageBgColor')">
-              <el-color-picker v-model="form.messageBgColor" show-alpha></el-color-picker>
-            </el-form-item>
-          </el-col>
-          <el-col :xs="24" :sm="12">
-            <el-form-item :label="$t('stylegen.memberMessageBgColor')">
-              <el-color-picker v-model="form.memberMessageBgColor" show-alpha></el-color-picker>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row :gutter="20">
-          <el-col :xs="24" :sm="12">
-            <el-form-item :label="$t('stylegen.moderatorMessageBgColor')">
-              <el-color-picker v-model="form.moderatorMessageBgColor" show-alpha></el-color-picker>
-            </el-form-item>
-          </el-col>
-          <el-col :xs="24" :sm="12">
-            <el-form-item :label="$t('stylegen.ownerMessageBgColor')">
-              <el-color-picker v-model="form.ownerMessageBgColor" show-alpha></el-color-picker>
-            </el-form-item>
-          </el-col>
-        </el-row>
-      </el-card>
-
-      <h3>{{ $t('stylegen.scAndNewMember') }}</h3>
-      <el-card shadow="never">
-        <el-row :gutter="20">
-          <el-col :xs="24" :sm="12">
-            <el-form-item :label="$t('stylegen.firstLineFont')">
-              <font-select v-model="form.firstLineFont"></font-select>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row :gutter="20">
-          <el-col :xs="24" :sm="12">
-            <el-form-item :label="$t('stylegen.firstLineFontSize')">
-              <el-input v-model.number="form.firstLineFontSize" type="number" min="0"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :xs="24" :sm="12">
-            <el-form-item :label="$t('stylegen.firstLineLineHeight')">
-              <el-input v-model.number="form.firstLineLineHeight" type="number" min="0"></el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-divider></el-divider>
-
-        <el-row :gutter="20">
-          <el-col :xs="24" :sm="12">
-            <el-form-item :label="$t('stylegen.secondLineFont')">
-              <font-select v-model="form.secondLineFont"></font-select>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row :gutter="20">
-          <el-col :xs="24" :sm="12">
-            <el-form-item :label="$t('stylegen.secondLineFontSize')">
-              <el-input v-model.number="form.secondLineFontSize" type="number" min="0"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :xs="24" :sm="12">
-            <el-form-item :label="$t('stylegen.secondLineLineHeight')">
-              <el-input v-model.number="form.secondLineLineHeight" type="number" min="0"></el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-divider></el-divider>
-
-        <el-row :gutter="20">
-          <el-col :xs="24" :sm="12">
-            <el-form-item :label="$t('stylegen.scContentLineFont')">
-              <font-select v-model="form.scContentFont"></font-select>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row :gutter="20">
-          <el-col :xs="24" :sm="12">
-            <el-form-item :label="$t('stylegen.scContentLineFontSize')">
-              <el-input v-model.number="form.scContentFontSize" type="number" min="0"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :xs="24" :sm="12">
-            <el-form-item :label="$t('stylegen.scContentLineLineHeight')">
-              <el-input v-model.number="form.scContentLineHeight" type="number" min="0"></el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-divider></el-divider>
-
-        <el-row :gutter="20">
-          <el-col :xs="24" :sm="12">
-            <el-form-item :label="$t('stylegen.showScTicker')">
-              <el-switch v-model="form.showScTicker"></el-switch>
-            </el-form-item>
-          </el-col>
-          <el-col :xs="24" :sm="12">
-            <el-form-item :label="$t('stylegen.showOtherThings')">
-              <el-switch v-model="form.showOtherThings"></el-switch>
-            </el-form-item>
-          </el-col>
-        </el-row>
-      </el-card>
-
-      <h3>{{ $t('stylegen.animation') }}</h3>
-      <el-card shadow="never">
-        <el-row :gutter="20">
-          <el-col :xs="24" :sm="12">
-            <el-form-item :label="$t('stylegen.animateIn')">
-              <el-switch v-model="form.animateIn"></el-switch>
-            </el-form-item>
-          </el-col>
-          <el-col :xs="24" :sm="12">
-            <el-form-item :label="$t('stylegen.fadeInTime')">
-              <el-input v-model.number="form.fadeInTime" type="number" min="0"></el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row :gutter="20">
-          <el-col :xs="24" :sm="12">
-            <el-form-item :label="$t('stylegen.animateOut')">
-              <el-switch v-model="form.animateOut"></el-switch>
-            </el-form-item>
-          </el-col>
-          <el-col :xs="24" :sm="12">
-            <el-form-item :label="$t('stylegen.fadeOutTime')">
-              <el-input v-model.number="form.fadeOutTime" type="number" min="0"></el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-form-item :label="$t('stylegen.animateOutWaitTime')">
-          <el-input v-model.number="form.animateOutWaitTime" type="number" min="0"></el-input>
-        </el-form-item>
-        <el-row :gutter="20">
-          <el-col :xs="24" :sm="12">
-            <el-form-item :label="$t('stylegen.slide')">
-              <el-switch v-model="form.slide"></el-switch>
-            </el-form-item>
-          </el-col>
-          <el-col :xs="24" :sm="12">
-            <el-form-item :label="$t('stylegen.reverseSlide')">
-              <el-switch v-model="form.reverseSlide"></el-switch>
-            </el-form-item>
-          </el-col>
         </el-row>
       </el-card>
     </el-form>
@@ -273,54 +70,13 @@ import { mergeConfig } from '@/utils'
 
 export const DEFAULT_CONFIG = {
   showAvatars: true,
-  avatarSize: 60,
-  avatarGiftSize: 40,
-  showUserNames: true,
   userNameFont: 'Noto Sans SC',
-  userNameFontSize: 18,
-  userNameLineHeight: 0,
+  userNameFontSize: 16,
   userNameColor: '#ffffff',
-  ownerUserNameColor: '#ffffff',
-  moderatorUserNameColor: '#ffffff',
-  memberUserNameColor: '#ffffff',
-  showBadges: false,
 
   messageFont: 'Noto Sans SC',
   messageFontSize: 16,
-  messageLineHeight: 0,
-  messageColor: '#ffffff',
-
-  showTime: false,
-  timeFont: 'Noto Sans SC',
-  timeFontSize: 16,
-  timeLineHeight: 0,
-  timeColor: '#999999',
-
-  bgColor: 'rgba(0, 0, 0, 0)',
-  messageBgColor: 'rgba(82, 67, 69, 1)',
-  ownerMessageBgColor: 'rgba(141, 5, 42, 1)',
-  moderatorMessageBgColor: 'rgba(147, 45, 65, 1)',
-  memberMessageBgColor: 'rgba(211, 138, 137, 1)',
-
-  firstLineFont: 'Noto Sans SC',
-  firstLineFontSize: 20,
-  firstLineLineHeight: 0,
-  secondLineFont: 'Noto Sans SC',
-  secondLineFontSize: 18,
-  secondLineLineHeight: 0,
-  scContentFont: 'Noto Sans SC',
-  scContentFontSize: 18,
-  scContentLineHeight: 0,
-  showScTicker: false,
-  showOtherThings: true,
-
-  animateIn: true,
-  fadeInTime: 200, // ms
-  animateOut: false,
-  animateOutWaitTime: 30, // s
-  fadeOutTime: 200, // ms
-  slide: true,
-  reverseSlide: false
+  messageColor: '#ffffff'
 }
 
 export default {
@@ -339,12 +95,13 @@ export default {
   computed: {
     result() {
       return `
+      ${this.importStyle}
       ${this.raceStyle}
 `
     },
     importStyle() {
       let allFonts = []
-      for (let name of ['userNameFont', 'messageFont', 'timeFont', 'firstLineFont', 'secondLineFont', 'scContentFont']) {
+      for (let name of ['userNameFont', 'messageFont']) {
         allFonts.push(this.form[name])
       }
       return common.getImportStyle(allFonts)
@@ -446,7 +203,7 @@ yt-live-chat-text-message-renderer {
 }
 /* Avatars */
 yt-live-chat-text-message-renderer #author-photo {
-  display: block !important;
+ ${this.form.showAvatars ? 'display: block !important;' : 'display: none !important;'}
   width: 60px !important;
   height: 60px !important;
   border-radius: 60px !important;
@@ -492,7 +249,6 @@ yt-live-chat-text-message-renderer yt-live-chat-author-chip {
 }
 yt-live-chat-text-message-renderer #content #author-name {
   display: block;
-  color: #ffffff !important;
   max-width: 100%;
   animation: shining 3.5s alternate infinite;
   overflow: hidden;
@@ -504,9 +260,9 @@ yt-live-chat-text-message-renderer yt-live-chat-author-badge-renderer {
   color: #ffffff !important;
 }
 yt-live-chat-text-message-renderer #author-name {
-  color: #ffffff !important;
-  font-family: "Noto Sans SC", "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "\\5FAE \\8F6F \\96C5 \\9ED1 ", SimHei, Arial, sans-serif;
-  font-size: 16px !important;
+  font-family: "${common.cssEscapeStr(this.form.userNameFont)}"${common.FALLBACK_FONTS};
+  ${this.form.userNameColor ? `color: ${this.form.userNameColor} !important;` : '#ffffff !important;'}
+  font-size: ${this.form.userNameFontSize}px !important;
   height: 30px !important;
   line-height: 30px !important;
   text-overflow: ellipsis;
@@ -538,16 +294,9 @@ yt-live-chat-author-medal-renderer[is-fan-group] {
 /* Messages */
 yt-live-chat-text-message-renderer #message,
 yt-live-chat-text-message-renderer #message * {
-  color: #ffffff !important;
-  font-family: "Noto Sans SC", "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "\\5FAE \\8F6F \\96C5 \\9ED1 ", SimHei, Arial, sans-serif;
-  font-size: 16px !important;
-  line-height: 30px !important;
-}
-yt-live-chat-text-message-renderer ##message,
-yt-live-chat-text-message-renderer ##message * {
-  color: #ffffff !important;
-  font-family: "Noto Sans SC", "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "\\5FAE \\8F6F \\96C5 \\9ED1 ", SimHei, Arial, sans-serif;
-  font-size: 16px !important;
+  ${this.form.messageColor ? `color: ${this.form.messageColor} !important;` : '#ffffff !important;'}
+  font-family: "${common.cssEscapeStr(this.form.messageFont)}"${common.FALLBACK_FONTS};
+  font-size: ${this.form.messageFontSize}px !important;
   line-height: 30px !important;
 }
 yt-live-chat-text-message-renderer #message {
