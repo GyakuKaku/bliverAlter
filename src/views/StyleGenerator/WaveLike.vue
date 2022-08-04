@@ -1,6 +1,25 @@
 <template>
   <div>
     <el-form label-width="150px" size="mini">
+      <h3>{{$t('stylegen.outlines')}}</h3>
+      <el-card shadow="never">
+        <el-row :gutter="20">
+          <el-col :xs="24" :sm="12">
+            <el-form-item :label="$t('stylegen.showOutlines')">
+              <el-switch v-model="form.showOutlines"></el-switch>
+            </el-form-item>
+          </el-col>
+          <el-col :xs="24" :sm="12">
+            <el-form-item :label="$t('stylegen.outlineColor')">
+              <el-color-picker v-model="form.outlineColor"></el-color-picker>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-form-item :label="$t('stylegen.outlineSize')">
+          <el-input v-model.number="form.outlineSize" type="number" min="0"></el-input>
+        </el-form-item>
+      </el-card>
+
       <h3>{{ $t('stylegen.avatars') }}</h3>
       <el-card shadow="never">
         <el-row :gutter="20">
@@ -69,6 +88,10 @@ import * as common from './common'
 import { mergeConfig } from '@/utils'
 
 export const DEFAULT_CONFIG = {
+  showOutlines: true,
+  outlineSize: 1,
+  outlineColor: '#c6c5c5',
+
   showAvatars: true,
   userNameFont: 'Noto Sans SC',
   userNameFontSize: 16,
@@ -105,6 +128,18 @@ export default {
         allFonts.push(this.form[name])
       }
       return common.getImportStyle(allFonts)
+    },
+    showOutlinesStyle() {
+      if (!this.form.showOutlines || !this.form.outlineSize) {
+        return ''
+      }
+      let shadow = []
+      for (let x = -this.form.outlineSize; x <= this.form.outlineSize; x += Math.ceil(this.form.outlineSize / 4)) {
+        for (let y = -this.form.outlineSize; y <= this.form.outlineSize; y += Math.ceil(this.form.outlineSize / 4)) {
+          shadow.push(`${x}px ${y}px ${this.form.outlineColor}`)
+        }
+      }
+      return `text-shadow: ${shadow.join(', ')};`
     },
     // eslint-disable-next-line max-lines-per-function
     raceStyle() {
@@ -297,7 +332,9 @@ yt-live-chat-text-message-renderer #message * {
   ${this.form.messageColor ? `color: ${this.form.messageColor} !important;` : '#ffffff !important;'}
   font-family: "${common.cssEscapeStr(this.form.messageFont)}"${common.FALLBACK_FONTS};
   font-size: ${this.form.messageFontSize}px !important;
+  ${this.showOutlinesStyle}
   line-height: 30px !important;
+  letter-spacing: 1px;
 }
 yt-live-chat-text-message-renderer #message {
   display: block !important;
