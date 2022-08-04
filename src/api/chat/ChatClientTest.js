@@ -198,11 +198,11 @@ export default class ChatClientTest {
     this.onAddText(simpleUserText)
     const memberUserText = {
       authorType: constants.AUTHRO_TYPE_MEMBER,
-      privilegeType: randInt(1, 3),
+      privilegeType: 3,
       avatarUrl: avatar.DEFAULT_AVATAR_URL,
       timestamp: new Date().getTime() / 1000,
       authorName: randomChoose(NAMES),
-      content: '大航海观众的一条弹幕',
+      content: '舰长的一条弹幕',
       isGiftDanmaku: false,
       authorLevel: randInt(0, 60),
       isNewbie: randInt(1, 10) <= 9,
@@ -214,11 +214,11 @@ export default class ChatClientTest {
     this.onAddText(memberUserText)
     const adminUserText = {
       authorType: constants.AUTHRO_TYPE_ADMIN,
-      privilegeType: randInt(1, 3),
+      privilegeType: 2,
       avatarUrl: avatar.DEFAULT_AVATAR_URL,
       timestamp: new Date().getTime() / 1000,
       authorName: randomChoose(NAMES),
-      content: '房管观众的一条弹幕',
+      content: '提督的一条弹幕',
       isGiftDanmaku: false,
       authorLevel: randInt(0, 60),
       isNewbie: randInt(1, 10) <= 9,
@@ -230,11 +230,11 @@ export default class ChatClientTest {
     this.onAddText(adminUserText)
     const ownerUserText = {
       authorType: constants.AUTHRO_TYPE_OWNER,
-      privilegeType: 0,
+      privilegeType: 1,
       avatarUrl: avatar.DEFAULT_AVATAR_URL,
       timestamp: new Date().getTime() / 1000,
       authorName: randomChoose(NAMES),
-      content: '主播的一条弹幕',
+      content: '总督的一条弹幕',
       isGiftDanmaku: false,
       authorLevel: randInt(0, 60),
       isNewbie: randInt(1, 10) <= 9,

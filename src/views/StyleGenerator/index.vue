@@ -20,6 +20,9 @@
         <el-tab-pane label="公式桃" name="tocciLike">
           <tocci-like ref="tocciLike" v-model="subComponentResults.tocciLike"></tocci-like>
         </el-tab-pane>
+        <el-tab-pane label="施工中" name="waveLike">
+          <wave-like ref="waveLike" v-model="subComponentResults.waveLike"></wave-like>
+        </el-tab-pane>
       </el-tabs>
 
       <el-form label-width="150px" size="mini">
@@ -65,12 +68,13 @@ import JoiLike from "./JoiLike";
 import WinterLike from "./WinterLike";
 import KitiLike from "./KitiLike";
 import TocciLike from "./TocciLike";
+import WaveLike from "./WaveLike";
 import Room from '@/views/Room'
 
 export default {
   name: 'StyleGenerator',
   components: {
-    Legacy, LineLike, JoiLike, WinterLike, KitiLike, TocciLike, Room
+    Legacy, LineLike, JoiLike, WinterLike, KitiLike, TocciLike, WaveLike, Room
   },
   data() {
     let styleElement = document.createElement('style')
@@ -86,7 +90,8 @@ export default {
         joiLike: '',
         winterLike: '',
         kitiLike: '',
-        tocciLike: ''
+        tocciLike: '',
+        waveLike: ''
       },
       activeTab: 'legacy',
       // 输入框的结果

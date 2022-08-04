@@ -1,5 +1,5 @@
 <template>
-  <yt-live-chat-text-message-renderer :author-type="authorTypeText">
+  <yt-live-chat-text-message-renderer :author-type="authorTypeText" :privilegeType="privilegeType">
     <img id="hat" class="joi-style" alt="" src="/static/img/common/hat.png" style="display: none;">
     <img id="ear" class="joi-style" alt="" src="/static/img/common/ear.png" style="display: none;">
     <img id="scarf" class="joi-style" alt="" src="/static/img/common/scarf.png" style="display: none;">
@@ -31,6 +31,7 @@
           :style="{'--repeated-mark-color': repeatedMarkColor}"
         ></el-badge>
       </span>
+      <div id="content-plus" style="display: none;"></div>
     </div>
     <div id="paw" class="joi-style" style="display: none;"></div>
     <div id="star" class="joi-style" style="display: none;"></div>
