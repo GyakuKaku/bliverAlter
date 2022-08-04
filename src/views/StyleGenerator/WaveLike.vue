@@ -555,11 +555,11 @@ yt-live-chat-text-message-renderer .el-badge {
   methods: {
     saveConfig: _.debounce(function() {
       let config = mergeConfig(this.form, DEFAULT_CONFIG)
-      window.localStorage.stylegenLineLikeConfig = JSON.stringify(config)
+      window.localStorage.stylegenWaveLikeConfig = JSON.stringify(config)
     }, 500),
     loadConfig() {
       try {
-        return mergeConfig(JSON.parse(window.localStorage.stylegenLineLikeConfig), DEFAULT_CONFIG)
+        return mergeConfig(JSON.parse(window.localStorage.stylegenWaveLikeConfig), DEFAULT_CONFIG)
       } catch {
         return { ...DEFAULT_CONFIG }
       }
