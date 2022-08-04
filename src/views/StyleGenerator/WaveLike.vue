@@ -1,22 +1,6 @@
 <template>
   <div>
     <el-form label-width="150px" size="mini">
-      <h3>{{$t('stylegen.global')}}</h3>
-      <el-card shadow="never">
-        <el-row :gutter="20">
-          <el-col :xs="24" :sm="12">
-            <el-form-item :label="$t('stylegen.danmakuAtBottom')">
-              <el-switch v-model="form.danmakuAtBottom"></el-switch>
-            </el-form-item>
-          </el-col>
-          <el-col :xs="24" :sm="12">
-            <el-form-item :label="$t('stylegen.tickerAtButtom')">
-              <el-switch v-model="form.tickerAtButtom"></el-switch>
-            </el-form-item>
-          </el-col>
-        </el-row>
-      </el-card>
-
       <h3>{{ $t('stylegen.avatars') }}</h3>
       <el-card shadow="never">
         <el-row :gutter="20">
@@ -59,15 +43,6 @@
             </el-form-item>
           </el-col>
         </el-row>
-        <el-divider></el-divider>
-
-        <el-row :gutter="20">
-          <el-col :xs="24" :sm="12">
-            <el-form-item :label="$t('stylegen.randomUserNamesColor')">
-              <el-switch v-model="form.randomUserNamesColor"></el-switch>
-            </el-form-item>
-          </el-col>
-        </el-row>
         <el-row :gutter="20">
           <el-col :xs="24" :sm="12">
             <el-form-item :label="$t('stylegen.normalColor')">
@@ -92,57 +67,10 @@
             </el-form-item>
           </el-col>
         </el-row>
-        <el-divider></el-divider>
-
         <el-row :gutter="20">
           <el-col :xs="24" :sm="12">
             <el-form-item :label="$t('stylegen.showBadges')">
               <el-switch v-model="form.showBadges"></el-switch>
-            </el-form-item>
-          </el-col>
-          <el-col :xs="24" :sm="12">
-            <el-form-item :label="$t('stylegen.badgesSize')">
-              <el-input v-model.number="form.badgesSize" type="number" min="0"></el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-      </el-card>
-
-      <h3>{{$t('stylegen.medal')}}</h3>
-      <el-card shadow="never">
-        <el-row :gutter="20">
-          <el-col :xs="24" :sm="12">
-            <el-form-item :label="$t('stylegen.showMedal')">
-              <el-switch v-model="form.showMedal"></el-switch>
-            </el-form-item>
-          </el-col>
-          <el-col :xs="24" :sm="12">
-            <el-form-item :label="$t('stylegen.showOnlyOwnerMedal')">
-              <el-switch v-model="form.showOnlyOwnerMedal"></el-switch>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row :gutter="20">
-          <el-col :xs="24" :sm="12">
-            <el-form-item :label="$t('stylegen.showMedalName')">
-              <el-switch v-model="form.showMedalName"></el-switch>
-            </el-form-item>
-          </el-col>
-          <el-col :xs="24" :sm="12">
-            <el-form-item :label="$t('stylegen.showMedalLevel')">
-              <el-switch v-model="form.showMedalLevel"></el-switch>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row :gutter="20">
-          <el-col :xs="24" :sm="12">
-            <el-form-item :label="$t('stylegen.fontSize')">
-              <el-input v-model.number="form.medalFontSize" type="number" min="0"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :xs="24" :sm="12">
-            <el-form-item :label="$t('stylegen.lineHeight')">
-              <el-input v-model.number="form.medalLineHeight" type="number" min="0"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
@@ -171,80 +99,6 @@
           <el-col :xs="24" :sm="12">
             <el-form-item :label="$t('stylegen.lineHeight')">
               <el-input v-model.number="form.messageLineHeight" type="number" min="0"></el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-divider></el-divider>
-
-        <el-row :gutter="20">
-          <el-col :xs="24" :sm="12">
-            <el-form-item :label="$t('stylegen.mergeSameUser')">
-              <el-switch v-model="form.messageMergeSameUser"></el-switch>
-            </el-form-item>
-          </el-col>
-          <el-col :xs="24" :sm="12">
-            <el-form-item :label="$t('stylegen.groupBlockPadding')">
-              <el-input v-model.number="form.messageGroupBlockPadding" type="number" min="0"></el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-divider></el-divider>
-        <el-row :gutter="20">
-          <el-col :xs="24" :sm="12">
-            <el-form-item :label="$t('stylegen.emoticonSize')">
-              <el-input v-model.number="form.emoticonSize" type="number" min="0"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :xs="24" :sm="12">
-            <el-form-item :label="$t('stylegen.emoticonInlineBorderRadius')">
-              <el-input v-model.number="form.emoticonInlineBorderRadius" type="number" min="0"></el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row :gutter="20">
-          <el-col :xs="24" :sm="12">
-            <el-form-item :label="$t('stylegen.emoticonBlockBorderRadius')">
-              <el-input v-model.number="form.emoticonBlockBorderRadius" type="number" min="0"></el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-      </el-card>
-
-      <h3>{{ $t('stylegen.time') }}</h3>
-      <el-card shadow="never">
-        <el-row :gutter="20">
-          <el-col :xs="24" :sm="12">
-            <el-form-item :label="$t('stylegen.showTime')">
-              <el-switch v-model="form.showTime"></el-switch>
-            </el-form-item>
-          </el-col>
-          <el-col :xs="24" :sm="12">
-            <el-form-item :label="$t('stylegen.showTimeRight')">
-              <el-switch v-model="form.showTimeRight"></el-switch>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row :gutter="20">
-          <el-col :xs="24" :sm="12">
-            <el-form-item :label="$t('stylegen.font')">
-              <font-select v-model="form.timeFont"></font-select>
-            </el-form-item>
-          </el-col>
-          <el-col :xs="24" :sm="12">
-            <el-form-item :label="$t('stylegen.color')">
-              <el-color-picker v-model="form.timeColor"></el-color-picker>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row :gutter="20">
-          <el-col :xs="24" :sm="12">
-            <el-form-item :label="$t('stylegen.fontSize')">
-              <el-input v-model.number="form.timeFontSize" type="number" min="0"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :xs="24" :sm="12">
-            <el-form-item :label="$t('stylegen.lineHeight')">
-              <el-input v-model.number="form.timeLineHeight" type="number" min="0"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
@@ -418,54 +272,35 @@ import * as common from './common'
 import { mergeConfig } from '@/utils'
 
 export const DEFAULT_CONFIG = {
-  danmakuAtBottom: false,
-  tickerAtButtom: false,
-
   showAvatars: true,
-  avatarSize: 40,
-
+  avatarSize: 60,
+  avatarGiftSize: 40,
   showUserNames: true,
   userNameFont: 'Noto Sans SC',
-  userNameFontSize: 20,
+  userNameFontSize: 18,
   userNameLineHeight: 0,
-  randomUserNamesColor: false,
-  userNameColor: '#cccccc',
-  ownerUserNameColor: '#ffd600',
-  moderatorUserNameColor: '#5e84f1',
-  memberUserNameColor: '#0f9d58',
-  showBadges: true,
-  badgesSize: 20,
-
-  showMedal: true,
-  showOnlyOwnerMedal: true,
-  showMedalName: true,
-  showMedalLevel: true,
-  medalFontSize: 14,
-  medalLineHeight: 0,
+  userNameColor: '#ffffff',
+  ownerUserNameColor: '#ffffff',
+  moderatorUserNameColor: '#ffffff',
+  memberUserNameColor: '#ffffff',
+  showBadges: false,
 
   messageFont: 'Noto Sans SC',
-  messageFontSize: 18,
+  messageFontSize: 16,
   messageLineHeight: 0,
-  messageColor: '#000000',
-  messageMergeSameUser: false,
-  messageGroupBlockPadding: 0,
-
-  emoticonSize: 48,
-  emoticonInlineBorderRadius: 0,
-  emoticonBlockBorderRadius: 4,
+  messageColor: '#ffffff',
 
   showTime: false,
-  showTimeRight: true,
   timeFont: 'Noto Sans SC',
   timeFontSize: 16,
   timeLineHeight: 0,
   timeColor: '#999999',
 
   bgColor: 'rgba(0, 0, 0, 0)',
-  messageBgColor: '#ffffff',
-  ownerMessageBgColor: 'rgba(231, 199, 30, 1)',
-  moderatorMessageBgColor: 'rgba(41, 95, 251, 1)',
-  memberMessageBgColor: 'rgba(43, 234, 43, 1)',
+  messageBgColor: 'rgba(82, 67, 69, 1)',
+  ownerMessageBgColor: 'rgba(141, 5, 42, 1)',
+  moderatorMessageBgColor: 'rgba(147, 45, 65, 1)',
+  memberMessageBgColor: 'rgba(211, 138, 137, 1)',
 
   firstLineFont: 'Noto Sans SC',
   firstLineFontSize: 20,
@@ -489,7 +324,7 @@ export const DEFAULT_CONFIG = {
 }
 
 export default {
-  name: 'LineLike',
+  name: 'WaveLike',
   components: {
     FontSelect
   },
@@ -570,9 +405,6 @@ yt-live-chat-author-chip #author-name {
 yt-live-chat-item-list-renderer #item-scroller {
   overflow: hidden !important;
 }
-yt-live-chat-text-message-renderer{
-
-}
 /* Hide header and input */
 yt-live-chat-header-renderer,
 yt-live-chat-message-input-renderer {
@@ -610,17 +442,17 @@ yt-live-chat-text-message-renderer {
   overflow: visible;
   z-index: 1005;
   position: relative;
-  max-width: calc(100% - 92px);
+  max-width: 100%;
 }
 /* Avatars */
-yt-live-chat-text-message-renderer #content #author-photo {
+yt-live-chat-text-message-renderer #author-photo {
   display: block !important;
   width: 60px !important;
   height: 60px !important;
   border-radius: 60px !important;
-  position: absolute !important;
+  /* position: absolute !important;
   left: -80px !important;
-  top: -3px;
+  top: -3px; */
   z-index: 100 !important;
   border:3px solid #ffce65 !important;
 }
@@ -629,7 +461,7 @@ yt-live-chat-text-message-renderer #author-photo:before {
   width: 60px;
   height: 60px;
   position: absolute;
-  left: -10px;
+  left: -3px;
   top: -3px;
   background-size: 100% 100% !important;
   background-image: url('/static/img/expand/faceBorder.png') !important;
@@ -711,29 +543,21 @@ yt-live-chat-text-message-renderer #message * {
   font-size: 16px !important;
   line-height: 30px !important;
 }
-yt-live-chat-text-message-renderer #image-and-message,
-yt-live-chat-text-message-renderer #image-and-message * {
+yt-live-chat-text-message-renderer ##message,
+yt-live-chat-text-message-renderer ##message * {
   color: #ffffff !important;
   font-family: "Noto Sans SC", "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "\\5FAE \\8F6F \\96C5 \\9ED1 ", SimHei, Arial, sans-serif;
   font-size: 16px !important;
   line-height: 30px !important;
 }
-yt-live-chat-text-message-renderer #image-and-message {
+yt-live-chat-text-message-renderer #message {
   display: block !important;
   overflow: visible !important;
   padding-left: 8px !important;
-  z-index: 800 !important;
   min-height: 30px !important;
 }
-yt-live-chat-text-message-renderer #message .emoji {
-  width: auto !important;
-  height: 48px !important;
-}
-#image-and-message img[display="block"] {
-  border-radius: 4px;
-}
-#image-and-message img[display="inline"] {
-  border-radius: 0px;
+yt-live-chat-text-message-renderer #message .el-image {
+  margin-top:8px;
 }
 /* Timestamps */
 /* Background colors */
@@ -767,15 +591,26 @@ yt-live-chat-membership-item-renderer #header-subtext * {
 }
 yt-live-chat-text-message-renderer #content-plus{
   display: block !important;
+  overflow: hidden;
   position: absolute;
   bottom: 0;
   left: 0;
   width: 100%;
   height: 64px;
-  background-image: url('/static/img/expand/wave.gif') !important;
-  border-radius: 0 0 4px 4px;
-  background-size: 100% 100% !important;
+  border-radius: 0 0 5px 5px;
   animation: up 1.5s;
+  z-index: -1;
+}
+yt-live-chat-text-message-renderer #content-plus::after{
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  min-width: 320px;
+  height: 64px;
+  background-image: url('/static/img/expand/wave.gif') !important;
+  background-size: 100% 100% !important;
   z-index: -1;
 }
 yt-live-chat-text-message-renderer #content {
@@ -783,7 +618,7 @@ yt-live-chat-text-message-renderer #content {
   padding: 0 32px 0 12px;
   position: relative;
   border-radius: 8px;
-  max-width: calc(100% - 44px);
+  max-width: 100%;
   border:3px solid #ffce65 !important;
   background-image: linear-gradient(#000a49, #0362a1) !important;
 }
@@ -799,7 +634,7 @@ yt-live-chat-text-message-renderer #content::before {
   background-image: url('/static/img/expand/stars.png') !important;
   background-size: 90px 90px !important;
   background-repeat: repeat !important;
-  z-index: 450;
+  z-index: -1;
 }
 yt-live-chat-text-message-renderer #content::after{
   content: '';
@@ -918,16 +753,6 @@ yt-live-chat-paid-message-renderer {
 yt-live-chat-text-message-renderer .el-badge {
   margin-left: 10px;
   height: 20px !important;
-}
-
-yt-live-chat-text-message-renderer #image-and-message .el-badge .el-badge__content {
-  font-size: 14px !important;
-  text-shadow: none !important;
-  font-family: sans-serif !important;
-  color: #FFF !important;
-  background-color: #000a49 !important;
-  border: 1px solid #FFCE65 !important;
-  line-height: 20px !important;
 }
 `
     }
