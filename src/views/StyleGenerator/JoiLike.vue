@@ -333,7 +333,7 @@ export const DEFAULT_CONFIG = {
   memberMessageBgColor: 'rgba(255, 206, 101, 1)',
 
   firstLineFont: 'Noto Sans SC',
-  firstLineFontSize: 20,
+  firstLineFontSize: 18,
   firstLineLineHeight: 0,
   secondLineFont: 'Noto Sans SC',
   secondLineFontSize: 18,
@@ -616,6 +616,10 @@ ${this.scAndNewMemberFontStyle}
   75% { transform: translateY(30%); opacity: 0; }
   100% { transform: translateY(0); opacity: 1; }
 }
+@keyframes star-up {
+  0% { height: 64px; }
+  100% { height: 64px; }
+}
 yt-live-chat-membership-item-renderer {
   overflow: visible;
   text-shadow: 1px 1px 2px #000000;
@@ -624,7 +628,7 @@ yt-live-chat-membership-item-renderer {
 yt-live-chat-membership-item-renderer #card {
   animation: up 0.4s ease-in;
   margin: 4px 0 !important;
-  max-width: 380px;
+  max-width: 360px;
   position: relative;
   background-color: #ffce65 !important;
 }
@@ -634,6 +638,19 @@ yt-live-chat-membership-item-renderer #header {
   margin: 4px 0 !important;
   background: none !important;
   position: relative;
+}
+yt-live-chat-membership-item-renderer #header::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: -1px;
+  width: calc(100% + 2px);
+  height: 64px;
+  background-image: url('/static/img/common/joi/starBorder.png') !important;
+  background-size: 60px 60px !important;
+  background-repeat: repeat-x !important;
+  animation: star-up 1.5s;
+  z-index: 500;
 }
 yt-live-chat-membership-item-renderer #author-photo {
   position: relative;
