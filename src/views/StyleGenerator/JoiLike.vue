@@ -457,7 +457,7 @@ yt-live-chat-text-message-renderer #star{
   width: 60px !important;
   height: 100% !important;
   z-index: 999 !important;
-  background-image: url('/static/img/common/joi/star.png') !important;
+  background-image: url('/static/img/common/star.png') !important;
   background-size: 60px 60px !important;
   background-repeat: repeat-y !important;
 }`
@@ -672,7 +672,7 @@ yt-live-chat-membership-item-renderer #author-photo::before {
   left: -3px !important;
   width: ${this.form.avatarGiftSize * 0.618}px !important;
   height: ${this.form.avatarGiftSize * 0.784}px !important;
-  background-image: url('/static/img/common/joi/hat.png') !important;
+  background-image: url('/static/img/common/hat.png') !important;
   background-size: 100% 100% !important;
 }
 yt-live-chat-membership-item-renderer #author-photo::after {
@@ -684,7 +684,7 @@ yt-live-chat-membership-item-renderer #author-photo::after {
   left: ${this.form.avatarGiftSize * 0.29}px !important;
   width: ${this.form.avatarGiftSize * 0.42}px !important;
   height: ${this.form.avatarGiftSize * 0.278}px !important;
-  background-image: url('/static/img/common/joi/scarf.png') !important;
+  background-image: url('/static/img/common/scarf.png') !important;
   background-size: 100% 100% !important;
 }
 yt-live-chat-membership-item-renderer #author-photo img {
