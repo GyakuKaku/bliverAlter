@@ -645,10 +645,11 @@ yt-live-chat-membership-item-renderer #header::after {
   bottom: -4px;
   left: -1px;
   width: calc(100% + 2px);
-  height: 64px;
+  height: 32px;
   background-image: url('/static/img/common/joi/starBorder.png') !important;
-  background-size: 60px 60px !important;
+  background-size: 203px 32px !important;
   background-repeat: repeat-x !important;
+  opacity: 0.2;
   animation: star-up 1.5s;
   z-index: 500;
 }
