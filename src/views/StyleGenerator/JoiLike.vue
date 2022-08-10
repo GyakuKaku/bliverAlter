@@ -630,6 +630,7 @@ yt-live-chat-membership-item-renderer #card {
   max-width: 360px;
   position: relative;
   background-image: linear-gradient(to bottom, #ffce65, #feb435) !important;
+  border: 3px solid #d5d5d5;
 }
 yt-live-chat-membership-item-renderer #header {
   display: flex !important;
@@ -749,8 +750,22 @@ yt-live-chat-paid-message-renderer #content * {
   font-family: "${common.cssEscapeStr(this.form.scContentFont)}"${common.FALLBACK_FONTS};
   font-size: ${this.form.scContentFontSize}px !important;
   line-height: ${this.form.scContentLineHeight || this.form.scContentFontSize}px !important;
-}`
-    },
+}
+yt-live-chat-paid-message-renderer #header {
+  background: none !important;
+}
+yt-live-chat-paid-message-renderer #content {
+  background: none !important;
+}
+yt-live-chat-paid-message-renderer #card {
+  border-radius: 0px !important;
+  background: #fafbf4;
+  flex-direction: column-reverse !important;
+  background-size: 100% 22px;
+  background-repeat: repeat-y;
+}
+`
+},
     scTickerStyle() {
       return `${this.form.showScTicker ? '' : `yt-live-chat-ticker-renderer {
   display: none !important;
