@@ -675,11 +675,11 @@ yt-live-chat-ticker-sponsor-item-renderer * {
   methods: {
     saveConfig: _.debounce(function () {
       let config = mergeConfig(this.form, DEFAULT_CONFIG)
-      window.localStorage.stylegenKitiLikeConfig = JSON.stringify(config)
+      window.localStorage.stylegenKitiLikeConfigV2 = JSON.stringify(config)
     }, 500),
     loadConfig() {
       try {
-        return mergeConfig(JSON.parse(window.localStorage.stylegenKitiLikeConfig), DEFAULT_CONFIG)
+        return mergeConfig(JSON.parse(window.localStorage.stylegenKitiLikeConfigV2), DEFAULT_CONFIG)
       } catch {
         return {...DEFAULT_CONFIG}
       }

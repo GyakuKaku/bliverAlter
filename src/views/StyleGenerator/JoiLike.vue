@@ -758,11 +758,7 @@ yt-live-chat-paid-message-renderer #content {
   background: none !important;
 }
 yt-live-chat-paid-message-renderer #card {
-  border-radius: 0px !important;
-  background: #fafbf4;
-  flex-direction: column-reverse !important;
-  background-size: 100% 22px;
-  background-repeat: repeat-y;
+
 }
 `
 },
@@ -795,11 +791,11 @@ yt-live-chat-ticker-sponsor-item-renderer * {
   methods: {
     saveConfig: _.debounce(function () {
       let config = mergeConfig(this.form, DEFAULT_CONFIG)
-      window.localStorage.stylegenJoiLikeConfig = JSON.stringify(config)
+      window.localStorage.stylegenJoiLikeConfigV2 = JSON.stringify(config)
     }, 500),
     loadConfig() {
       try {
-        return mergeConfig(JSON.parse(window.localStorage.stylegenJoiLikeConfig), DEFAULT_CONFIG)
+        return mergeConfig(JSON.parse(window.localStorage.stylegenJoiLikeConfigV2), DEFAULT_CONFIG)
       } catch {
         return {...DEFAULT_CONFIG}
       }
