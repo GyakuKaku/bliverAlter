@@ -108,31 +108,31 @@
       <el-card shadow="never">
         <el-row :gutter="20">
           <el-col :xs="24" :sm="12">
-            <el-form-item :label="$t('stylegen.bgColor')">
+            <el-form-item label="消息背景颜色">
               <el-color-picker v-model="form.bgColor" show-alpha></el-color-picker>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row :gutter="20">
           <el-col :xs="24" :sm="12">
-            <el-form-item :label="$t('stylegen.messageBgColor')">
+            <el-form-item label="消息背景颜色">
               <el-color-picker v-model="form.messageBgColor" show-alpha></el-color-picker>
             </el-form-item>
           </el-col>
           <el-col :xs="24" :sm="12">
-            <el-form-item :label="$t('stylegen.memberMessageBgColor')">
+            <el-form-item label="舰长消息背景颜色">
               <el-color-picker v-model="form.memberMessageBgColor" show-alpha></el-color-picker>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row :gutter="20">
           <el-col :xs="24" :sm="12">
-            <el-form-item :label="$t('stylegen.moderatorMessageBgColor')">
+            <el-form-item label="提督消息背景颜色">
               <el-color-picker v-model="form.moderatorMessageBgColor" show-alpha></el-color-picker>
             </el-form-item>
           </el-col>
           <el-col :xs="24" :sm="12">
-            <el-form-item :label="$t('stylegen.ownerMessageBgColor')">
+            <el-form-item label="总督消息背景颜色">
               <el-color-picker v-model="form.ownerMessageBgColor" show-alpha></el-color-picker>
             </el-form-item>
           </el-col>
@@ -289,6 +289,11 @@
               <el-switch v-model="form.earAnime"></el-switch>
             </el-form-item>
           </el-col>
+          <el-col :xs="24" :sm="12">
+            <el-form-item label="上舰弹幕框动画">
+              <el-switch v-model="form.memberAnime"></el-switch>
+            </el-form-item>
+          </el-col>
         </el-row>
       </el-card>
     </el-form>
@@ -356,7 +361,8 @@ export const DEFAULT_CONFIG = {
   showScarf: true,
   showFlower: false,
   showEar: false,
-  earAnime: false
+  earAnime: false,
+  memberAnime: true
 }
 
 export default {
@@ -476,9 +482,9 @@ yt-live-chat-text-message-renderer #content{
   z-index: 1000;
 }
   ${this.getBgStyleForAuthorType('', this.form.messageBgColor)}
-  ${this.getBgStyleForAuthorType('owner', this.form.ownerMessageBgColor)}
-  ${this.getBgStyleForAuthorType('moderator', this.form.moderatorMessageBgColor)}
-  ${this.getBgStyleForAuthorType('member', this.form.memberMessageBgColor)}`
+  ${this.getBgStyleForAuthorType('3', this.form.memberMessageBgColor)}
+  ${this.getBgStyleForAuthorType('2', this.form.moderatorMessageBgColor)}
+  ${this.getBgStyleForAuthorType('1', this.form.ownerMessageBgColor)}`
     },
     avatarStyle() {
       return `/* Avatars */
@@ -625,12 +631,12 @@ yt-live-chat-membership-item-renderer {
   letter-spacing: 1px;
 }
 yt-live-chat-membership-item-renderer #card {
-  animation: up 0.4s ease-in;
   margin: 4px 0 !important;
   max-width: 360px;
   position: relative;
   background-image: linear-gradient(to bottom, #ffce65, #feb435) !important;
   border: 3px solid #d5d5d5;
+  ${this.form.memberAnime ? 'animation: up 0.4s ease-in;' : ''}
 }
 yt-live-chat-membership-item-renderer #header {
   display: flex !important;
@@ -661,11 +667,10 @@ yt-live-chat-membership-item-renderer #header::after {
   background-size: 72px 72px !important;
   background-repeat: repeat !important;
   opacity: 0.72;
-  animation: member-bg-show 2.4s;
+  ${this.form.memberAnime ? 'animation: member-bg-show 2.4s;' : ''}
 }
 yt-live-chat-membership-item-renderer #author-photo {
   position: relative;
-  animation: jump 1.2s;
   overflow: visible !important;
   ${this.form.showAvatars ? 'display: block !important;' : 'display: none !important;'}
   width: ${this.form.avatarGiftSize}px !important;
@@ -673,11 +678,11 @@ yt-live-chat-membership-item-renderer #author-photo {
   border-radius: ${this.form.avatarGiftSize}px !important;
   margin-right: ${this.form.avatarGiftSize / 4}px !important;
   z-index: 800;
+  ${this.form.memberAnime ? 'animation: jump 1.2s;' : ''}
 }
 yt-live-chat-membership-item-renderer #author-photo::before {
   ${this.form.showHat ? '' : 'display: none !important;'}
   content: '';
-  animation: hat-down 1.6s;
   position: absolute !important;
   top: -4px !important;
   left: -3px !important;
@@ -685,11 +690,11 @@ yt-live-chat-membership-item-renderer #author-photo::before {
   height: ${this.form.avatarGiftSize * 0.784}px !important;
   background-image: url('/static/img/common/joi/hat.png') !important;
   background-size: 100% 100% !important;
+  ${this.form.memberAnime ? 'animation: hat-down 1.6s;' : ''}
 }
 yt-live-chat-membership-item-renderer #author-photo::after {
   ${this.form.showScarf ? '' : 'display: none !important;'}
   content: '';
-  animation: scarf-up 1.6s;
   position: absolute !important;
   bottom: -5px !important;
   left: ${this.form.avatarGiftSize * 0.29}px !important;
@@ -697,6 +702,7 @@ yt-live-chat-membership-item-renderer #author-photo::after {
   height: ${this.form.avatarGiftSize * 0.278}px !important;
   background-image: url('/static/img/common/joi/scarf.png') !important;
   background-size: 100% 100% !important;
+  ${this.form.memberAnime ? 'animation: scarf-up 1.6s;' : ''}
 }
 yt-live-chat-membership-item-renderer #author-photo img {
   ${this.form.showAvatars ? '' : 'display: none !important;'}
@@ -706,7 +712,7 @@ yt-live-chat-membership-item-renderer #author-photo img {
 }
 yt-live-chat-membership-item-renderer #header-content {
   display: block;
-  animation: right-in 1.2s ease-out;
+  ${this.form.memberAnime ? 'animation: right-in 1.2s ease-out;' : ''}
 }
 yt-live-chat-membership-item-renderer #header-content-primary-column {
   z-index: 800;
@@ -808,7 +814,7 @@ yt-live-chat-ticker-sponsor-item-renderer * {
       if (!color) {
         color = '#ffffff'
       }
-      let typeSelector = authorType ? `[author-type="${authorType}"]` : ''
+      let typeSelector = authorType ? `[privilegeType="${authorType}"]` : ''
       return `yt-live-chat-text-message-renderer${typeSelector}{
   background-color: ${color} !important;
 }`
