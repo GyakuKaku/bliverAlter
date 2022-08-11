@@ -257,7 +257,8 @@ export default class ChatClientTest {
       ...randomChoose(GIFT_INFO_LIST),
       avatarUrl: avatar.DEFAULT_AVATAR_URL,
       timestamp: new Date().getTime() / 1000,
-      authorName: randomChoose(NAMES)
+      authorName: randomChoose(NAMES),
+      num: 1
     }
     this.onAddGift(gift)
     const sc = {
