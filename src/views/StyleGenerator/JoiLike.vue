@@ -757,14 +757,19 @@ yt-live-chat-paid-message-renderer #content * {
   font-size: ${this.form.scContentFontSize}px !important;
   line-height: ${this.form.scContentLineHeight || this.form.scContentFontSize}px !important;
 }
+yt-live-chat-paid-message-renderer #card {
+
+}
 yt-live-chat-paid-message-renderer #header {
   background: none !important;
 }
+yt-live-chat-paid-message-renderer #header #header-content-primary-column {
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-end;
+}
 yt-live-chat-paid-message-renderer #content {
   background: none !important;
-}
-yt-live-chat-paid-message-renderer #card {
-
 }
 `
 },
