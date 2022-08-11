@@ -252,6 +252,23 @@ export default class ChatClientTest {
       privilegeType: randInt(1, 3)
     }
     this.onAddMember(neoMember)
+    const gift = {
+      id: getUuid4Hex(),
+      ...randomChoose(GIFT_INFO_LIST),
+      avatarUrl: avatar.DEFAULT_AVATAR_URL,
+      timestamp: new Date().getTime() / 1000,
+      authorName: randomChoose(NAMES)
+    }
+    this.onAddGift(gift)
+    const sc = {
+      id: getUuid4Hex(),
+      avatarUrl: avatar.DEFAULT_AVATAR_URL,
+      timestamp: new Date().getTime() / 1000,
+      authorName: '送礼用户',
+      price: 99999,
+      content: '这是一条醒目留言'
+    }
+    this.onAddSuperChat(sc)
   }
 
   refreshTimer () {
