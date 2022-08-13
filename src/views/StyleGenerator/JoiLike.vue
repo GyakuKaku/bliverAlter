@@ -360,7 +360,7 @@ export const DEFAULT_CONFIG = {
   scContentFont: 'Noto Sans SC',
   scNameFontSize: 14,
   scNameLineHeight: 0,
-  scContentFontSize: 16,
+  scContentFontSize: 18,
   scContentLineHeight: 0,
   showScTicker: false,
   showOtherThings: true,
@@ -748,9 +748,9 @@ scStyle() {
   100% { width: calc(100% - 52px); opacity: 1; }
 }
 @keyframes sc-content-down {
-  0%, 50% { transform: translateY(-50%) scaleY(0.9); opacity: 0; }
+  0%, 50% { transform: translateY(-50%) scaleY(0.95); opacity: 0; }
   70% { transform: translateY(-50%) scaleY(0.95); opacity: 0; }
-  90% { transform: translateY(5%) scaleY(0.9); opacity: 1; }
+  90% { transform: translateY(8%) scaleY(0.85); opacity: 1; }
   100% { transform: translateY(0) scaleY(1); opacity: 1; }
 }
 yt-live-chat-membership-item-renderer #header-content-inner-column,
@@ -776,7 +776,7 @@ yt-live-chat-paid-message-renderer #card {
 
 }
 yt-live-chat-paid-message-renderer #header {
-  background-image: linear-gradient(to bottom, #fad022, #fad022) !important;
+  background-image: linear-gradient(to bottom, #ffce65, #ffce65) !important;
   border: 2px solid #d5d5d5;
   border-radius: ${ this.form.scNameLineHeight || this.form.scNameFontSize }px !important;
   margin-bottom: 4px;
@@ -843,12 +843,14 @@ yt-live-chat-paid-message-renderer #header #header-content-primary-column {
 }
 yt-live-chat-paid-message-renderer #content {
   position: relative;
-  background-image: linear-gradient(to bottom, #fad022, #fad022) !important;
+  background-image: linear-gradient(to bottom, #ffce65, #ffce65) !important;
   border: 2px solid #d5d5d5;
   color: #171717 !important;
   font-weight: bolder;
   margin: 0 8px 0 0;
   ${this.form.memberAnime ? 'animation: sc-content-down 2s;' : ''}
+  z-index: -2;
+  padding: 14px 24px !important;
 }
 yt-live-chat-paid-message-renderer #content::after {
   content: '';
@@ -858,13 +860,10 @@ yt-live-chat-paid-message-renderer #content::after {
   width: 100%;
   height: 100%;
   background-image: url('/static/img/common/joi/star.png') !important;
-  background-size: 60px 60px !important;
+  background-size: 80px 80px !important;
   background-repeat: repeat !important;
-  opacity: 0.72;
-  z-index: 0;
-}
-yt-live-chat-paid-message-renderer #content > span {
-  z-index: 0;
+  opacity: 0.8;
+  z-index: -1;
 }
 `
 },
