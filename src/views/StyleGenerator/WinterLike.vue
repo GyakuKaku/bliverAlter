@@ -451,16 +451,16 @@ yt-live-chat-text-message-renderer #author-border {
 }
 
 yt-live-chat-text-message-renderer[author-type=""] #author-border {
-  background-image: url('/static/img/common/borderNormal.png') !important;
+  background-image: url('/static/img/common/winter/borderNormal.png') !important;
 }
 yt-live-chat-text-message-renderer[author-type="moderator"] #author-border {
-  background-image: url('/static/img/common/borderStaff.png') !important;
+  background-image: url('/static/img/common/winter/borderStaff.png') !important;
 }
 yt-live-chat-text-message-renderer[author-type="owner"] #author-border {
-  background-image: url('/static/img/common/borderOwner.png') !important;
+  background-image: url('/static/img/common/winter/borderOwner.png') !important;
 }
 yt-live-chat-text-message-renderer[author-type="member"] #author-border {
-  background-image: url('/static/img/common/borderMember.png') !important;
+  background-image: url('/static/img/common/winter/borderMember.png') !important;
 }
 `
     },
@@ -487,7 +487,7 @@ yt-live-chat-text-message-renderer #author-name-text{
   display: block !important;
   border-radius: 8px !important;
   padding: 6px 0px !important;
-  border-image-source: url('/static/img/common/name.png') !important;
+  border-image-source: url('/static/img/common/winter/name.png') !important;
   border: 1px solid transparent;
   border-image-slice: 0 380 fill !important;
   border-width: 0 12px 0 12px !important;
@@ -544,19 +544,19 @@ yt-live-chat-text-message-renderer #message {
   border-width: 0 86px 0 52px !important;
   border-image-slice: 0 258 0 157 fill !important;
   padding: 58px 0 18px 0;
-  border-image-source: url('/static/img/common/rabbitBody.png');
+  border-image-source: url('/static/img/common/winter/rabbitBody.png');
 }
 yt-live-chat-text-message-renderer[author-type=""] #message {
-  border-image-source: url('/static/img/common/rabbitBodyNormal.png') !important;
+  border-image-source: url('/static/img/common/winter/rabbitBodyNormal.png') !important;
 }
 yt-live-chat-text-message-renderer[author-type="moderator"] #message {
-  border-image-source: url('/static/img/common/rabbitBodyStaff.png') !important;
+  border-image-source: url('/static/img/common/winter/rabbitBodyStaff.png') !important;
 }
 yt-live-chat-text-message-renderer[author-type="owner"] #message {
-  border-image-source: url('/static/img/common/rabbitBodyOwner.png') !important;
+  border-image-source: url('/static/img/common/winter/rabbitBodyOwner.png') !important;
 }
 yt-live-chat-text-message-renderer[author-type="member"] #message {
-  border-image-source: url('/static/img/common/rabbitBody.png') !important;
+  border-image-source: url('/static/img/common/winter/rabbitBody.png') !important;
 }
 `
     },
@@ -613,7 +613,7 @@ yt-live-chat-membership-item-renderer #author-border {
   width: ${this.form.avatarSize + 2}px !important;
   height: ${this.form.avatarSize + 2}px !important;
   background-size: ${this.form.avatarSize + 2}px ${this.form.avatarSize + 2}px !important;
-  background-image: url('/static/img/common/borderMember.png') !important;
+  background-image: url('/static/img/common/winter/borderMember.png') !important;
 }
 
 ${this.scTickerStyle}
