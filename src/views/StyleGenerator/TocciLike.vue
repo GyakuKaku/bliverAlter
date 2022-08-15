@@ -327,8 +327,8 @@ export const DEFAULT_CONFIG = {
 
   bgColor: 'rgba(0, 0, 0, 0)',
   messageBgColor: 'rgba(82, 67, 69, 1)',
-  memberMessageBgColor: 'rgba(141, 5, 42, 1)',
-  moderatorMessageBgColor: 'rgba(147, 45, 65, 1)',
+  memberMessageBgColor: 'rgba(147, 45, 65, 1)',
+  moderatorMessageBgColor: 'rgba(141, 5, 42, 1)',
   ownerMessageBgColor: 'rgba(211, 138, 137, 1)',
 
   firstLineFont: 'Noto Sans SC',
@@ -353,7 +353,7 @@ export const DEFAULT_CONFIG = {
   slide: true,
   reverseSlide: false,
 
-  pawOpacity: 0.12,
+  pawOpacity: 0.16,
   memberAnime: true
 }
 
@@ -584,6 +584,10 @@ body {
   0%, 10% { width: 80px; }
   100% { width: calc(100% - 6px); }
 }
+@keyframes member-open-bg {
+  0%, 10% { width: 80px; left: (50% - 40px); }
+  100% { width: calc(100% - 54px); left: 27px; }
+}
 @keyframes member-open-header {
   0%, 10% { margin-left: 50%; }
   100% { margin-left: 0; }
@@ -649,13 +653,15 @@ yt-live-chat-membership-item-renderer::before {
   opacity: ${this.form.pawOpacity};
   display: block;
   position: absolute;
-  width: calc(100% - 48px);
-  top: 7px;
-  height: calc(100% - 16px);
+  width: calc(100% - 54px);
+  top: 10px;
+  left: 27px;
+  height: calc(100% - 22px);
   background-image: url('/static/img/common/tocci/heart.png');
   background-size: 90px 90px;
   background-repeat: repeat;
   z-index: 10;
+  ${this.form.memberAnime ? 'animation: member-open-bg 1.2s;' : ''}
 }
 yt-live-chat-membership-item-renderer #author-photo {
   position: relative;
