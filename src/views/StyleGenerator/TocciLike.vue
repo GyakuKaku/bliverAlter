@@ -108,38 +108,38 @@
       <el-card shadow="never">
         <el-row :gutter="20">
           <el-col :xs="24" :sm="12">
-            <el-form-item :label="$t('stylegen.bgColor')">
+            <el-form-item label="消息背景颜色">
               <el-color-picker v-model="form.bgColor" show-alpha></el-color-picker>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row :gutter="20">
           <el-col :xs="24" :sm="12">
-            <el-form-item :label="$t('stylegen.messageBgColor')">
+            <el-form-item label="消息背景颜色">
               <el-color-picker v-model="form.messageBgColor" show-alpha></el-color-picker>
             </el-form-item>
           </el-col>
           <el-col :xs="24" :sm="12">
-            <el-form-item :label="$t('stylegen.memberMessageBgColor')">
+            <el-form-item label="舰长消息背景颜色">
               <el-color-picker v-model="form.memberMessageBgColor" show-alpha></el-color-picker>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row :gutter="20">
           <el-col :xs="24" :sm="12">
-            <el-form-item :label="$t('stylegen.moderatorMessageBgColor')">
+            <el-form-item label="提督消息背景颜色">
               <el-color-picker v-model="form.moderatorMessageBgColor" show-alpha></el-color-picker>
             </el-form-item>
           </el-col>
           <el-col :xs="24" :sm="12">
-            <el-form-item :label="$t('stylegen.ownerMessageBgColor')">
+            <el-form-item label="总督消息背景颜色">
               <el-color-picker v-model="form.ownerMessageBgColor" show-alpha></el-color-picker>
             </el-form-item>
           </el-col>
         </el-row>
       </el-card>
 
-      <h3>{{ $t('stylegen.scAndNewMember') }}</h3>
+      <h3>舰长</h3>
       <el-card shadow="never">
         <el-row :gutter="20">
           <el-col :xs="24" :sm="12">
@@ -181,8 +181,22 @@
             </el-form-item>
           </el-col>
         </el-row>
-        <el-divider></el-divider>
+      </el-card>
 
+      <h3>打赏</h3>
+      <el-card shadow="never">
+        <el-row :gutter="20">
+          <el-col :xs="24" :sm="12">
+            <el-form-item label="打赏第一行字体尺寸">
+              <el-input v-model.number="form.scNameFontSize" type="number" min="0"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :xs="24" :sm="12">
+            <el-form-item label="第一行行高（0为默认）">
+              <el-input v-model.number="form.scNameLineHeight" type="number" min="0"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
         <el-row :gutter="20">
           <el-col :xs="24" :sm="12">
             <el-form-item :label="$t('stylegen.scContentLineFont')">
@@ -269,6 +283,11 @@
               <el-slider v-model="form.pawOpacity" show-input :min="0" :max="1" :step="0.01"></el-slider>
             </el-form-item>
           </el-col>
+          <el-col :xs="24" :sm="12">
+            <el-form-item label="上舰弹幕框动画">
+              <el-switch v-model="form.memberAnime"></el-switch>
+            </el-form-item>
+          </el-col>
         </el-row>
       </el-card>
     </el-form>
@@ -284,7 +303,7 @@ import {mergeConfig} from '@/utils'
 export const DEFAULT_CONFIG = {
   showAvatars: true,
   avatarSize: 60,
-  avatarGiftSize: 40,
+  avatarGiftSize: 48,
   showUserNames: true,
   userNameFont: 'Noto Sans SC',
   userNameFontSize: 18,
@@ -308,17 +327,19 @@ export const DEFAULT_CONFIG = {
 
   bgColor: 'rgba(0, 0, 0, 0)',
   messageBgColor: 'rgba(82, 67, 69, 1)',
-  ownerMessageBgColor: 'rgba(141, 5, 42, 1)',
+  memberMessageBgColor: 'rgba(141, 5, 42, 1)',
   moderatorMessageBgColor: 'rgba(147, 45, 65, 1)',
-  memberMessageBgColor: 'rgba(211, 138, 137, 1)',
+  ownerMessageBgColor: 'rgba(211, 138, 137, 1)',
 
   firstLineFont: 'Noto Sans SC',
-  firstLineFontSize: 20,
+  firstLineFontSize: 18,
   firstLineLineHeight: 0,
   secondLineFont: 'Noto Sans SC',
   secondLineFontSize: 18,
   secondLineLineHeight: 0,
   scContentFont: 'Noto Sans SC',
+  scNameFontSize: 14,
+  scNameLineHeight: 0,
   scContentFontSize: 18,
   scContentLineHeight: 0,
   showScTicker: false,
@@ -332,7 +353,8 @@ export const DEFAULT_CONFIG = {
   slide: true,
   reverseSlide: false,
 
-  pawOpacity: 0.12
+  pawOpacity: 0.12,
+  memberAnime: true
 }
 
 export default {
@@ -368,7 +390,9 @@ ${this.timeStyle}
 
 ${this.backgroundStyle}
 
-${this.scAndNewMemberStyle}
+${this.newMemberStyle}
+
+${this.scStyle}
 
 ${this.animationStyle}
 `
@@ -422,9 +446,9 @@ yt-live-chat-text-message-renderer #content{
   z-index:1006 !important;
 }
   ${this.getBgStyleForAuthorType('', this.form.messageBgColor)}
-  ${this.getBgStyleForAuthorType('owner', this.form.ownerMessageBgColor)}
-  ${this.getBgStyleForAuthorType('moderator', this.form.moderatorMessageBgColor)}
-  ${this.getBgStyleForAuthorType('member', this.form.memberMessageBgColor)}`
+  ${this.getBgStyleForAuthorType('3', this.form.memberMessageBgColor)}
+  ${this.getBgStyleForAuthorType('2', this.form.moderatorMessageBgColor)}
+  ${this.getBgStyleForAuthorType('1', this.form.ownerMessageBgColor)}`
     },
     avatarStyle() {
       return `/* Avatars */
@@ -482,9 +506,10 @@ yt-live-chat-text-message-renderer[author-type="member"] #author-border {
       return `/* Channel names */
 yt-live-chat-text-message-renderer yt-live-chat-author-chip {
   display: block;
+  margin-right: 0 !important;
   height: ${this.form.avatarSize / 2}px !important;
   line-height: ${this.form.avatarSize / 2}px !important;
-  width: calc(100% - ${this.form.avatarSize / 2 + 16}px) !important;
+  width: 100% !important;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -553,17 +578,130 @@ body {
   ${this.form.bgColor ? `background-color: ${this.form.bgColor};` : ''}
 }`
     },
-    scAndNewMemberStyle() {
+    newMemberStyle() {
       return `/* SuperChat/Fan Funding Messages */
-yt-live-chat-paid-message-renderer {
-  margin: 4px 0 !important;
+@keyframes member-open {
+  0%, 10% { width: 80px; }
+  100% { width: calc(100% - 6px); }
 }
-
-${this.scAndNewMemberFontStyle}
-
-yt-live-chat-membership-item-renderer #card,
+@keyframes member-open-header {
+  0%, 10% { margin-left: 50%; }
+  100% { margin-left: 0; }
+}
+@keyframes member-open-content {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+@keyframes neck-down {
+  0% { bottom: 0; }
+  100% { bottom: -16px; }
+}
+yt-live-chat-membership-item-renderer {
+  overflow: visible;
+  letter-spacing: 1px;
+}
+yt-live-chat-membership-item-renderer #card {
+  margin: 4px auto !important;
+  max-width: 360px;
+  position: relative;
+  background-image: linear-gradient(to bottom, #932D41, #932D41) !important;
+  border: 3px solid #ffce65;
+  ${this.form.memberAnime ? 'animation: member-open 1.2s;' : ''}
+}
+yt-live-chat-membership-item-renderer #card::before {
+  content: '';
+  position: absolute;
+  height: 48px;
+  width: 80px;
+  background-image: url('/static/img/common/tocci/neckLeft.png');
+  background-size: 100% 100% !important;
+  bottom: -16px;
+  left: 0;
+  z-index: 100;
+  ${this.form.memberAnime ? 'animation: neck-down 1.2s;' : ''}
+}
+yt-live-chat-membership-item-renderer #card::after {
+  content: '';
+  position: absolute;
+  height: 48px;
+  width: 80px;
+  background-image: url('/static/img/common/tocci/neckRight.png');
+  background-size: 100% 100% !important;
+  bottom: -16px;
+  right: 0;
+  z-index: 100;
+  ${this.form.memberAnime ? 'animation: neck-down 1.2s;' : ''}
+}
 yt-live-chat-membership-item-renderer #header {
-  ${this.showNewMemberBgStyle}
+  position: relative;
+  display: flex !important;
+  justify-content: center;
+  z-index: 10;
+  margin: 4px auto !important;
+  max-width: calc(100% - 48px);
+  background: none !important;
+  overflow: hidden;
+  padding-left: 0 !important;
+  ${this.form.memberAnime ? 'animation: member-open-header 1.2s;' : ''}
+}
+yt-live-chat-membership-item-renderer::before {
+  content: '';
+  opacity: ${this.form.pawOpacity};
+  display: block;
+  position: absolute;
+  width: calc(100% - 48px);
+  top: 7px;
+  height: calc(100% - 16px);
+  background-image: url('/static/img/common/tocci/heart.png');
+  background-size: 90px 90px;
+  background-repeat: repeat;
+  z-index: 10;
+}
+yt-live-chat-membership-item-renderer #author-photo {
+  position: relative;
+  overflow: visible !important;
+  ${this.form.showAvatars ? 'display: block !important;' : 'display: none !important;'}
+  width: ${this.form.avatarGiftSize}px !important;
+  height: ${this.form.avatarGiftSize}px !important;
+  border-radius: ${this.form.avatarGiftSize}px !important;
+  margin-right: ${this.form.avatarGiftSize / 4}px !important;
+  z-index: 800;
+}
+yt-live-chat-membership-item-renderer #author-photo::before {
+  content: '';
+  position: absolute;
+  z-index: 101;
+  width: ${this.form.avatarGiftSize + 2}px;
+  height: ${this.form.avatarGiftSize + 2}px;
+  background-size: 100% 100% !important;
+  background-image: url('/static/img/common/tocci/borderMember.png');
+}
+yt-live-chat-membership-item-renderer #author-photo::after {
+
+}
+yt-live-chat-membership-item-renderer #author-photo img {
+  ${this.form.showAvatars ? '' : 'display: none !important;'}
+  width: ${this.form.avatarGiftSize}px !important;
+  height: ${this.form.avatarGiftSize}px !important;
+  border-radius: ${this.form.avatarGiftSize}px !important;
+}
+yt-live-chat-membership-item-renderer #header-content {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+yt-live-chat-membership-item-renderer #header-content-primary-column {
+  z-index: 800;
+}
+yt-live-chat-membership-item-renderer #author-name {
+
+}
+yt-live-chat-membership-item-renderer #header-subtext,
+yt-live-chat-membership-item-renderer #header-subtext * {
+  color: #ffffff !important;
+  font-family: "${common.cssEscapeStr(this.form.secondLineFont)}"${common.FALLBACK_FONTS};
+  font-size: ${this.form.secondLineFontSize}px !important;
+  line-height: ${this.form.secondLineLineHeight || this.form.secondLineFontSize}px !important;
 }
 
 ${this.scTickerStyle}
@@ -572,9 +710,20 @@ ${this.form.showOtherThings ? '' : `yt-live-chat-item-list-renderer {
   display: none !important;
 }`}`
     },
-    scAndNewMemberFontStyle() {
-      return `yt-live-chat-paid-message-renderer #author-name,
-yt-live-chat-paid-message-renderer #author-name *,
+scStyle() {
+      return `yt-live-chat-paid-message-renderer {
+  margin: ${this.form.avatarGiftSize - (this.form.scNameLineHeight || this.form.scNameFontSize) - 8}px 0 4px 0 !important;
+}
+@keyframes sc-title-left-in {
+  0% { width: 0; opacity: 0; }
+  100% { width: calc(100% - 52px); opacity: 1; }
+}
+@keyframes sc-content-down {
+  0%, 50% { transform: translateY(-50%) scaleY(0.95); opacity: 0; }
+  70% { transform: translateY(-50%) scaleY(0.95); opacity: 0; }
+  90% { transform: translateY(8%) scaleY(0.85); opacity: 1; }
+  100% { transform: translateY(0) scaleY(1); opacity: 1; }
+}
 yt-live-chat-membership-item-renderer #header-content-inner-column,
 yt-live-chat-membership-item-renderer #header-content-inner-column * {
   font-family: "${common.cssEscapeStr(this.form.firstLineFont)}"${common.FALLBACK_FONTS};
@@ -583,24 +732,112 @@ yt-live-chat-membership-item-renderer #header-content-inner-column * {
 }
 
 yt-live-chat-paid-message-renderer #purchase-amount,
-yt-live-chat-paid-message-renderer #purchase-amount *,
-yt-live-chat-membership-item-renderer #header-subtext,
-yt-live-chat-membership-item-renderer #header-subtext * {
-  font-family: "${common.cssEscapeStr(this.form.secondLineFont)}"${common.FALLBACK_FONTS};
-  font-size: ${this.form.secondLineFontSize}px !important;
-  line-height: ${this.form.secondLineLineHeight || this.form.secondLineFontSize}px !important;
+yt-live-chat-paid-message-renderer #purchase-amount * {
+  font-family: "${common.cssEscapeStr(this.form.firstLineFont)}"${common.FALLBACK_FONTS};
+  font-size: ${ this.form.scNameFontSize }px !important;
+  line-height: ${ this.form.scNameLineHeight || this.form.scNameFontSize }px !important;
 }
-
 yt-live-chat-paid-message-renderer #content,
 yt-live-chat-paid-message-renderer #content * {
   font-family: "${common.cssEscapeStr(this.form.scContentFont)}"${common.FALLBACK_FONTS};
   font-size: ${this.form.scContentFontSize}px !important;
   line-height: ${this.form.scContentLineHeight || this.form.scContentFontSize}px !important;
-}`
-    },
-    showNewMemberBgStyle() {
-      return `margin: 4px 0 !important;`
-    },
+}
+yt-live-chat-paid-message-renderer #card {
+
+}
+yt-live-chat-paid-message-renderer #header {
+  background-image: linear-gradient(to bottom, #ffce65, #ffce65) !important;
+  border: 2px solid #d5d5d5;
+  border-radius: ${ this.form.scNameLineHeight || this.form.scNameFontSize }px !important;
+  margin-bottom: 4px;
+  padding: 0 8px 0 ${ this.form.avatarGiftSize }px !important;
+  ${this.form.memberAnime ? 'animation: sc-title-left-in 1s;' : ''}
+}
+yt-live-chat-paid-message-renderer #author-photo,
+yt-live-chat-paid-message-renderer #author-photo img {
+  ${this.form.showAvatars ? '' : 'display: none !important;'}
+  width: ${this.form.avatarGiftSize}px !important;
+  height: ${this.form.avatarGiftSize}px !important;
+  border-radius: ${this.form.avatarGiftSize}px !important;
+}
+yt-live-chat-paid-message-renderer #author-photo {
+  position: absolute;
+  left: -8px;
+  bottom: -2px;
+  overflow: visible !important;
+  margin-right: 0 !important;
+}
+yt-live-chat-paid-message-renderer #author-photo::before {
+  ${this.form.showHat ? '' : 'display: none !important;'}
+  content: '';
+  position: absolute !important;
+  top: -4px !important;
+  left: -3px !important;
+  width: ${this.form.avatarGiftSize * 0.618}px !important;
+  height: ${this.form.avatarGiftSize * 0.784}px !important;
+  background-image: url('/static/img/common/joi/hat.png') !important;
+  background-size: 100% 100% !important;
+}
+yt-live-chat-paid-message-renderer #author-photo::after {
+  ${this.form.showScarf ? '' : 'display: none !important;'}
+  content: '';
+  position: absolute !important;
+  bottom: -5px !important;
+  left: ${this.form.avatarGiftSize * 0.29}px !important;
+  width: ${this.form.avatarGiftSize * 0.42}px !important;
+  height: ${this.form.avatarGiftSize * 0.278}px !important;
+  background-image: url('/static/img/common/joi/scarf.png') !important;
+  background-size: 100% 100% !important;
+}
+yt-live-chat-paid-message-renderer #author-photo img {
+
+}
+yt-live-chat-paid-message-renderer #author-name {
+  font-family: "${common.cssEscapeStr(this.form.firstLineFont)}"${common.FALLBACK_FONTS};
+  font-size: ${ this.form.scNameFontSize }px !important;
+  line-height: ${ this.form.scNameLineHeight || this.form.scNameFontSize }px !important;
+  max-width: calc(100% - 80px);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: #171717 !important;
+  font-weight: bolder;
+}
+yt-live-chat-paid-message-renderer #header #header-content-primary-column {
+  flex-direction: row !important;
+  justify-content: space-between;
+  align-items: flex-end;
+  width: 100%;
+  color: #171717 !important;
+  font-weight: bolder;
+}
+yt-live-chat-paid-message-renderer #content {
+  position: relative;
+  background-image: linear-gradient(to bottom, #ffce65, #ffce65) !important;
+  border: 2px solid #d5d5d5;
+  color: #171717 !important;
+  font-weight: bolder;
+  margin: 0 8px 0 0;
+  ${this.form.memberAnime ? 'animation: sc-content-down 2s;' : ''}
+  z-index: -2;
+  padding: 14px 24px !important;
+}
+yt-live-chat-paid-message-renderer #content::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('/static/img/common/joi/star.png') !important;
+  background-size: 80px 80px !important;
+  background-repeat: repeat !important;
+  opacity: 0.8;
+  z-index: -1;
+}
+`
+},
     scTickerStyle() {
       return `${this.form.showScTicker ? '' : `yt-live-chat-ticker-renderer {
   display: none !important;
@@ -647,7 +884,7 @@ yt-live-chat-ticker-sponsor-item-renderer * {
       if (!color) {
         color = '#ffffff'
       }
-      let typeSelector = authorType ? `[author-type="${authorType}"]` : ''
+      let typeSelector = authorType ? `[privilegeType="${authorType}"]` : ''
       return `yt-live-chat-text-message-renderer${typeSelector}{
   background-color: ${color} !important;
 }`
