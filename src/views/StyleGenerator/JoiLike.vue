@@ -326,7 +326,7 @@ export const DEFAULT_CONFIG = {
   avatarGiftSize: 40,
   showUserNames: true,
   userNameFont: 'Noto Sans SC',
-  userNameFontSize: 14,
+  userNameFontSize: 18,
   userNameLineHeight: 0,
   userNameColor: '#ffffff',
   ownerUserNameColor: '#ffffff',
@@ -335,7 +335,7 @@ export const DEFAULT_CONFIG = {
   showBadges: false,
 
   messageFont: 'Noto Sans SC',
-  messageFontSize: 20,
+  messageFontSize: 16,
   messageLineHeight: 0,
   messageColor: '#333333',
 
