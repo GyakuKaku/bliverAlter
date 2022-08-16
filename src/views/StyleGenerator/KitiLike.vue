@@ -649,11 +649,23 @@ yt-live-chat-membership-item-renderer #card {
   background-color: #FBA33E;
   ${this.form.memberAnime ? 'animation: card-in 2.5s;' : ''}
 }
+yt-live-chat-membership-item-renderer #card::after {
+  content: '';
+  position: absolute;
+  bottom: -20px;
+  right: -10px;
+  width: 160px;
+  height: 128px;
+  background-image: url('/static/img/common/kiti/pawLarger.png');
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  opacity: 0.32;
+}
 yt-live-chat-membership-item-renderer #header {
   display: flex !important;
   z-index: 10;
   margin: 4px 0 !important;
-  background: none !important;
+  background-color: transparent !important;
   position: relative;
   padding: 18px 16px !important;
 }
