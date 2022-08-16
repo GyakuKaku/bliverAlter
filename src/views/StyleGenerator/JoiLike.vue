@@ -326,7 +326,7 @@ export const DEFAULT_CONFIG = {
   avatarGiftSize: 40,
   showUserNames: true,
   userNameFont: 'Noto Sans SC',
-  userNameFontSize: 18,
+  userNameFontSize: 14,
   userNameLineHeight: 0,
   userNameColor: '#ffffff',
   ownerUserNameColor: '#ffffff',
@@ -335,7 +335,7 @@ export const DEFAULT_CONFIG = {
   showBadges: false,
 
   messageFont: 'Noto Sans SC',
-  messageFontSize: 16,
+  messageFontSize: 20,
   messageLineHeight: 0,
   messageColor: '#333333',
 
@@ -749,7 +749,7 @@ scStyle() {
 }
 @keyframes sc-content-down {
   0%, 50% { transform: translateY(-50%) scaleY(0.95); opacity: 0; }
-  70% { transform: translateY(-50%) scaleY(0.95); opacity: 0; }
+  60% { transform: translateY(-50%) scaleY(0.95); opacity: 0; }
   90% { transform: translateY(8%) scaleY(0.85); opacity: 1; }
   100% { transform: translateY(0) scaleY(1); opacity: 1; }
 }
@@ -826,12 +826,25 @@ yt-live-chat-paid-message-renderer #author-name {
   font-family: "${common.cssEscapeStr(this.form.firstLineFont)}"${common.FALLBACK_FONTS};
   font-size: ${ this.form.scNameFontSize }px !important;
   line-height: ${ this.form.scNameLineHeight || this.form.scNameFontSize }px !important;
-  max-width: calc(100% - 80px);
+  max-width: calc(100% - 85px - ${ this.form.scNameLineHeight || this.form.scNameFontSize }px);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   color: #171717 !important;
   font-weight: bolder;
+}
+yt-live-chat-paid-message-renderer #purchase-amount {
+  margin-right: ${(this.form.scNameLineHeight || this.form.scNameFontSize) + 4}px;
+}
+yt-live-chat-paid-message-renderer #purchase-amount::after {
+  content: '';
+  position: absolute;
+  top: 3px;
+  right: 8px;
+  height: ${(this.form.scNameLineHeight || this.form.scNameFontSize)}px;
+  width: ${(this.form.scNameLineHeight || this.form.scNameFontSize)}px;
+  background-size: 100% 100% !important;
+  background-image: url('/static/img/common/tocci/sctitle.png');
 }
 yt-live-chat-paid-message-renderer #header #header-content-primary-column {
   flex-direction: row !important;
