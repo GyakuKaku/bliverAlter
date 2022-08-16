@@ -844,7 +844,7 @@ yt-live-chat-paid-message-renderer #purchase-amount::after {
   height: ${(this.form.scNameLineHeight || this.form.scNameFontSize)}px;
   width: ${(this.form.scNameLineHeight || this.form.scNameFontSize)}px;
   background-size: 100% 100% !important;
-  background-image: url('/static/img/common/tocci/sctitle.png');
+  background-image: url('/static/img/common/joi/heartJoi.png');
 }
 yt-live-chat-paid-message-renderer #header #header-content-primary-column {
   flex-direction: row !important;

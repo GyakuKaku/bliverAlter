@@ -306,8 +306,8 @@ export const DEFAULT_CONFIG = {
   avatarGiftSize: 48,
   showUserNames: true,
   userNameFont: 'Noto Sans SC',
-  userNameFontSize: 18,
-  userNameLineHeight: 0,
+  userNameFontSize: 15,
+  userNameLineHeight: 24,
   userNameColor: '#ffffff',
   ownerUserNameColor: '#ffffff',
   moderatorUserNameColor: '#ffffff',
@@ -315,8 +315,8 @@ export const DEFAULT_CONFIG = {
   showBadges: false,
 
   messageFont: 'Noto Sans SC',
-  messageFontSize: 16,
-  messageLineHeight: 0,
+  messageFontSize: 20,
+  messageLineHeight: 32,
   messageColor: '#ffffff',
 
   showTime: false,
@@ -505,8 +505,8 @@ yt-live-chat-text-message-renderer[author-type="member"] #author-border {
 yt-live-chat-text-message-renderer yt-live-chat-author-chip {
   display: block;
   margin-right: 0 !important;
-  height: ${this.form.avatarSize / 2}px !important;
-  line-height: ${this.form.avatarSize / 2}px !important;
+  height: ${this.form.userNameLineHeight || this.form.userNameFontSize}px !important;
+  line-height: ${this.form.userNameLineHeight || this.form.userNameFontSize}px !important;
   width: 100% !important;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -533,8 +533,8 @@ yt-live-chat-text-message-renderer #author-name {
   ${this.form.userNameColor ? `color: ${this.form.userNameColor} !important;` : ''}
   font-family: "${common.cssEscapeStr(this.form.userNameFont)}"${common.FALLBACK_FONTS};
   font-size: ${this.form.userNameFontSize}px !important;
-  height: ${this.form.avatarSize / 2}px !important;
-  line-height: ${this.form.avatarSize / 2}px !important;
+  height: ${this.form.userNameLineHeight || this.form.userNameFontSize}px !important;
+  line-height: ${this.form.userNameLineHeight || this.form.userNameFontSize}px !important;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
@@ -542,8 +542,8 @@ yt-live-chat-text-message-renderer #author-name {
 /* Hide badges */
 yt-live-chat-text-message-renderer #chat-badges {
   ${this.form.showBadges ? '' : 'display: none !important;'}
-  height: ${this.form.avatarSize / 2}px !important;
-  line-height: ${this.form.avatarSize / 2}px !important;
+  height: ${this.form.userNameLineHeight || this.form.userNameFontSize}px !important;
+  line-height: ${this.form.userNameLineHeight || this.form.userNameFontSize}px !important;
 }`
     },
     messageStyle() {
@@ -553,14 +553,14 @@ yt-live-chat-text-message-renderer #message * {
   ${this.form.messageColor ? `color: ${this.form.messageColor} !important;` : ''}
   font-family: "${common.cssEscapeStr(this.form.messageFont)}"${common.FALLBACK_FONTS};
   font-size: ${this.form.messageFontSize}px !important;
-  line-height: ${this.form.avatarSize / 2}px !important;
+  line-height: ${this.form.messageLineHeight || this.form.messageFontSize}px !important;
 }
 
 yt-live-chat-text-message-renderer #message {
   display: block !important;
   overflow: visible !important;
   padding-left: 8px !important;
-  min-height: ${this.form.avatarSize / 2}px !important;
+  min-height: ${this.form.messageLineHeight || this.form.messageFontSize}px !important;
 }
 yt-live-chat-text-message-renderer #message .el-image {
   margin-top:8px;
