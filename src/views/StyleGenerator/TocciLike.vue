@@ -411,7 +411,7 @@ yt-live-chat-text-message-renderer #paw{
   display: block !important;
   position: absolute !important;
   bottom: 0 !important;
-  width: 100% !important;
+  width: calc(100% - 6px) !important;
   height: 100% !important;
   background-image: url('/static/img/common/tocci/heart.png') !important;
   background-size: 90px 90px !important;
@@ -428,6 +428,8 @@ yt-live-chat-text-message-renderer #star{
   background-image: url('/static/img/common/tocci/column.png') !important;
   background-size: 60px 100% !important;
   background-repeat: no-repeat !important;
+  border-bottom-right-radius: 4px;
+  border-top-right-radius: 4px;
 }`
     },
     paddingStyle() {
