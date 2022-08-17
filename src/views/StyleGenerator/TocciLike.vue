@@ -339,12 +339,11 @@ export const DEFAULT_CONFIG = {
 
   bgColor: 'rgba(0, 0, 0, 0)',
   messageBgColor: 'rgba(82, 67, 69, 1)',
-  memberLv1MessageBgColor: 'rgba(147, 45, 65, 1)',
+  memberLv1MessageBgColor: 'rgba(211, 138, 137, 1)',
   memberLv2MessageBgColor: 'rgba(141, 5, 42, 1)',
-  memberLv3MessageBgColor: 'rgba(211, 138, 137, 1)',
+  memberLv3MessageBgColor: 'rgba(147, 45, 65, 1)',
   moderatorMessageBgColor: 'rgba(141, 5, 42, 1)',
-  ownerMessageBgColor: 'rgba(147, 45, 65, 1)',
-
+  ownerMessageBgColor: 'rgba(211, 138, 137, 1)',
 
   firstLineFont: 'Noto Sans SC',
   firstLineFontSize: 18,
@@ -607,8 +606,8 @@ body {
   100% { width: calc(100% - 54px); left: 27px; }
 }
 @keyframes member-open-header {
-  0%, 10% { margin-left: 50%; }
-  100% { margin-left: 0; }
+  0%, 10% { }
+  100% { }
 }
 @keyframes member-open-content {
   0% { opacity: 0; }
