@@ -169,7 +169,7 @@ export default class ChatClientTest {
     // 随机生成弹幕
     this.refreshTimer()
     // 展示用固定弹幕
-    // setTimeout(this.showExample, 3000)
+    // setTimeout(() => { this.showExample() }, 3000)
   }
 
   stop () {
