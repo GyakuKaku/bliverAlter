@@ -196,7 +196,7 @@ export default class ChatClientTest {
       translation: ''
     }
     this.onAddText(simpleUserText)
-    const memberUserText = {
+    const member3UserText = {
       authorType: constants.AUTHRO_TYPE_MEMBER,
       privilegeType: 3,
       avatarUrl: avatar.DEFAULT_AVATAR_URL,
@@ -211,9 +211,9 @@ export default class ChatClientTest {
       id: getUuid4Hex(),
       translation: ''
     }
-    this.onAddText(memberUserText)
-    const adminUserText = {
-      authorType: constants.AUTHRO_TYPE_ADMIN,
+    this.onAddText(member3UserText)
+    const member2UserText = {
+      authorType: constants.AUTHRO_TYPE_MEMBER,
       privilegeType: 2,
       avatarUrl: avatar.DEFAULT_AVATAR_URL,
       timestamp: new Date().getTime() / 1000,
@@ -227,9 +227,9 @@ export default class ChatClientTest {
       id: getUuid4Hex(),
       translation: ''
     }
-    this.onAddText(adminUserText)
-    const ownerUserText = {
-      authorType: constants.AUTHRO_TYPE_OWNER,
+    this.onAddText(member2UserText)
+    const member1UserText = {
+      authorType: constants.AUTHRO_TYPE_MEMBER,
       privilegeType: 1,
       avatarUrl: avatar.DEFAULT_AVATAR_URL,
       timestamp: new Date().getTime() / 1000,
@@ -243,7 +243,23 @@ export default class ChatClientTest {
       id: getUuid4Hex(),
       translation: ''
     }
-    this.onAddText(ownerUserText)
+    this.onAddText(member1UserText)
+    const adminUserText = {
+      authorType: constants.AUTHRO_TYPE_ADMIN,
+      privilegeType: 3,
+      avatarUrl: avatar.DEFAULT_AVATAR_URL,
+      timestamp: new Date().getTime() / 1000,
+      authorName: randomChoose(NAMES),
+      content: '房管的一条弹幕',
+      isGiftDanmaku: false,
+      authorLevel: randInt(0, 60),
+      isNewbie: randInt(1, 10) <= 9,
+      isMobileVerified: randInt(1, 10) <= 9,
+      medalLevel: randInt(0, 40),
+      id: getUuid4Hex(),
+      translation: ''
+    }
+    this.onAddText(adminUserText)
     const neoMember = {
       id: getUuid4Hex(),
       avatarUrl: avatar.DEFAULT_AVATAR_URL,
