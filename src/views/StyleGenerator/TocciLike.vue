@@ -121,18 +121,30 @@
           </el-col>
           <el-col :xs="24" :sm="12">
             <el-form-item label="舰长消息背景颜色">
-              <el-color-picker v-model="form.memberMessageBgColor" show-alpha></el-color-picker>
+              <el-color-picker v-model="form.memberLv3MessageBgColor" show-alpha></el-color-picker>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row :gutter="20">
           <el-col :xs="24" :sm="12">
             <el-form-item label="提督消息背景颜色">
-              <el-color-picker v-model="form.moderatorMessageBgColor" show-alpha></el-color-picker>
+              <el-color-picker v-model="form.memberLv2MessageBgColor" show-alpha></el-color-picker>
             </el-form-item>
           </el-col>
           <el-col :xs="24" :sm="12">
             <el-form-item label="总督消息背景颜色">
+              <el-color-picker v-model="form.memberLv1MessageBgColor" show-alpha></el-color-picker>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row :gutter="20">
+          <el-col :xs="24" :sm="12">
+            <el-form-item label="房管消息背景颜色">
+              <el-color-picker v-model="form.moderatorMessageBgColor" show-alpha></el-color-picker>
+            </el-form-item>
+          </el-col>
+          <el-col :xs="24" :sm="12">
+            <el-form-item label="主播消息背景颜色">
               <el-color-picker v-model="form.ownerMessageBgColor" show-alpha></el-color-picker>
             </el-form-item>
           </el-col>
@@ -327,9 +339,12 @@ export const DEFAULT_CONFIG = {
 
   bgColor: 'rgba(0, 0, 0, 0)',
   messageBgColor: 'rgba(82, 67, 69, 1)',
-  memberMessageBgColor: 'rgba(147, 45, 65, 1)',
+  memberLv1MessageBgColor: 'rgba(147, 45, 65, 1)',
+  memberLv2MessageBgColor: 'rgba(141, 5, 42, 1)',
+  memberLv3MessageBgColor: 'rgba(211, 138, 137, 1)',
   moderatorMessageBgColor: 'rgba(141, 5, 42, 1)',
-  ownerMessageBgColor: 'rgba(211, 138, 137, 1)',
+  ownerMessageBgColor: 'rgba(147, 45, 65, 1)',
+
 
   firstLineFont: 'Noto Sans SC',
   firstLineFontSize: 18,
@@ -447,10 +462,13 @@ yt-live-chat-text-message-renderer #content{
   width: calc(100% - ${this.form.avatarSize / 2 + 76}px) !important;
   z-index:1006 !important;
 }
-  ${this.getBgStyleForAuthorType('', this.form.messageBgColor)}
-  ${this.getBgStyleForAuthorType('3', this.form.memberMessageBgColor)}
-  ${this.getBgStyleForAuthorType('2', this.form.moderatorMessageBgColor)}
-  ${this.getBgStyleForAuthorType('1', this.form.ownerMessageBgColor)}`
+  ${this.getBgStyleForPrivilegeType('', this.form.messageBgColor)}
+  ${this.getBgStyleForPrivilegeType('3', this.form.memberLv3MessageBgColor)}
+  ${this.getBgStyleForPrivilegeType('2', this.form.memberLv2MessageBgColor)}
+  ${this.getBgStyleForPrivilegeType('1', this.form.memberLv1MessageBgColor)}
+  ${this.getBgStyleForAuthorType('owner', this.form.ownerMessageBgColor)}
+  ${this.getBgStyleForAuthorType('moderator', this.form.moderatorMessageBgColor)}
+`
     },
     avatarStyle() {
       return `/* Avatars */
@@ -879,12 +897,21 @@ yt-live-chat-ticker-sponsor-item-renderer * {
       this.form = {...DEFAULT_CONFIG}
     },
 
-    getBgStyleForAuthorType(authorType, color) {
+    getBgStyleForPrivilegeType(authorType, color) {
       if (!color) {
         color = '#ffffff'
       }
       let typeSelector = authorType ? `[privilegeType="${authorType}"]` : ''
       return `yt-live-chat-text-message-renderer${typeSelector}{
+  background-color: ${color} !important;
+}`
+    },
+    getBgStyleForAuthorType(authorType, color) {
+      if (!color) {
+        color = '#ffffff'
+      }
+      let typeSelector = authorType ? `[author-type="${authorType}"]` : ''
+      return `yt-live-chat-text-message-renderer${typeSelector} {
   background-color: ${color} !important;
 }`
     }
