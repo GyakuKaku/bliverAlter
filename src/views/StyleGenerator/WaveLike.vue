@@ -98,7 +98,7 @@ export const DEFAULT_CONFIG = {
   userNameColor: '#ffffff',
 
   messageFont: 'Noto Sans SC',
-  messageFontSize: 16,
+  messageFontSize: 20,
   messageColor: '#ffffff'
 }
 
@@ -555,11 +555,11 @@ yt-live-chat-text-message-renderer .el-badge {
   methods: {
     saveConfig: _.debounce(function() {
       let config = mergeConfig(this.form, DEFAULT_CONFIG)
-      window.localStorage.stylegenWaveLikeConfig = JSON.stringify(config)
+      window.localStorage.stylegenWaveV2LikeConfig = JSON.stringify(config)
     }, 500),
     loadConfig() {
       try {
-        return mergeConfig(JSON.parse(window.localStorage.stylegenWaveLikeConfig), DEFAULT_CONFIG)
+        return mergeConfig(JSON.parse(window.localStorage.stylegenWaveV2LikeConfig), DEFAULT_CONFIG)
       } catch {
         return { ...DEFAULT_CONFIG }
       }
