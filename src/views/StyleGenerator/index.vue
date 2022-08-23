@@ -2,25 +2,25 @@
   <el-row :gutter="20">
     <el-col :sm="24" :md="16">
       <el-tabs v-model="activeTab">
-        <el-tab-pane :label="$t('stylegen.legacy')" name="legacy">
+        <el-tab-pane label="经典" lazy name="legacy">
           <legacy ref="legacy" v-model="subComponentResults.legacy"></legacy>
         </el-tab-pane>
-        <el-tab-pane :label="$t('stylegen.lineLike')" name="lineLike">
+        <el-tab-pane label="仿微信" lazy name="lineLike">
           <line-like ref="lineLike" v-model="subComponentResults.lineLike"></line-like>
         </el-tab-pane>
-        <el-tab-pane label="公式轴" name="joiLike">
+        <el-tab-pane label="公式轴" lazy name="joiLike">
           <joi-like ref="joiLike" v-model="subComponentResults.joiLike"></joi-like>
         </el-tab-pane>
-        <el-tab-pane label="冬装轴" name="winterLike">
+        <el-tab-pane label="冬装轴" lazy name="winterLike">
           <winter-like ref="winterLike" v-model="subComponentResults.winterLike"></winter-like>
         </el-tab-pane>
-        <el-tab-pane label="公式吉" name="kitiLike">
+        <el-tab-pane label="公式吉" lazy name="kitiLike">
           <kiti-like ref="kitiLike" v-model="subComponentResults.kitiLike"></kiti-like>
         </el-tab-pane>
-        <el-tab-pane label="公式桃" name="tocciLike">
+        <el-tab-pane label="公式桃" lazy name="tocciLike">
           <tocci-like ref="tocciLike" v-model="subComponentResults.tocciLike"></tocci-like>
         </el-tab-pane>
-        <el-tab-pane label="波浪" name="waveLike">
+        <el-tab-pane label="波浪" lazy name="waveLike">
           <wave-like ref="waveLike" v-model="subComponentResults.waveLike"></wave-like>
         </el-tab-pane>
       </el-tabs>
