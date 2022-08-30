@@ -90,7 +90,7 @@ import { mergeConfig } from '@/utils'
 export const DEFAULT_CONFIG = {
   showOutlines: true,
   outlineSize: 1,
-  outlineColor: '#c6c5c5',
+  outlineColor: '#000a49',
 
   showAvatars: true,
   userNameFont: 'Noto Sans SC',
