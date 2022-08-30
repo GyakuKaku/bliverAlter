@@ -98,7 +98,7 @@ export const DEFAULT_CONFIG = {
   userNameColor: '#ffffff',
 
   messageFont: 'Noto Sans SC',
-  messageFontSize: 20,
+  messageFontSize: 18,
   messageColor: '#ffffff'
 }
 
