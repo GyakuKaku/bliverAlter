@@ -23,9 +23,6 @@ export async function getAvatarUrl(uid) {
       {
         params: {
           uid: uid
-        },
-        headers: {
-          'cache-control': 'no-cache'
         }
       })).data
   } catch {
