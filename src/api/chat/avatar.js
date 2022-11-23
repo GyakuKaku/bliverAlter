@@ -19,7 +19,7 @@ export async function getAvatarUrl(uid) {
   let res
   try {
     res = (await
-      axios.get('http://39.105.155.193:9153/xlive/web-room/v1/index/getDanmuMedalAnchorInfo',
+      axios.get('/xlive/web-room/v1/index/getDanmuMedalAnchorInfo',
       {
         params: {
           ruid: uid
