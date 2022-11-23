@@ -19,14 +19,29 @@ export async function getAvatarUrl(uid) {
   let res
   try {
     res = (await
-      axios.get('/api/avatar_url',
+      axios.get('http://39.105.155.193:9153/xlive/web-room/v1/index/getDanmuMedalAnchorInfo',
       {
         params: {
-          uid: uid
+          ruid: uid
         }
       })).data
   } catch {
     return DEFAULT_AVATAR_URL
   }
-  return res.avatarUrl
+  return processAvatarUrl(res.code === 0 ? res.data.rface : DEFAULT_AVATAR_URL)
 }
+// export async function getAvatarUrl(uid) {
+//   let res
+//   try {
+//     res = (await
+//       axios.get('/api/avatar_url',
+//       {
+//         params: {
+//           uid: uid
+//         }
+//       })).data
+//   } catch {
+//     return DEFAULT_AVATAR_URL
+//   }
+//   return res.avatarUrl
+// }
