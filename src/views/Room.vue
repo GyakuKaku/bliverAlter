@@ -96,7 +96,7 @@ export default {
         if (!this.config.relayMessagesByServer) {
           this.chatClient = new ChatClientDirect(this.roomId)
         } else {
-          this.chatClient = new ChatClientRelay(this.roomId, this.config.autoTranslate)
+          this.chatClient = new ChatClientRelay(this.roomId, false)
         }
       }
       this.chatClient.onAddText = this.onAddText
