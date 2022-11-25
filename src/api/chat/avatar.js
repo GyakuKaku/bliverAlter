@@ -19,7 +19,7 @@ export async function getAvatarUrl(uid) {
   let res
   try {
     res = (await
-      axios.get('/xlive/web-room/v1/index/getDanmuMedalAnchorInfo',
+      axios.get('/manager/bliveExtra/getDanmuMedalAnchorInfo',
       {
         params: {
           ruid: uid
@@ -28,7 +28,7 @@ export async function getAvatarUrl(uid) {
   } catch {
     return DEFAULT_AVATAR_URL
   }
-  return processAvatarUrl(res.code === 0 ? res.data.rface : DEFAULT_AVATAR_URL)
+  return processAvatarUrl(res.data)
 }
 // export async function getAvatarUrl(uid) {
 //   let res
