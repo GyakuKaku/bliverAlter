@@ -30,6 +30,7 @@ export async function getAvatarUrl(uid) {
   }
   return processAvatarUrl(res.data)
 }
+
 // export async function getAvatarUrl(uid) {
 //   let res
 //   try {
