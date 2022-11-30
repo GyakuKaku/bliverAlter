@@ -22,10 +22,10 @@ import zh from './lang/zh'
 import ja from './lang/ja'
 import en from './lang/en'
 
-if (process.env.NODE_ENV === 'development') {
-  // 开发时使用localhost:12450
-  axios.defaults.baseURL = 'http://localhost:12450'
-}
+// if (process.env.NODE_ENV === 'development') {
+//   // 开发时使用localhost:12450
+//   axios.defaults.baseURL = 'http://localhost:12450'
+// }
 axios.defaults.timeout = 10 * 1000
 
 Vue.use(VueRouter)

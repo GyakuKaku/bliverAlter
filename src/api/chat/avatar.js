@@ -15,20 +15,32 @@ export function processAvatarUrl(avatarUrl) {
   return avatarUrl
 }
 
-export async function getAvatarUrl(uid) {
+export async function getAvatarUrl(uid, model) {
   let res
   try {
-    res = (await
-      axios.get('/manager/bliveExtra/getDanmuMedalAnchorInfo',
-      {
-        params: {
-          ruid: uid
-        }
-      })).data
-  } catch {
+    if (model === 1) {
+      res = (await
+        axios.get('/manager/bliveExtra/getDanmuMedalAnchorInfo',
+          {
+            params: {
+              ruid: uid
+            }
+          })).data
+      return processAvatarUrl(res.data)
+    } else {
+      res = (await
+        axios.get('/api/avatar_url',
+          {
+            params: {
+              uid: uid
+            }
+          })).data
+      return res.avatarUrl
+    }
+  }
+  catch {
     return DEFAULT_AVATAR_URL
   }
-  return processAvatarUrl(res.data)
 }
 
 // export async function getAvatarUrl(uid) {
