@@ -8,7 +8,7 @@
     <img id="kiti-scarf" class="kiti-style" alt="" src="/static/img/common/kiti/scarf.png" style="display: none;">
     <img id="tail" class="kiti-style" alt="" src="/static/img/common/kiti/tail.png" style="display: none;">
     <div id="author-border" style="display: none;"></div>
-    <img-shadow id="author-photo" height="24" width="24" class="style-scope yt-live-chat-text-message-renderer" :imgUrl="avatarUrl">
+    <img-shadow id="author-photo" height="24" width="24" class="style-scope yt-live-chat-text-message-renderer" :imgUrl="getRandomHeader(avatarUrl)">
     </img-shadow>
     <div id="content" class="style-scope yt-live-chat-text-message-renderer">
       <span id="timestamp" class="style-scope yt-live-chat-text-message-renderer">{{timeText}}</span>
@@ -95,6 +95,15 @@ export default {
     getRandom() {
       const date = new Date()
       return date.getHours().toString() + date.getMinutes().toString()
+    },
+    getRandomHeader(url) {
+      const date = new Date()
+      const random = date.getMonth().toString() + date.getDate().toString()
+      if (url.indexOf('?') > -1) {
+        return url + '&random=' + random;
+      } else {
+        return url + '?random=' + random;
+      }
     }
   }
 }
