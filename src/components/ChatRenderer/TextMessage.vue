@@ -97,12 +97,12 @@ export default {
       return date.getHours().toString() + date.getMinutes().toString()
     },
     getRandomHeader(url) {
-      const date = new Date()
-      const random = date.getMonth().toString() + date.getDate().toString()
+      // const date = new Date()
+      // const random = date.getMonth().toString() + date.getDate().toString()
       if (url.indexOf('?') > -1) {
-        return url + '&random=' + random;
+        return url + '&random=' + 'refresh';
       } else {
-        return url + '?random=' + random;
+        return url + '?random=' + 'refresh';
       }
     }
   }
