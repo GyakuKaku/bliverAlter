@@ -63,13 +63,10 @@ export default class ChatClientDirect {
     this.isDestroying = false
     this.heartbeatTimerId = null
     this.receiveTimeoutTimerId = null
-
-    this.model = 0
   }
 
   async start() {
     await this.initRoom()
-    this.model = await this.initModel()
     this.wsConnect()
   }
 
@@ -93,20 +90,6 @@ export default class ChatClientDirect {
     this.roomOwnerUid = res.ownerUid
     if (res.hostServerList.length !== 0) {
       this.hostServerList = res.hostServerList
-    }
-  }
-
-  async initModel() {
-    let res
-    try {
-      res = (await axios.get('/manager/bliveExtra/getModelSwitch', {
-        params: {
-          roomId: this.roomId
-        }
-      })).data
-      return res.data
-    } catch {
-      return 0
     }
   }
 
@@ -340,7 +323,7 @@ export default class ChatClientDirect {
     }
 
     let data = {
-      avatarUrl: await avatar.getAvatarUrl(uid, this.model),
+      avatarUrl: await avatar.getAvatarUrl(uid),
       timestamp: info[0][4] / 1000,
       authorName: info[2][1],
       authorType: authorType,
@@ -387,7 +370,7 @@ export default class ChatClientDirect {
     let data = command.data
     data = {
       id: getUuid4Hex(),
-      avatarUrl: await avatar.getAvatarUrl(data.uid, this.model),
+      avatarUrl: await avatar.getAvatarUrl(data.uid),
       timestamp: data.start_time,
       authorName: data.username,
       privilegeType: data.guard_level
