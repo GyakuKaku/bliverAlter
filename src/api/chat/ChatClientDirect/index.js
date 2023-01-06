@@ -321,7 +321,6 @@ export default class ChatClientDirect {
     } else {
       authorType = 0
     }
-
     let data = {
       avatarUrl: await avatar.getAvatarUrl(uid),
       timestamp: info[0][4] / 1000,
@@ -337,6 +336,13 @@ export default class ChatClientDirect {
       id: getUuid4Hex(),
       translation: '',
       imgContent: info[0][13]
+    }
+    // eslint-disable-next-line no-debugger
+    if (info[0][15] && info[0][15]['extra']) {
+      const extraMap = JSON.parse(info[0][15]['extra'])
+      if (extraMap.emots) {
+        data.emots = extraMap.emots
+      }
     }
     this.onAddText(data)
   }

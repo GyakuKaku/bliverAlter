@@ -12,7 +12,7 @@
     </img-shadow>
     <div id="content" class="style-scope yt-live-chat-text-message-renderer">
       <span id="timestamp" class="style-scope yt-live-chat-text-message-renderer">{{timeText}}</span>
-      <yt-live-chat-author-chip style="vertical-align: top;" class="style-scope yt-live-chat-text-message-renderer">
+      <yt-live-chat-author-chip class="style-scope yt-live-chat-text-message-renderer">
         <span id="author-name" dir="auto" class="style-scope yt-live-chat-author-chip" :type="authorTypeText">
           <span id="author-name-text">{{ authorName }}</span>
           <span id="chip-badges" class="style-scope yt-live-chat-author-chip"></span>
@@ -24,7 +24,12 @@
         </span>
       </yt-live-chat-author-chip>
       <span style="vertical-align: bottom;" id="message" class="style-scope yt-live-chat-text-message-renderer">
-        <span v-if="!imgFlag && imgContent == null" >{{ content }}</span>
+        <template v-if="!imgFlag && imgContent == null">
+          <span v-for="(content, index) in contentList" :key="index">
+            <el-image v-if="content.type === 2" style="height: 20px;width: 20px;display: inline-block;" :src="content.content"></el-image>
+            <span v-else>{{ content.content }}</span>
+          </span>
+        </template>
         <el-image v-if="imgFlag && imgContent == null" :src="img" style="width: 120px;"></el-image>
         <el-image v-if="imgContent != null && imgContent.emoticon_unique !== 'official_147'" :src="imgContent.url + '?random=' + getRandom()" :style="'width:' + imgContent.width + 'px;'"></el-image>
         <el-image v-if="imgContent != null && imgContent.emoticon_unique === 'official_147'" src="/static/img/common/dianzan.png" :style="'width:' + imgContent.width + 'px;'"></el-image>
@@ -66,7 +71,8 @@ export default {
     repeated: Number,
     imgFlag: Boolean,
     img: String,
-    imgContent: Object
+    imgContent: Object,
+    emots: Object
   },
   computed: {
     timeText() {
@@ -89,6 +95,34 @@ export default {
         }
       }
       return `hsl(${color[0]}, ${color[1]}%, ${color[2]}%)`
+    },
+    contentList() {
+      if (this.emots) {
+        let temp = this.content
+        for (const target in this.emots) {
+          temp = temp.replaceAll(target, '@@' + target + '@@')
+        }
+        const list = temp.split('@@')
+        const result = []
+        list.forEach(item => {
+          if (item !== '') {
+            if (this.emots[item]) {
+              result.push({
+                type: 2,
+                content: this.emots[item].url
+              })
+            } else {
+              result.push({
+                type: 1,
+                content: item
+              })
+            }
+          }
+        })
+        return result
+      } else {
+        return [{type: 1, content: this.content}]
+      }
     }
   },
   methods: {

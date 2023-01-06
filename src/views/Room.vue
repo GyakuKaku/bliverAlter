@@ -130,7 +130,8 @@ export default {
         privilegeType: data.privilegeType,
         repeated: 1,
         translation: data.translation,
-        imgContent: data.imgContent
+        imgContent: data.imgContent,
+        emots: data.emots
       }
       this.$refs.renderer.addMessage(message)
     },
