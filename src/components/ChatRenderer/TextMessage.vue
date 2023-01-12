@@ -100,9 +100,9 @@ export default {
       if (this.emots) {
         let temp = this.content
         for (const target in this.emots) {
-          temp = temp.replaceAll(target, '@@' + target + '@@')
+          temp = temp.replaceAll(target, '⭐' + target + '⭐')
         }
-        const list = temp.split('@@')
+        const list = temp.split('⭐')
         const result = []
         list.forEach(item => {
           if (item !== '') {
