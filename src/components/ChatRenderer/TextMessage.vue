@@ -26,7 +26,7 @@
       <span style="vertical-align: bottom;" id="message" class="style-scope yt-live-chat-text-message-renderer">
         <template v-if="!imgFlag && imgContent == null">
           <span v-for="(content, index) in contentList" :key="index">
-            <el-image v-if="content.type === 2" style="height: 20px;width: 20px;display: inline-block;vertical-align: middle;" :src="content.content"></el-image>
+            <el-image v-if="content.type === 2" style="height: 20px;width: 20px;display: inline-block;" :src="content.content"></el-image>
             <span v-else>{{ content.content }}</span>
           </span>
         </template>
