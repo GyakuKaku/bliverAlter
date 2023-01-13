@@ -25,10 +25,10 @@
       </yt-live-chat-author-chip>
       <span style="vertical-align: bottom;" id="message" class="style-scope yt-live-chat-text-message-renderer">
         <template v-if="!imgFlag && imgContent == null">
-          <span v-for="(content, index) in contentList" :key="index">
-            <el-image v-if="content.type === 2" style="height: 20px;width: 20px;display: inline-block;" :src="content.content"></el-image>
-            <span v-else>{{ content.content }}</span>
-          </span>
+          <template v-for="(content, index) in contentList">
+            <img v-if="content.type === 2" :key="index" style="height: 20px;width: 20px;vertical-align: middle;" :src="content.content" alt="" />
+            <span v-else :key="index">{{ content.content }}</span>
+          </template>
         </template>
         <el-image v-if="imgFlag && imgContent == null" :src="img" style="width: 120px;"></el-image>
         <el-image v-if="imgContent != null && imgContent.emoticon_unique !== 'official_147'" :src="imgContent.url + '?random=' + getRandom()" :style="'width:' + imgContent.width + 'px;'"></el-image>
