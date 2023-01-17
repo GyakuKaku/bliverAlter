@@ -24,15 +24,15 @@
         </span>
       </yt-live-chat-author-chip>
       <span style="vertical-align: bottom;" id="message" class="style-scope yt-live-chat-text-message-renderer">
-        <template v-if="!imgFlag && imgContent == null">
+        <template v-if="!imgFlag && imgContentMsg == null">
           <template v-for="(content, index) in contentList">
             <img v-if="content.type === 2" :key="index" style="height: 20px;width: 20px;vertical-align: middle;" :src="content.content" alt="" />
             <span v-else :key="index">{{ content.content }}</span>
           </template>
         </template>
-        <el-image v-if="imgFlag && imgContent == null" :src="img" style="width: 120px;"></el-image>
-        <el-image v-if="imgContent != null && imgContent.emoticon_unique !== 'official_147'" ref="contentImg" :src="getRandom(imgContent.url)" :style="'width:' + imgContent.width + 'px;'" @error="retryGetPic"></el-image>
-        <el-image v-if="imgContent != null && imgContent.emoticon_unique === 'official_147'" src="/static/img/common/dianzan.png" :style="'width:' + imgContent.width + 'px;'"></el-image>
+        <el-image v-if="imgFlag && imgContentMsg == null" :src="img" style="width: 120px;"></el-image>
+        <el-image v-if="imgContentMsg != null && imgContentMsg.emoticon_unique !== 'official_147'" ref="contentImg" :src="getRandom(imgContentMsg.url)" :style="'width:' + imgContentMsg.width + 'px;'" @error="retryGetPic"></el-image>
+        <el-image v-if="imgContentMsg != null && imgContentMsg.emoticon_unique === 'official_147'" src="/static/img/common/dianzan.png" :style="'width:' + imgContentMsg.width + 'px;'"></el-image>
         <el-badge :value="repeated" :max="99" v-show="repeated > 1" class="style-scope yt-live-chat-text-message-renderer"
           :style="{'--repeated-mark-color': repeatedMarkColor}"
         ></el-badge>
@@ -76,6 +76,7 @@ export default {
   },
   data() {
     return {
+      imgContentMsg: null,
       retry: true
     }
   },
@@ -130,6 +131,11 @@ export default {
       }
     }
   },
+  created() {
+    if (this.imgContent) {
+      this.imgContentMsg = Object.assign({}, this.imgContent)
+    }
+  },
   methods: {
     getRandom(url) {
       const date = new Date()
@@ -152,13 +158,13 @@ export default {
     retryGetPic() {
       if (this.retry) {
         this.retry = false
-        if (this.imgContent.url.indexOf('?') > -1) {
-          this.imgContent.url = this.imgContent.url + '&retry=1';
+        if (this.imgContentMsg.url.indexOf('?') > -1) {
+          this.imgContentMsg.url = this.imgContentMsg.url + '&retry=1';
         } else {
-          this.imgContent.url = this.imgContent.url + '?retry=1';
+          this.imgContentMsg.url = this.imgContentMsg.url + '?retry=1';
         }
       } else {
-        this.imgContent = null
+        this.imgContentMsg = null
       }
     }
   }
