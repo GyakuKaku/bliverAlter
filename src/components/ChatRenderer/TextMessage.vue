@@ -12,7 +12,7 @@
     </img-shadow>
     <div id="content" class="style-scope yt-live-chat-text-message-renderer">
       <span id="timestamp" class="style-scope yt-live-chat-text-message-renderer">{{timeText}}</span>
-      <yt-live-chat-author-chip class="style-scope yt-live-chat-text-message-renderer">
+      <yt-live-chat-author-chip style="vertical-align: top;" class="style-scope yt-live-chat-text-message-renderer">
         <span id="author-name" dir="auto" class="style-scope yt-live-chat-author-chip" :type="authorTypeText">
           <span id="author-name-text">{{ authorName }}</span>
           <span id="chip-badges" class="style-scope yt-live-chat-author-chip"></span>
@@ -157,6 +157,8 @@ export default {
         } else {
           this.imgContent.url = this.imgContent.url + '?retry=1';
         }
+      } else {
+        this.imgContent = null
       }
     }
   }
