@@ -31,7 +31,7 @@
           </template>
         </template>
         <el-image v-if="imgFlag && imgContent == null" :src="img" style="width: 120px;"></el-image>
-        <el-image v-if="imgContent != null && imgContent.emoticon_unique !== 'official_147'" :src="imgContent.url + '?random=' + getRandom()" :style="'width:' + imgContent.width + 'px;'"></el-image>
+        <el-image v-if="imgContent != null && imgContent.emoticon_unique !== 'official_147'" ref="contentImg" :src="getRandom(imgContent.url)" :style="'width:' + imgContent.width + 'px;'" @error="retryGetPic"></el-image>
         <el-image v-if="imgContent != null && imgContent.emoticon_unique === 'official_147'" src="/static/img/common/dianzan.png" :style="'width:' + imgContent.width + 'px;'"></el-image>
         <el-badge :value="repeated" :max="99" v-show="repeated > 1" class="style-scope yt-live-chat-text-message-renderer"
           :style="{'--repeated-mark-color': repeatedMarkColor}"
@@ -73,6 +73,11 @@ export default {
     img: String,
     imgContent: Object,
     emots: Object
+  },
+  data() {
+    return {
+      retry: true
+    }
   },
   computed: {
     timeText() {
@@ -126,17 +131,32 @@ export default {
     }
   },
   methods: {
-    getRandom() {
+    getRandom(url) {
       const date = new Date()
-      return date.getHours().toString() + date.getMinutes().toString()
+      const random = date.getHours().toString() + date.getMinutes().toString()
+      if (url.indexOf('?') > -1) {
+        return url + '&random=' + random;
+      } else {
+        return url + '?random=' + random;
+      }
     },
     getRandomHeader(url) {
-      // const date = new Date()
-      // const random = date.getMonth().toString() + date.getDate().toString()
+      const date = new Date()
+      const random = date.getMonth().toString() + date.getDate().toString()
       if (url.indexOf('?') > -1) {
-        return url + '&random=' + 'refresh';
+        return url + '&random=' + random;
       } else {
-        return url + '?random=' + 'refresh';
+        return url + '?random=' + random;
+      }
+    },
+    retryGetPic() {
+      if (this.retry) {
+        this.retry = false
+        if (this.imgContent.url.indexOf('?') > -1) {
+          this.imgContent.url = this.imgContent.url + '&retry=1';
+        } else {
+          this.imgContent.url = this.imgContent.url + '?retry=1';
+        }
       }
     }
   }
