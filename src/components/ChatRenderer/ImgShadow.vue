@@ -26,8 +26,8 @@ export default {
   },
   methods: {
     onLoadError() {
-      if (this.showImgUrl !== avatar.DEFAULT_AVATAR_URL) {
-        this.showImgUrl = avatar.DEFAULT_AVATAR_URL
+      if (this.showImgUrl !== avatar.DEFAULT_AVATAR_URL_LOCAL) {
+        this.showImgUrl = avatar.DEFAULT_AVATAR_URL_LOCAL
       }
     }
   }
