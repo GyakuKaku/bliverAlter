@@ -334,11 +334,17 @@ export default class ChatClientDirect {
       isMobileVerified: Boolean(info[2][6]),
       medalLevel: roomId === this.roomId ? medalLevel : 0,
       id: getUuid4Hex(),
-      translation: '',
-      imgContent: info[0][13]
+      translation: ''
     }
     // eslint-disable-next-line no-debugger
-    if (info[0][15] && info[0][15]['extra']) {
+    // debugger
+    if (info[0][13]) {
+      data.imgContent = info[0][13]
+      if (data.imgContent.width === 20) {
+        data.imgContent.width = 120
+      }
+    }
+    if (info[0][15] && info[0][15]['extra'] && (info[0][13] == null || info[0][13] === '{}')) {
       const extraMap = JSON.parse(info[0][15]['extra'])
       if (extraMap.emots) {
         data.emots = extraMap.emots
