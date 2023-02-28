@@ -341,7 +341,7 @@ export default class ChatClientDirect {
     if (info[0][13]) {
       data.imgContent = info[0][13]
       if (data.imgContent.width === 20) {
-        data.imgContent.width = 120
+        data.imgContent.width = 164
       }
     }
     if (info[0][15] && info[0][15]['extra'] && (info[0][13] == null || info[0][13] === '{}')) {
