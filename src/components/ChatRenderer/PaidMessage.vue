@@ -8,6 +8,7 @@
       '--yt-live-chat-paid-message-timestamp-color': color.time,
       '--yt-live-chat-paid-message-color': color.content
     }"
+    :price="price" :price-level="priceRange.price"
   >
     <div id="card" class="style-scope yt-live-chat-paid-message-renderer">
       <div id="header" class="style-scope yt-live-chat-paid-message-renderer">
@@ -52,6 +53,9 @@ export default {
     img: String
   },
   computed: {
+    priceRange() {
+      return constants.getPriceConfig(this.price)
+    },
     color() {
       return constants.getPriceConfig(this.price).colors
     },

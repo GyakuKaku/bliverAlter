@@ -1,5 +1,5 @@
 <template>
-  <yt-live-chat-membership-item-renderer class="style-scope yt-live-chat-item-list-renderer" show-only-header>
+  <yt-live-chat-membership-item-renderer class="style-scope yt-live-chat-item-list-renderer" :privilegeType="privilegeType" show-only-header>
     <div id="card" class="style-scope yt-live-chat-membership-item-renderer">
       <div id="header" class="style-scope yt-live-chat-membership-item-renderer">
         <div id="author-border" style="display: none;"></div>
