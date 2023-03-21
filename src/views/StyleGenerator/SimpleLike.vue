@@ -368,14 +368,14 @@ yt-live-chat-text-message-renderer #message,
 yt-live-chat-text-message-renderer #message * {
   color: var(--main-message-color) !important;
   font-family: var(--main-font-family);
-  font-size: 16px !important;
-  line-height: 16px !important;
+  font-size: ${this.form.messageFontSize}px !important;
+  line-height: ${this.form.messageFontSize}px !important;
 }
 
 yt-live-chat-text-message-renderer #message {
   max-width: 100%;
   display: block !important;
-  border-radius: 20px;
+  border-radius: ${this.form.messageFontSize + 4}px;
   padding: 11px 12px;
   border: 2px solid var(--main-message-name-background);
   background: var(--main-message-background-color);
@@ -427,15 +427,23 @@ yt-live-chat-membership-item-renderer #header {
   flex-wrap: wrap;
 }
 yt-live-chat-membership-item-renderer #header::after {
-  content: '欢迎新会员上舰';
   animation: anim-member-text-in 300ms;
-  font-size: 16px;
+  font-size: ${this.form.messageFontSize}px;
   width: 100%;
   margin-top: 6px;
   border-radius: 20px;
   padding: 7px 12px;
   color: var(--main-message-color);
   background-color: var(--main-message-background-color);
+}
+yt-live-chat-membership-item-renderer[privilegetype="3"] #header::after {
+   content: '欢迎新会员上舰舰长';
+}
+yt-live-chat-membership-item-renderer[privilegetype="2"] #header::after {
+   content: '欢迎新会员上舰提督';
+}
+yt-live-chat-membership-item-renderer[privilegetype="1"] #header::after {
+   content: '欢迎新会员上舰总督';
 }
 yt-live-chat-membership-item-renderer #header-content-primary-column {
   width: 100%;
@@ -528,7 +536,7 @@ yt-live-chat-paid-message-renderer #content {
 }
 yt-live-chat-paid-message-renderer #content #message {
   animation: anim-member-text-in 300ms;
-  font-size: 16px;
+  font-size: ${this.form.messageFontSize}px;
   margin-top: 6px;
   border-radius: 20px;
   padding: 7px 12px;
