@@ -23,7 +23,7 @@
         <el-tab-pane label="波浪" lazy name="waveLike">
           <wave-like ref="waveLike" v-model="subComponentResults.waveLike"></wave-like>
         </el-tab-pane>
-        <el-tab-pane label="简约" lazy name="simpleLike">
+        <el-tab-pane label="消息" lazy name="simpleLike">
           <simple-like ref="simpleLike" v-model="subComponentResults.simpleLike"></simple-like>
         </el-tab-pane>
       </el-tabs>
