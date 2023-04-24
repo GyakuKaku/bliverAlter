@@ -226,8 +226,7 @@ export default {
       let query = {...this.form}
       delete query.roomId
       query.imgTransformer = window.localStorage.imgTransformerV2 == null ? '[]' : window.localStorage.imgTransformerV2
-      const date = new Date()
-      query.random = date.getMonth().toString() + date.getDate().toString()
+
       let resolved
       if (isTestRoom) {
         resolved = this.$router.resolve({name: 'test_room', query})

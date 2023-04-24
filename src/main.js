@@ -15,6 +15,7 @@ import StyleGenerator from './views/StyleGenerator'
 import ImgManager from './views/ImgManager'
 import Help from './views/Help'
 import Room from './views/Room.vue'
+import Reloader from './views/Reloader.vue'
 import Supervision from './views/Supervision.vue'
 import NotFound from './views/NotFound.vue'
 
@@ -89,6 +90,17 @@ const router = new VueRouter({
     {
       path: '/room/:roomId',
       name: 'room',
+      component: Reloader,
+      props(route) {
+        let roomId = parseInt(route.params.roomId)
+        if (isNaN(roomId)) {
+          roomId = null
+        }
+        return {roomId, strConfig: route.query}
+      }
+    },{
+      path: '/roomNeo/:roomId',
+      name: 'roomNeo',
       component: Room,
       props(route) {
         let roomId = parseInt(route.params.roomId)

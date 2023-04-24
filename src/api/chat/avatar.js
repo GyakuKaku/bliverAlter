@@ -11,7 +11,7 @@ export function processAvatarUrl(avatarUrl) {
   }
   // 缩小图片加快传输
   if (!avatarUrl.endsWith('noface.gif') && !avatarUrl.endsWith('noface.png')) {
-    avatarUrl += '@48w_48h'
+    avatarUrl += '@42w_42h'
   }
   return avatarUrl
 }
