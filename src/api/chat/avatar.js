@@ -23,7 +23,8 @@ export async function getAvatarUrl(uid) {
       axios.get('/api/avatar_url',
         {
           params: {
-            uid: uid
+            uid: uid,
+            temp: '20230426'
           }
         })).data
     return res.avatarUrl
