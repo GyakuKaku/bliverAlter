@@ -150,9 +150,9 @@ export default {
       const date = new Date()
       const random = date.getMonth().toString() + date.getDate().toString()
       if (url.indexOf('?') > -1) {
-        return url + '&random=' + random;
+        return url + '&refresh=' + random;
       } else {
-        return url + '?random=' + random;
+        return url + '?refresh=' + random;
       }
     },
     retryGetPic() {
