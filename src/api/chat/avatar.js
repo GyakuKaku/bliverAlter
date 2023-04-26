@@ -1,7 +1,7 @@
 import axios from 'axios'
 
-export const DEFAULT_AVATAR_URL = '//static.hdslb.com/images/member/noface.gif'
-export const DEFAULT_AVATAR_URL_LOCAL = '/static/img/icons/noface.png'
+export const DEFAULT_AVATAR_URL = '//static.hdslb.com/images/member/noface.gif?refresh'
+export const DEFAULT_AVATAR_URL_LOCAL = '/static/img/icons/noface.png?refresh'
 
 export function processAvatarUrl(avatarUrl) {
   // 去掉协议，兼容HTTP、HTTPS
