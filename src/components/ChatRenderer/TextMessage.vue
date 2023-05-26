@@ -31,8 +31,7 @@
           </template>
         </template>
         <el-image v-if="imgFlag && imgContentMsg == null" :src="img" style="width: 120px;"></el-image>
-        <el-image v-if="imgContentMsg != null && imgContentMsg.emoticon_unique !== 'official_147'" ref="contentImg" :src="getRandom(imgContentMsg.url)" :style="'width:' + imgContentMsg.width + 'px;'" @error="retryGetPic"></el-image>
-        <el-image v-if="imgContentMsg != null && imgContentMsg.emoticon_unique === 'official_147'" src="/static/img/common/dianzan.png" :style="'width:' + imgContentMsg.width + 'px;'"></el-image>
+        <el-image v-if="imgContentMsg != null" ref="contentImg" :src="getRandom(imgContentMsg.url)" :style="'width:' + imgContentMsg.width + 'px;'" @error="retryGetPic"></el-image>
         <el-badge :value="repeated" :max="99" v-show="repeated > 1" class="style-scope yt-live-chat-text-message-renderer"
           :style="{'--repeated-mark-color': repeatedMarkColor}"
         ></el-badge>
