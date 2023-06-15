@@ -26,6 +26,9 @@
         <el-tab-pane label="消息" lazy name="simpleLike">
           <simple-like ref="simpleLike" v-model="subComponentResults.simpleLike"></simple-like>
         </el-tab-pane>
+        <el-tab-pane label="消息漂浮" lazy name="simpleLikeFloat">
+          <simple-like-float ref="simpleLikeFloat" v-model="subComponentResults.simpleLikeFloat"></simple-like-float>
+        </el-tab-pane>
       </el-tabs>
 
       <el-form label-width="150px" size="mini">
@@ -73,12 +76,13 @@ import KitiLike from "./KitiLike";
 import TocciLike from "./TocciLike";
 import WaveLike from "./WaveLike";
 import SimpleLike from "./SimpleLike";
+import SimpleLikeFloat from "./SimpleLikeFloat";
 import Room from '@/views/Room'
 
 export default {
   name: 'StyleGenerator',
   components: {
-    Legacy, LineLike, JoiLike, WinterLike, KitiLike, TocciLike, WaveLike, SimpleLike, Room
+    Legacy, LineLike, JoiLike, WinterLike, KitiLike, TocciLike, WaveLike, SimpleLike, SimpleLikeFloat, Room
   },
   data() {
     let styleElement = document.createElement('style')
@@ -96,7 +100,8 @@ export default {
         kitiLike: '',
         tocciLike: '',
         waveLike: '',
-        simpleLike: ''
+        simpleLike: '',
+        simpleLikeFloat: ''
       },
       activeTab: 'legacy',
       // 输入框的结果

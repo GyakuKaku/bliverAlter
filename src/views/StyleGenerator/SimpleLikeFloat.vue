@@ -102,7 +102,7 @@ export const DEFAULT_CONFIG = {
 }
 
 export default {
-  name: 'SimpleLike',
+  name: 'SimpleLikeFloat',
   components: {
     FontSelect
   },
@@ -588,11 +588,11 @@ body {
   methods: {
     saveConfig: _.debounce(function() {
       let config = mergeConfig(this.form, DEFAULT_CONFIG)
-      window.localStorage.stylegenSimpleLikeConfig = JSON.stringify(config)
+      window.localStorage.stylegenSimpleLikeFloatConfig = JSON.stringify(config)
     }, 500),
     loadConfig() {
       try {
-        return mergeConfig(JSON.parse(window.localStorage.stylegenSimpleLikeConfig), DEFAULT_CONFIG)
+        return mergeConfig(JSON.parse(window.localStorage.stylegenSimpleLikeFloatConfig), DEFAULT_CONFIG)
       } catch {
         return { ...DEFAULT_CONFIG }
       }
