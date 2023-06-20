@@ -163,10 +163,10 @@ export default {
   },
   methods: {
     getRandomOffsetX() {
-      return Math.floor(Math.random() * (this.$refs.items.clientWidth - 300))
+      return Math.floor(Math.random() * (this.$refs.items.clientWidth - 280))
     },
     getRandomOffsetY() {
-      return Math.floor(Math.random() * this.$refs.items.clientHeight)
+      return Math.floor(Math.random() * (this.$refs.items.clientHeight - 100))
     },
     getGiftShowContent(message) {
       return constants.getGiftShowContent(message, this.showGiftName)
