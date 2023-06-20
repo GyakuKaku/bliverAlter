@@ -1,18 +1,6 @@
 <template>
   <div>
     <el-form label-width="150px" size="mini">
-
-      <h3>{{ $t('stylegen.avatars') }}</h3>
-      <el-card shadow="never">
-        <el-row :gutter="20">
-          <el-col :xs="24" :sm="12">
-            <el-form-item :label="$t('stylegen.showAvatars')">
-              <el-switch v-model="form.showAvatars"></el-switch>
-            </el-form-item>
-          </el-col>
-        </el-row>
-      </el-card>
-
       <h3>{{ $t('stylegen.messages') }}</h3>
       <el-card shadow="never">
         <el-row :gutter="20">
@@ -88,7 +76,6 @@ import * as common from './common'
 import { mergeConfig } from '@/utils'
 
 export const DEFAULT_CONFIG = {
-  showAvatars: true,
   messageFont: 'Noto Sans SC',
   messageFontSize: 16,
   messageBgColor: "#f1f2f6",
@@ -98,7 +85,8 @@ export const DEFAULT_CONFIG = {
   mainBgColor: "#747d8c",
   memberJBgColor: "#5E88DB",
   memberTBgColor: "#5C65F2",
-  memberZBgColor: "#7958E8"
+  memberZBgColor: "#7958E8",
+  maxWidth: 300
 }
 
 export default {
@@ -164,6 +152,8 @@ export default {
   --main-message-color: ${this.form.messageColor};
   /** 整体字体 **/
   --main-font-family: ${this.form.messageFont};
+  /** 弹幕最大宽度 **/
+  --message-max-width: ${this.form.maxWidth}px;
 }
 /* Transparent background */
 yt-live-chat-renderer {
@@ -214,6 +204,11 @@ yt-live-chat-renderer {
 yt-live-chat-text-message-renderer {
   padding-left: 4px !important;
   padding-right: 4px !important;
+  width: var(--message-max-width);
+  /** 动画相关 **/
+  animation: anim-msg-in 2400ms;
+  animation-fill-mode: forwards;
+  transform-origin: center center;
 }
 
 /* Outlines */
@@ -222,79 +217,24 @@ yt-live-chat-renderer * {
 }
 
 /* Avatars */
-@keyframes anim-header-border-rotate {
-  0% { opacity: 0; transform: rotate(90deg); }
-  40% { opacity: 0; transform: rotate(90deg); }
-  100% { opacity: 1; transform: rotate(0); }
-}
-
-@keyframes anim {
-  0% { opacity: 0; transform: translateX(-16px); }
-  100% { opacity: 1; transform: none; }
-}
 yt-live-chat-text-message-renderer #author-photo {
-  ${this.form.showAvatars ? 'display: block !important;' : 'display: none !important;'}
-  animation: anim 210ms;
-  animation-fill-mode: both;
-  position: relative;
-  overflow: visible !important;
-  margin-top: 23px;
-  width: 34px !important;
-  height: 34px !important;
-  border-radius: 34px !important;
+  display: none !important;
 }
 yt-live-chat-text-message-renderer #author-photo img {
-  width: 34px !important;
-  height: 34px !important;
-  border-radius: 34px !important;
-}
-yt-live-chat-text-message-renderer #author-photo:before {
-  content: '';
-  animation: anim-header-border-rotate 500ms;
-  width: 34px;
-  height: 34px;
-  border-radius: 34px !important;
-  position: absolute;
-  left: -4px;
-  top: -4px;
-  border: 4px solid var(--main-message-name-background);
-}
-yt-live-chat-text-message-renderer[privilegeType="3"] #author-photo:before {
-  border: 4px inset var(--member-j-message-name-background) !important;
-}
-yt-live-chat-text-message-renderer[privilegeType="2"] #author-photo:before {
-  border: 4px inset var(--member-t-message-name-background) !important;
-}
-yt-live-chat-text-message-renderer[privilegeType="1"] #author-photo:before {
-  border: 4px inset var(--member-z-message-name-background) !important;
+  display: none !important;
 }
 
 yt-live-chat-membership-item-renderer #author-photo,
 yt-live-chat-membership-item-renderer #author-photo img {
-  ${this.form.showAvatars ? 'display: block !important;' : 'display: none !important;'}
-  width: 24px !important;
-  height: 24px !important;
-  border-radius: 24px !important;
-  margin-right: 6px !important;
+  display: none !important;
 }
 
 yt-live-chat-paid-message-renderer #author-photo,
 yt-live-chat-paid-message-renderer #author-photo img {
-  ${this.form.showAvatars ? 'display: block !important;' : 'display: none !important;'}
-  width: 24px !important;
-  height: 24px !important;
-  border-radius: 24px !important;
-  margin-right: 6px !important;
+  display: none !important;
 }
 /* Channel names */
-@keyframes anim-msg-in-name {
-  0% { transform: translateY(11px); }
-  80% { transform: translateY(11px); }
-  100% { transform: translateY(11px); }
-}
 yt-live-chat-text-message-renderer yt-live-chat-author-chip {
-  animation: anim-msg-in-name 250ms;
-  transform-origin: 0 0;
   position: relative;
   transform: translateY(11px);
   margin: 0 0 0 4px !important;
@@ -344,9 +284,12 @@ yt-live-chat-text-message-renderer #author-name {
 
 /* Messages */
 @keyframes anim-msg-in {
-  0% { opacity: 0; transform: scale(0.7); }
-  85% { opacity: 0.8; transform: scale(1.1); }
-  100% { opacity: 1; transform: scale(1); }
+  0% { opacity: 0; transform: translateX(var(--x-offset)) translateY(var(--y-offset)) scale(0.7); }
+  8.5% { opacity: 0.8; transform: translateX(var(--x-offset)) translateY(var(--y-offset)) scale(1.1); }
+  10% { opacity: 1; transform: translateX(var(--x-offset)) translateY(var(--y-offset)) scale(1); }
+  90% { opacity: 1; transform: translateX(var(--x-offset)) translateY(var(--y-offset)) scale(1); }
+  91.5% { opacity: 0.8; transform: translateX(var(--x-offset)) translateY(var(--y-offset)) scale(1.1); }
+  100% { opacity: 0; transform: translateX(var(--x-offset)) translateY(var(--y-offset)) scale(0.7); }
 }
 
 yt-live-chat-text-message-renderer #card {
@@ -354,14 +297,11 @@ yt-live-chat-text-message-renderer #card {
 }
 
 yt-live-chat-text-message-renderer #content {
-  /** 动画相关 **/
-  animation: anim-msg-in 240ms;
-  transform-origin: left center;
   /** 基本属性相关 **/
   display: block;
   position: relative;
-  max-width: calc(100% - 48px);
-  ${this.form.showAvatars ? '' : 'margin-left: 22px;'}
+  max-width: 100%;
+  margin-left: 22px;
 }
 
 yt-live-chat-text-message-renderer #message,
@@ -392,9 +332,12 @@ yt-live-chat-text-message-renderer[privilegeType="1"] #message {
 
 /* member */
 @keyframes anim-member-in {
-  0% { opacity: 0; transform: scale(0.8); }
-  85% { opacity: 0.8; transform: scale(1.1); }
-  100% { opacity: 1; transform: scale(1); }
+  0% { opacity: 0; transform: scale(0.7) translateX(var(--x-offset)) translateY(var(--y-offset)); }
+  8.5% { opacity: 0.8; transform: scale(1.1) translateX(var(--x-offset)) translateY(var(--y-offset)); }
+  10% { opacity: 1; transform: scale(1) translateX(var(--x-offset)) translateY(var(--y-offset)); }
+  90% { opacity: 1; transform: scale(1) translateX(var(--x-offset)) translateY(var(--y-offset)); }
+  91.5% { opacity: 0.8; transform: scale(1.1) translateX(var(--x-offset)) translateY(var(--y-offset)); }
+  100% { opacity: 0; transform: scale(0.7) translateX(var(--x-offset)) translateY(var(--y-offset)); }
 }
 @keyframes anim-member-text-in {
   0% { opacity: 0; transform: scale(0.8); }
@@ -402,8 +345,10 @@ yt-live-chat-text-message-renderer[privilegeType="1"] #message {
   100% { opacity: 1; transform: scale(1); }
 }
 yt-live-chat-membership-item-renderer {
-  animation: anim-member-in 240ms;
+  animation: anim-member-in 2400ms;
   transform-origin: center center;
+  animation-fill-mode: forwards;
+  width: var(--message-max-width);
 }
 yt-live-chat-membership-item-renderer[privilegetype="3"] #card,
 yt-live-chat-membership-item-renderer[privilegetype="3"] #header {
@@ -467,9 +412,11 @@ yt-live-chat-membership-item-renderer #header-subtext * {
 
 /* SuperChat/Fan Funding Messages */
 yt-live-chat-paid-message-renderer {
-  animation: anim-member-in 240ms;
+  animation: anim-member-in 2400ms;
+  animation-fill-mode: forwards;
   transform-origin: center center;
   margin: 4px 0 !important;
+  width: var(--message-max-width);
 }
 yt-live-chat-paid-message-renderer #card {
   border-radius: 12px !important;
@@ -560,8 +507,27 @@ yt-live-chat-ticker-sponsor-item-renderer * {
   font-family: var(--main-font-family);
 }
 
+yt-live-chat-text-message-renderer[offsetX],
+yt-live-chat-membership-item-renderer[offsetX],
+yt-live-chat-paid-message-renderer[offsetX] {
+  position: absolute;
+}
+yt-live-chat-text-message-renderer[offsetY],
+yt-live-chat-membership-item-renderer[offsetY],
+yt-live-chat-paid-message-renderer[offsetY] {
+  position: absolute;
+}
+#item-offset {
+  overflow: visible !important;
+  height: 100% !important;
+}
+#items {
+  overflow: visible !important;
+  height: 100% !important;
+}
+
 /* Hide badges */
-yt-live-chat-text-message-renderer #chat-badges {
+#chat-badges {
   display: none !important;
 }
 /* Medal */

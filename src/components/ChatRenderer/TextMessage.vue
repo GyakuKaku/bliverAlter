@@ -1,5 +1,5 @@
 <template>
-  <yt-live-chat-text-message-renderer :author-type="authorTypeText" :privilegeType="privilegeType">
+  <yt-live-chat-text-message-renderer :author-type="authorTypeText" :privilegeType="privilegeType" :offsetX="offsetX" :offsetY="offsetY">
     <img id="hat" class="joi-style" alt="" src="/static/img/common/joi/hat.png" style="display: none;">
     <img id="ear" class="joi-style" alt="" src="/static/img/common/joi/ear.png" style="display: none;">
     <img id="scarf" class="joi-style" alt="" src="/static/img/common/joi/scarf.png" style="display: none;">
@@ -71,7 +71,9 @@ export default {
     imgFlag: Boolean,
     img: String,
     imgContent: Object,
-    emots: Object
+    emots: Object,
+    offsetX: Number,
+    offsetY: Number
   },
   data() {
     return {
