@@ -103,7 +103,7 @@ export default {
         simpleLike: '',
         simpleLikeFloat: ''
       },
-      activeTab: 'simpleLikeFloat',
+      activeTab: 'legacy',
       // 输入框的结果
       inputResult: '',
       // 防抖后延迟变化的结果
