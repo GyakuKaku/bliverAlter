@@ -166,7 +166,7 @@ export default {
       return Math.floor(Math.random() * (this.$refs.items.clientWidth - 280))
     },
     getRandomOffsetY() {
-      return Math.floor(Math.random() * (this.$refs.items.clientHeight - 100))
+      return Math.floor(Math.random() * (this.$refs.items.clientHeight - 180))
     },
     getGiftShowContent(message) {
       return constants.getGiftShowContent(message, this.showGiftName)
