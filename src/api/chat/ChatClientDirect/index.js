@@ -296,7 +296,6 @@ export default class ChatClientDirect {
     }
     let callback = CMD_CALLBACK_MAP[cmd]
     if (callback) {
-      console.log(command)
       if (command.info && command.info[2][0] === 0) {
         console.log("******* 无法获取uid 准备重连 *******")
         this.reConnectByOncloseEvent()
