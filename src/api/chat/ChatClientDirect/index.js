@@ -38,7 +38,6 @@ const AUTH_REPLY_CODE_OK = 0
 
 const HEARTBEAT_INTERVAL = 10 * 1000
 const RECEIVE_TIMEOUT = HEARTBEAT_INTERVAL + (5 * 1000)
-const WEBSOCKET_RECONNECT_TIMEOUT = 4.5 * 60 * 1000
 
 let textEncoder = new TextEncoder()
 let textDecoder = new TextDecoder()
@@ -64,7 +63,6 @@ export default class ChatClientDirect {
     this.isDestroying = false
     this.heartbeatTimerId = null
     this.receiveTimeoutTimerId = null
-    this.websocketReconnectTimerId = null
   }
 
   async start() {
@@ -115,7 +113,7 @@ export default class ChatClientDirect {
 
   sendAuth() {
     let authParams = {
-      uid: 0,
+      uid: this.roomOwnerUid,
       roomid: this.roomId,
       protover: 3,
       platform: 'web',
@@ -141,10 +139,6 @@ export default class ChatClientDirect {
     this.sendAuth()
     this.heartbeatTimerId = window.setInterval(this.sendHeartbeat.bind(this), HEARTBEAT_INTERVAL)
     this.refreshReceiveTimeoutTimer()
-    if (this.websocketReconnectTimerId) {
-      window.clearTimeout(this.websocketReconnectTimerId)
-    }
-    this.websocketReconnectTimerId = window.setTimeout(this.onWebsocketReconnectTimeout.bind(this), WEBSOCKET_RECONNECT_TIMEOUT)
   }
 
   sendHeartbeat() {
@@ -163,19 +157,10 @@ export default class ChatClientDirect {
     this.discardWebsocket()
   }
 
-  onWebsocketReconnectTimeout() {
-    console.log('定时刷新ws')
-    this.discardWebsocket()
-  }
-
   discardWebsocket() {
     if (this.receiveTimeoutTimerId) {
       window.clearTimeout(this.receiveTimeoutTimerId)
       this.receiveTimeoutTimerId = null
-    }
-    if (this.websocketReconnectTimerId) {
-      window.clearTimeout(this.websocketReconnectTimerId)
-      this.websocketReconnectTimerId = null
     }
 
     // 直接丢弃阻塞的websocket，不等onclose回调了
@@ -193,10 +178,6 @@ export default class ChatClientDirect {
     if (this.receiveTimeoutTimerId) {
       window.clearTimeout(this.receiveTimeoutTimerId)
       this.receiveTimeoutTimerId = null
-    }
-    if (this.websocketReconnectTimerId) {
-      window.clearTimeout(this.websocketReconnectTimerId)
-      this.websocketReconnectTimerId = null
     }
 
     if (this.isDestroying) {
