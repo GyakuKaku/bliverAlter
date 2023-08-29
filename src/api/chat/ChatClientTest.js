@@ -3,17 +3,11 @@ import * as constants from '@/components/ChatRenderer/constants'
 import * as avatar from './avatar'
 
 const NAMES = [
-  'xfgryujk', 'Simon', 'Il Harper', 'Kinori', 'shugen', 'yuyuyzl', '3Shain', '光羊', '黑炎', 'Misty', '孤梦星影',
-  'ジョナサン・ジョースター', 'ジョセフ・ジョースター', 'ディオ・ブランドー', '空條承太郎', '博丽灵梦', '雾雨魔理沙',
-  'Rick Astley'
+  '轴芯', '大喆', '好星人', '特别特别特别长的名字', '短', '名字_name'
 ]
 
-// const CONTENTS = [
-//   '草', 'kksk', '8888888888', '888888888888888888888888888888', '老板大气，老板身体健康'
-// ]
-
 const CONTENTS = [
-  '草', 'kksk', '8888888888', '888888888888888888888888888888', '老板大气，老板身体健康', '(test)'
+  '特别特别特别特别特别特别特别特别特别特别特别特别长的一句话', 'kksk', '8888888888', '888888888888888888888888888888', '老板大气，老板身体健康', '呆子来咯', 'laile'
 ]
 
 const AUTHOR_TYPES = [
@@ -108,7 +102,7 @@ const MESSAGE_GENERATORS = [
   },
   // 新舰长
   {
-    weight: 1,
+    weight: 8,
     value() {
       return {
         type: constants.MESSAGE_TYPE_MEMBER,
@@ -172,7 +166,10 @@ export default class ChatClientTest {
   }
 
   start () {
+    // 随机生成弹幕
     this.refreshTimer()
+    // 展示用固定弹幕
+    // setTimeout(() => { this.showExample() }, 3000)
   }
 
   stop () {
@@ -180,6 +177,115 @@ export default class ChatClientTest {
       window.clearTimeout(this.timerId)
       this.timerId = null
     }
+  }
+
+  showExample () {
+    const simpleUserText = {
+      authorType: constants.AUTHRO_TYPE_NORMAL,
+      privilegeType: 0,
+      avatarUrl: avatar.DEFAULT_AVATAR_URL,
+      timestamp: new Date().getTime() / 1000,
+      authorName: randomChoose(NAMES),
+      content: '普通观众的一条弹幕',
+      isGiftDanmaku: false,
+      authorLevel: randInt(0, 60),
+      isNewbie: randInt(1, 10) <= 9,
+      isMobileVerified: randInt(1, 10) <= 9,
+      medalLevel: randInt(0, 40),
+      id: getUuid4Hex(),
+      translation: ''
+    }
+    this.onAddText(simpleUserText)
+    const member3UserText = {
+      authorType: constants.AUTHRO_TYPE_MEMBER,
+      privilegeType: 3,
+      avatarUrl: avatar.DEFAULT_AVATAR_URL,
+      timestamp: new Date().getTime() / 1000,
+      authorName: randomChoose(NAMES),
+      content: '舰长的一条弹幕',
+      isGiftDanmaku: false,
+      authorLevel: randInt(0, 60),
+      isNewbie: randInt(1, 10) <= 9,
+      isMobileVerified: randInt(1, 10) <= 9,
+      medalLevel: randInt(0, 40),
+      id: getUuid4Hex(),
+      translation: ''
+    }
+    this.onAddText(member3UserText)
+    const member2UserText = {
+      authorType: constants.AUTHRO_TYPE_MEMBER,
+      privilegeType: 2,
+      avatarUrl: avatar.DEFAULT_AVATAR_URL,
+      timestamp: new Date().getTime() / 1000,
+      authorName: randomChoose(NAMES),
+      content: '提督的一条弹幕',
+      isGiftDanmaku: false,
+      authorLevel: randInt(0, 60),
+      isNewbie: randInt(1, 10) <= 9,
+      isMobileVerified: randInt(1, 10) <= 9,
+      medalLevel: randInt(0, 40),
+      id: getUuid4Hex(),
+      translation: ''
+    }
+    this.onAddText(member2UserText)
+    const member1UserText = {
+      authorType: constants.AUTHRO_TYPE_MEMBER,
+      privilegeType: 1,
+      avatarUrl: avatar.DEFAULT_AVATAR_URL,
+      timestamp: new Date().getTime() / 1000,
+      authorName: randomChoose(NAMES),
+      content: '总督的一条弹幕',
+      isGiftDanmaku: false,
+      authorLevel: randInt(0, 60),
+      isNewbie: randInt(1, 10) <= 9,
+      isMobileVerified: randInt(1, 10) <= 9,
+      medalLevel: randInt(0, 40),
+      id: getUuid4Hex(),
+      translation: ''
+    }
+    this.onAddText(member1UserText)
+    const adminUserText = {
+      authorType: constants.AUTHRO_TYPE_ADMIN,
+      privilegeType: 3,
+      avatarUrl: avatar.DEFAULT_AVATAR_URL,
+      timestamp: new Date().getTime() / 1000,
+      authorName: randomChoose(NAMES),
+      content: '房管的一条弹幕',
+      isGiftDanmaku: false,
+      authorLevel: randInt(0, 60),
+      isNewbie: randInt(1, 10) <= 9,
+      isMobileVerified: randInt(1, 10) <= 9,
+      medalLevel: randInt(0, 40),
+      id: getUuid4Hex(),
+      translation: ''
+    }
+    this.onAddText(adminUserText)
+    const neoMember = {
+      id: getUuid4Hex(),
+      avatarUrl: avatar.DEFAULT_AVATAR_URL,
+      timestamp: new Date().getTime() / 1000,
+      authorName: randomChoose(NAMES),
+      privilegeType: randInt(1, 3)
+    }
+    this.onAddMember(neoMember)
+    const gift = {
+      id: getUuid4Hex(),
+      ...randomChoose(GIFT_INFO_LIST),
+      avatarUrl: avatar.DEFAULT_AVATAR_URL,
+      timestamp: new Date().getTime() / 1000,
+      authorName: randomChoose(NAMES),
+      num: 1
+    }
+    this.onAddGift(gift)
+    const sc = {
+      id: getUuid4Hex(),
+      avatarUrl: avatar.DEFAULT_AVATAR_URL,
+      timestamp: new Date().getTime() / 1000,
+      authorName: '送礼用户',
+      price: 99999,
+      content: '这是一条醒目留言'
+    }
+    this.onAddSuperChat(sc)
   }
 
   refreshTimer () {

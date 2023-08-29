@@ -100,24 +100,23 @@
                   <el-switch v-model="form.relayMessagesByServer"></el-switch>
                 </el-form-item>
               </el-col>
-              <el-col :xs="24" :sm="8">
-                <el-form-item :label="$t('home.autoTranslate')">
-                  <el-switch v-model="form.autoTranslate" :disabled="!serverConfig.enableTranslate || !form.relayMessagesByServer"></el-switch>
-                </el-form-item>
-              </el-col>
+<!--              <el-col :xs="24" :sm="8">-->
+<!--                <el-form-item :label="$t('home.autoTranslate')">-->
+<!--                  <el-switch v-model="form.autoTranslate" :disabled="!serverConfig.enableTranslate || !form.relayMessagesByServer"></el-switch>-->
+<!--                </el-form-item>-->
+<!--              </el-col>-->
             </el-row>
-            <el-form-item :label="$t('home.giftUsernamePronunciation')">
-              <el-radio-group v-model="form.giftUsernamePronunciation">
-                <el-radio label="">{{$t('home.dontShow')}}</el-radio>
-                <el-radio label="pinyin">{{$t('home.pinyin')}}</el-radio>
-                <el-radio label="kana">{{$t('home.kana')}}</el-radio>
-              </el-radio-group>
-            </el-form-item>
+<!--            <el-form-item :label="$t('home.giftUsernamePronunciation')">-->
+<!--              <el-radio-group v-model="form.giftUsernamePronunciation">-->
+<!--                <el-radio label="">{{$t('home.dontShow')}}</el-radio>-->
+<!--                <el-radio label="pinyin">{{$t('home.pinyin')}}</el-radio>-->
+<!--                <el-radio label="kana">{{$t('home.kana')}}</el-radio>-->
+<!--              </el-radio-group>-->
+<!--            </el-form-item>-->
           </el-tab-pane>
         </el-tabs>
       </el-form>
     </p>
-
     <p>
       <el-card>
         <el-form :model="form" label-width="150px">
@@ -130,8 +129,18 @@
             <el-button :disabled="!roomUrl" @click="enterTestRoom">{{$t('home.enterTestRoom')}}</el-button>
             <el-button @click="exportConfig">{{$t('home.exportConfig')}}</el-button>
             <el-button @click="importConfig">{{$t('home.importConfig')}}</el-button>
+            <el-button type="primary" :disabled="!roomUrl" @click="enterSupervision">监控礼物弹幕</el-button>
           </el-form-item>
         </el-form>
+      </el-card>
+    </p>
+    <p>
+      <el-card>
+        此服务是基于开源项目blivechat二次开发的弹幕姬服务。
+        <br/>
+        原项目地址：https://github.com/xfgryujk/blivechat
+        <br/>
+        原作者专栏：https://www.bilibili.com/read/cv4594365
       </el-card>
     </p>
   </div>
@@ -164,15 +173,16 @@ export default {
       return this.getRoomUrl(false)
     },
     obsRoomUrl() {
-      if (this.roomUrl === '') {
-        return ''
-      }
-      if (this.serverConfig.loaderUrl === '') {
-        return this.roomUrl
-      }
-      let url = new URL(this.serverConfig.loaderUrl)
-      url.searchParams.append('url', this.roomUrl)
-      return url.href
+      return  this.getRoomUrl(false)
+      // if (this.roomUrl === '') {
+      //   return ''
+      // }
+      // if (this.serverConfig.loaderUrl === '') {
+      //   return this.roomUrl
+      // }
+      // let url = new URL(this.serverConfig.loaderUrl)
+      // url.searchParams.append('url', this.roomUrl)
+      // return url.href
     }
   },
   watch: {
@@ -195,6 +205,17 @@ export default {
     enterRoom() {
       window.open(this.roomUrl, `room ${this.form.roomId}`, 'menubar=0,location=0,scrollbars=0,toolbar=0,width=600,height=600')
     },
+    enterSupervision() {
+      if (this.form.roomId === '') {
+        return
+      }
+      let query = {...this.form}
+      delete query.roomId
+      query.imgTransformer = window.localStorage.imgTransformerV2 == null ? '[]' : window.localStorage.imgTransformerV2
+      let resolved = this.$router.resolve({name: 'supervision', params: {roomId: this.form.roomId}, query})
+
+      window.open(`${window.location.protocol}//${window.location.host}${resolved.href}`, `room ${this.form.roomId}`, 'menubar=0,location=0,scrollbars=0,toolbar=0,width=800,height=600')
+    },
     enterTestRoom() {
       window.open(this.getRoomUrl(true), 'test room', 'menubar=0,location=0,scrollbars=0,toolbar=0,width=600,height=600')
     },
@@ -204,7 +225,8 @@ export default {
       }
       let query = {...this.form}
       delete query.roomId
-      query.imgTransformer = window.localStorage.imgTransformerV2 == null ? '[{"from":"轴伊的肯定","target":"joiYES.jpg"},{"from":"轴伊的否定","target":"joiNO.jpg"},{"from":"傲娇","target":"aojiao.jpg"},{"from":"真不是人","target":"zbsr.png"}]' : window.localStorage.imgTransformerV2
+      query.imgTransformer = window.localStorage.imgTransformerV2 == null ? '[]' : window.localStorage.imgTransformerV2
+
       let resolved
       if (isTestRoom) {
         resolved = this.$router.resolve({name: 'test_room', query})

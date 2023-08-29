@@ -15,16 +15,18 @@ import StyleGenerator from './views/StyleGenerator'
 import ImgManager from './views/ImgManager'
 import Help from './views/Help'
 import Room from './views/Room.vue'
+import Reloader from './views/Reloader.vue'
+import Supervision from './views/Supervision.vue'
 import NotFound from './views/NotFound.vue'
 
 import zh from './lang/zh'
 import ja from './lang/ja'
 import en from './lang/en'
 
-if (process.env.NODE_ENV === 'development') {
-  // 开发时使用localhost:12450
-  axios.defaults.baseURL = 'http://localhost:12450'
-}
+// if (process.env.NODE_ENV === 'development') {
+//   // 开发时使用localhost:12450
+//   axios.defaults.baseURL = 'http://localhost:12450'
+// }
 axios.defaults.timeout = 10 * 1000
 
 Vue.use(VueRouter)
@@ -84,10 +86,33 @@ const router = new VueRouter({
       ]
     },
     {path: '/room/test', name: 'test_room', component: Room, props: route => ({strConfig: route.query})},
+    {path: '/supervision/test', name: 'test_supervision', component: Supervision, props: route => ({strConfig: route.query})},
     {
       path: '/room/:roomId',
       name: 'room',
+      component: Reloader,
+      props(route) {
+        let roomId = parseInt(route.params.roomId)
+        if (isNaN(roomId)) {
+          roomId = null
+        }
+        return {roomId, strConfig: route.query}
+      }
+    },{
+      path: '/roomNeo/:roomId',
+      name: 'roomNeo',
       component: Room,
+      props(route) {
+        let roomId = parseInt(route.params.roomId)
+        if (isNaN(roomId)) {
+          roomId = null
+        }
+        return {roomId, strConfig: route.query}
+      }
+    },{
+      path: '/supervision/:roomId',
+      name: 'supervision',
+      component: Supervision,
       props(route) {
         let roomId = parseInt(route.params.roomId)
         if (isNaN(roomId)) {

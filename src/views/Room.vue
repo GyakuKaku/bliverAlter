@@ -96,7 +96,7 @@ export default {
         if (!this.config.relayMessagesByServer) {
           this.chatClient = new ChatClientDirect(this.roomId)
         } else {
-          this.chatClient = new ChatClientRelay(this.roomId, this.config.autoTranslate)
+          this.chatClient = new ChatClientRelay(this.roomId, false)
         }
       }
       this.chatClient.onAddText = this.onAddText
@@ -130,7 +130,8 @@ export default {
         privilegeType: data.privilegeType,
         repeated: 1,
         translation: data.translation,
-        imgContent: data.imgContent
+        imgContent: data.imgContent,
+        emots: data.emots
       }
       this.$refs.renderer.addMessage(message)
     },
@@ -170,7 +171,7 @@ export default {
         authorName: data.authorName,
         authorNamePronunciation: this.getPronunciation(data.authorName),
         privilegeType: data.privilegeType,
-        title: 'New member'
+        title: '欢迎新会员上舰'
       }
       this.$refs.renderer.addMessage(message)
     },

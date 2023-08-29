@@ -16,23 +16,48 @@
                 :authorType="message.authorType" :content="getShowContent(message)" :privilegeType="message.privilegeType"
                 :repeated="message.repeated"
                 :imgContent="imgContentHandle(message.imgContent)"
+                :emots="message.emots"
+                :style="
+                  `--x-offset:${message.offsetX}px;
+                  --y-offset:${message.offsetY}px;`
+                "
+                :offsetX="message.offsetX"
+                :offsetY="message.offsetY"
               ></text-message>
               <paid-message :key="message.id" v-else-if="message.type === MESSAGE_TYPE_GIFT"
                 class="style-scope yt-live-chat-item-list-renderer"
+                :style="
+                  `--x-offset:${message.offsetX}px;
+                  --y-offset:${message.offsetY}px;`
+                "
                 :price="message.price" :avatarUrl="message.avatarUrl" :authorName="getShowAuthorName(message)"
                 :time="message.time" :content="getGiftShowContent(message)"
+                :offsetX="message.offsetX"
+                :offsetY="message.offsetY"
               ></paid-message>
               <membership-item :key="message.id" v-else-if="message.type === MESSAGE_TYPE_MEMBER"
                 class="style-scope yt-live-chat-item-list-renderer"
+                :style="
+                  `--x-offset:${message.offsetX}px;
+                  --y-offset:${message.offsetY}px;`
+                "
                 :avatarUrl="message.avatarUrl" :authorName="getShowAuthorName(message)" :privilegeType="message.privilegeType"
                 :title="message.title" :time="message.time"
+                :offsetX="message.offsetX"
+                :offsetY="message.offsetY"
               ></membership-item>
               <paid-message :key="message.id" v-else-if="message.type === MESSAGE_TYPE_SUPER_CHAT"
                 class="style-scope yt-live-chat-item-list-renderer"
+                :style="
+                  `--x-offset:${message.offsetX}px;
+                  --y-offset:${message.offsetY}px;`
+                "
                 :img-flag="message.imgFlag"
                 :img="'/static/img/memes/' + message.img"
                 :price="message.price" :avatarUrl="message.avatarUrl" :authorName="getShowAuthorName(message)"
                 :time="message.time" :content="getShowContent(message)"
+                :offsetX="message.offsetX"
+                :offsetY="message.offsetY"
               ></paid-message>
             </template>
           </div>
@@ -127,6 +152,7 @@ export default {
   },
   mounted() {
     this.scrollToBottom()
+
   },
   beforeDestroy() {
     if (this.emitSmoothedMessageTimerId) {
@@ -136,6 +162,12 @@ export default {
     this.clearMessages()
   },
   methods: {
+    getRandomOffsetX() {
+      return Math.floor(Math.random() * (this.$refs.items.clientWidth - 280))
+    },
+    getRandomOffsetY() {
+      return Math.floor(Math.random() * (this.$refs.items.clientHeight - 180))
+    },
     getGiftShowContent(message) {
       return constants.getGiftShowContent(message, this.showGiftName)
     },
@@ -143,6 +175,8 @@ export default {
     getShowAuthorName: constants.getShowAuthorName,
 
     addMessage(message) {
+      message.offsetX = this.getRandomOffsetX()
+      message.offsetY = this.getRandomOffsetY()
       this.addMessages([message])
     },
     addMessages(messages) {
@@ -393,7 +427,8 @@ export default {
           }
         }
       } catch (e) {
-        console.log('图片转换失败')
+        console.log(e)
+        console.log('图片转换失败handleImgMessage')
       }
     },
     handleAddMessage(message) {
@@ -402,7 +437,6 @@ export default {
         addTime: new Date() // 添加一个本地时间给Ticker用，防止本地时间和服务器时间相差很大的情况
       }
       this.messagesBuffer.push(message)
-
       if (message.type !== constants.MESSAGE_TYPE_TEXT) {
         this.paidMessages.unshift(message)
         const MAX_PAID_MESSAGE_NUM = 100
@@ -411,7 +445,7 @@ export default {
         }
       }
       try {
-        if (this.$route.query.imgTransformer) {
+        if (this.$route.query.imgTransformer && message.content) {
           const transformerStr = String(this.$route.query.imgTransformer)
           const transformer = JSON.parse(transformerStr)
           for (let i = 0; i < transformer.length; i++) {
@@ -423,7 +457,7 @@ export default {
           }
         }
       } catch (e) {
-        console.log('图片转换失败')
+        console.log('图片转换失败handleAddMessage')
       }
     },
     handleDelMessage({id}) {

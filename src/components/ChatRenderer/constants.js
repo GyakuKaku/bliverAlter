@@ -25,10 +25,10 @@ export const MESSAGE_TYPE_DEL = 4
 export const MESSAGE_TYPE_UPDATE = 5
 
 // 美元 -> 人民币 汇率
-const EXCHANGE_RATE = 7
+// const EXCHANGE_RATE = 7
 export const PRICE_CONFIGS = [
   { // $100红
-    price: 100 * EXCHANGE_RATE,
+    price: 1000,
     colors: {
       contentBg: 'rgba(230,33,23,1)',
       headerBg: 'rgba(208,0,0,1)',
@@ -40,7 +40,7 @@ export const PRICE_CONFIGS = [
     pinTime: 60
   },
   { // $50品红
-    price: 50 * EXCHANGE_RATE,
+    price: 500,
     colors: {
       contentBg: 'rgba(233,30,99,1)',
       headerBg: 'rgba(194,24,91,1)',
@@ -52,7 +52,7 @@ export const PRICE_CONFIGS = [
     pinTime: 30
   },
   { // $20橙
-    price: 20 * EXCHANGE_RATE,
+    price: 100,
     colors: {
       contentBg: 'rgba(245,124,0,1)',
       headerBg: 'rgba(230,81,0,1)',
@@ -64,7 +64,7 @@ export const PRICE_CONFIGS = [
     pinTime: 10
   },
   { // $10黄
-    price: 10 * EXCHANGE_RATE,
+    price: 50,
     colors: {
       contentBg: 'rgba(255,202,40,1)',
       headerBg: 'rgba(255,179,0,1)',
@@ -76,7 +76,7 @@ export const PRICE_CONFIGS = [
     pinTime: 5
   },
   { // $5绿
-    price: 5 * EXCHANGE_RATE,
+    price: 30,
     colors: {
       contentBg: 'rgba(29,233,182,1)',
       headerBg: 'rgba(0,191,165,1)',
@@ -88,7 +88,7 @@ export const PRICE_CONFIGS = [
     pinTime: 2
   },
   { // $2浅蓝
-    price: 2 * EXCHANGE_RATE,
+    price: 10,
     colors: {
       contentBg: 'rgba(0,229,255,1)',
       headerBg: 'rgba(0,184,212,1)',
@@ -100,7 +100,7 @@ export const PRICE_CONFIGS = [
     pinTime: 0
   },
   { // $1蓝
-    price: 1 * EXCHANGE_RATE,
+    price: 1,
     colors: {
       contentBg: 'rgba(30,136,229,1)',
       headerBg: 'rgba(21,101,192,1)',

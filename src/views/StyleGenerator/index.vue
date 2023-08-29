@@ -2,11 +2,32 @@
   <el-row :gutter="20">
     <el-col :sm="24" :md="16">
       <el-tabs v-model="activeTab">
-        <el-tab-pane :label="$t('stylegen.legacy')" name="legacy">
+        <el-tab-pane label="经典" lazy name="legacy">
           <legacy ref="legacy" v-model="subComponentResults.legacy"></legacy>
         </el-tab-pane>
-        <el-tab-pane :label="$t('stylegen.lineLike')" name="lineLike">
+        <el-tab-pane label="仿微信" lazy name="lineLike">
           <line-like ref="lineLike" v-model="subComponentResults.lineLike"></line-like>
+        </el-tab-pane>
+        <el-tab-pane label="公式轴" lazy name="joiLike">
+          <joi-like ref="joiLike" v-model="subComponentResults.joiLike"></joi-like>
+        </el-tab-pane>
+        <el-tab-pane label="冬装轴" lazy name="winterLike">
+          <winter-like ref="winterLike" v-model="subComponentResults.winterLike"></winter-like>
+        </el-tab-pane>
+        <el-tab-pane label="公式吉" lazy name="kitiLike">
+          <kiti-like ref="kitiLike" v-model="subComponentResults.kitiLike"></kiti-like>
+        </el-tab-pane>
+        <el-tab-pane label="公式桃" lazy name="tocciLike">
+          <tocci-like ref="tocciLike" v-model="subComponentResults.tocciLike"></tocci-like>
+        </el-tab-pane>
+        <el-tab-pane label="波浪" lazy name="waveLike">
+          <wave-like ref="waveLike" v-model="subComponentResults.waveLike"></wave-like>
+        </el-tab-pane>
+        <el-tab-pane label="消息" lazy name="simpleLike">
+          <simple-like ref="simpleLike" v-model="subComponentResults.simpleLike"></simple-like>
+        </el-tab-pane>
+        <el-tab-pane label="消息漂浮" lazy name="simpleLikeFloat">
+          <simple-like-float ref="simpleLikeFloat" v-model="subComponentResults.simpleLikeFloat"></simple-like-float>
         </el-tab-pane>
       </el-tabs>
 
@@ -49,12 +70,19 @@ import _ from 'lodash'
 
 import Legacy from './Legacy'
 import LineLike from './LineLike'
+import JoiLike from "./JoiLike";
+import WinterLike from "./WinterLike";
+import KitiLike from "./KitiLike";
+import TocciLike from "./TocciLike";
+import WaveLike from "./WaveLike";
+import SimpleLike from "./SimpleLike";
+import SimpleLikeFloat from "./SimpleLikeFloat";
 import Room from '@/views/Room'
 
 export default {
   name: 'StyleGenerator',
   components: {
-    Legacy, LineLike, Room
+    Legacy, LineLike, JoiLike, WinterLike, KitiLike, TocciLike, WaveLike, SimpleLike, SimpleLikeFloat, Room
   },
   data() {
     let styleElement = document.createElement('style')
@@ -66,7 +94,14 @@ export default {
       // 子组件的结果
       subComponentResults: {
         legacy: '',
-        lineLike: ''
+        lineLike: '',
+        joiLike: '',
+        winterLike: '',
+        kitiLike: '',
+        tocciLike: '',
+        waveLike: '',
+        simpleLike: '',
+        simpleLikeFloat: ''
       },
       activeTab: 'legacy',
       // 输入框的结果

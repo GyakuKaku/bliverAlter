@@ -1,7 +1,8 @@
 <template>
-  <yt-live-chat-membership-item-renderer class="style-scope yt-live-chat-item-list-renderer" show-only-header>
+  <yt-live-chat-membership-item-renderer class="style-scope yt-live-chat-item-list-renderer" :privilegeType="privilegeType" :offsetX="offsetX" :offsetY="offsetY" show-only-header>
     <div id="card" class="style-scope yt-live-chat-membership-item-renderer">
       <div id="header" class="style-scope yt-live-chat-membership-item-renderer">
+        <div id="author-border" style="display: none;"></div>
         <img-shadow id="author-photo" height="40" width="40" class="style-scope yt-live-chat-membership-item-renderer"
           :imgUrl="avatarUrl"
         ></img-shadow>
@@ -46,7 +47,9 @@ export default {
     authorName: String,
     privilegeType: Number,
     title: String,
-    time: Date
+    time: Date,
+    offsetX: Number,
+    offsetY: Number
   },
   computed: {
     timeText() {
