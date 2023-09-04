@@ -117,6 +117,19 @@
         </el-tabs>
       </el-form>
     </p>
+    <div>
+      <el-card>
+        <p>虽然不登录可能会弹幕接收不全，多刷新几次也能正常显示，也没有证据证明登录一定好使，总之可以试试...</p>
+        <p style="margin-bottom: 12px; font-weight: bolder">*登录成功后，需要重新复制房间url到obs</p>
+        <div v-if="biliUserInfo == null">
+          <el-button type="primary" @click="handleLogin">扫码登录</el-button>
+        </div>
+        <div v-else style="display: flex; align-items: center">
+          现在登录用户Uid: {{biliUserInfo.DedeUserID}}
+          <el-button type="danger" size="mini" style="margin-left: 20px" @click="handleLogout">退出登录</el-button>
+        </div>
+      </el-card>
+    </div>
     <p>
       <el-card>
         <el-form :model="form" label-width="150px">
@@ -136,13 +149,14 @@
     </p>
     <p>
       <el-card>
-        此服务是基于开源项目blivechat二次开发的弹幕姬服务。
+        此服务是基于开源项目blivechat二次开发的弹幕机服务。
         <br/>
         原项目地址：https://github.com/xfgryujk/blivechat
         <br/>
         原作者专栏：https://www.bilibili.com/read/cv4594365
       </el-card>
     </p>
+    <BliQRLoginModal ref="bliQRLoginModal" @setBiliUserInfo="setBiliUserInfo" />
   </div>
 </template>
 
@@ -153,11 +167,13 @@ import download from 'downloadjs'
 
 import {mergeConfig} from '@/utils'
 import * as chatConfig from '@/api/chatConfig'
-
+import BliQRLoginModal from "@/components/BliQRLoginModal.vue";
 export default {
   name: 'Home',
+  components: {BliQRLoginModal},
   data() {
     return {
+      biliUserInfo: null,
       serverConfig: {
         enableTranslate: true,
         loaderUrl: ''
@@ -174,15 +190,6 @@ export default {
     },
     obsRoomUrl() {
       return  this.getRoomUrl(false)
-      // if (this.roomUrl === '') {
-      //   return ''
-      // }
-      // if (this.serverConfig.loaderUrl === '') {
-      //   return this.roomUrl
-      // }
-      // let url = new URL(this.serverConfig.loaderUrl)
-      // url.searchParams.append('url', this.roomUrl)
-      // return url.href
     }
   },
   watch: {
@@ -195,11 +202,42 @@ export default {
     this.updateServerConfig()
   },
   methods: {
+    setBiliUserInfo(userInfo) {
+      this.biliUserInfo = Object.assign({}, userInfo)
+      window.localStorage.BLI_USER_INFO = JSON.stringify(userInfo)
+    },
+    handleLogin() {
+      this.$refs.bliQRLoginModal.handleShow()
+    },
+    handleLogout() {
+      this.$confirm('是否要退出B站登录', '是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.biliLogout()
+      })
+    },
+    biliLogout() {
+      delete window.localStorage.BLI_USER_INFO
+      this.biliUserInfo = null
+    },
     async updateServerConfig() {
       try {
         this.serverConfig = (await axios.get('/api/server_info')).data.config
       } catch (e) {
         this.$message.error('Failed to fetch server information: ' + e)
+      }
+      if (window.localStorage.BLI_USER_INFO) {
+        try {
+          this.biliUserInfo = JSON.parse(window.localStorage.BLI_USER_INFO)
+          const timestamp = new Date().getTime()
+          if (timestamp - this.biliUserInfo.timestamp > 86400000) {
+            this.biliLogout()
+          }
+        } catch (e) {
+          this.biliLogout()
+        }
       }
     },
     enterRoom() {
@@ -231,6 +269,10 @@ export default {
       if (isTestRoom) {
         resolved = this.$router.resolve({name: 'test_room', query})
       } else {
+        if (this.biliUserInfo && this.biliUserInfo.SESSDATA) {
+          query.SESSDATA = this.biliUserInfo.SESSDATA
+          query.DedeUserID = this.biliUserInfo.DedeUserID
+        }
         resolved = this.$router.resolve({name: 'room', params: {roomId: this.form.roomId}, query})
       }
       return `${window.location.protocol}//${window.location.host}${resolved.href}`

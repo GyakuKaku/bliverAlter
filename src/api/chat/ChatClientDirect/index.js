@@ -43,9 +43,11 @@ let textEncoder = new TextEncoder()
 let textDecoder = new TextDecoder()
 
 export default class ChatClientDirect {
-  constructor(roomId) {
+  constructor(roomId, watcherUid, sessionData) {
     // 调用initRoom后初始化，如果失败，使用这里的默认值
     this.roomId = roomId
+    this.sessionData = sessionData ? sessionData : null
+    this.watcherUid = watcherUid ? watcherUid : null
     this.roomOwnerUid = 0
     this.realRoomId = null
     this.hostServerList = [
@@ -87,10 +89,15 @@ export default class ChatClientDirect {
 
   async initRoom() {
     let res
+    const params = {
+      roomId: this.roomId
+    }
+    if (this.sessionData) {
+      params.sessionData = encodeURIComponent(this.sessionData)
+      params.watcherUid = this.watcherUid
+    }
     try {
-      res = (await axios.get('http://39.105.155.193:9999/manager/bliveExtra/room_info', { params: {
-        roomId: this.roomId
-      } })).data
+      res = (await axios.get('http://39.105.155.193:9999/manager/bliveExtra/room_info2', { params: params })).data
       if (res .errorCode === 105) {
         res = (await axios.get('/api/room_info', {
           params: {
@@ -118,7 +125,11 @@ export default class ChatClientDirect {
     this.realRoomId = res.roomId
     this.roomOwnerUid = res.roomOwnerUid
     this.watcherUid = res.watcherUid
-    this.token = res.token
+    if (this.sessionData) {
+      this.token = res.token
+    } else {
+      this.token = null
+    }
     if (res.hostServerList.length !== 0) {
       this.hostServerList = res.hostServerList
     }
@@ -143,7 +154,9 @@ export default class ChatClientDirect {
       protover: 3,
       platform: 'web',
       type: 2,
-      key: this.token
+    }
+    if (this.token) {
+      authParams. key = this.token
     }
     this.websocket.send(this.makePacket(authParams, OP_AUTH))
   }

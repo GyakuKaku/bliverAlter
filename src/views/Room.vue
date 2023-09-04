@@ -87,6 +87,11 @@ export default {
       cfg.relayMessagesByServer = toBool(cfg.relayMessagesByServer)
       cfg.autoTranslate = toBool(cfg.autoTranslate)
 
+      if (this.strConfig.SESSDATA) {
+        cfg.SESSDATA = this.strConfig.SESSDATA
+        cfg.DedeUserID = this.strConfig.DedeUserID
+      }
+
       this.config = cfg
     },
     initChatClient() {
@@ -94,7 +99,7 @@ export default {
         this.chatClient = new ChatClientTest()
       } else {
         if (!this.config.relayMessagesByServer) {
-          this.chatClient = new ChatClientDirect(this.roomId)
+          this.chatClient = new ChatClientDirect(this.roomId, this.config.DedeUserID, this.config.SESSDATA)
         } else {
           this.chatClient = new ChatClientRelay(this.roomId, false)
         }
