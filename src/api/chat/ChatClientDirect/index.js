@@ -88,10 +88,14 @@ export default class ChatClientDirect {
   async initRoom() {
     let res
     try {
-      res = (await axios.get('http://127.0.0.1:9999/manager/bliveExtra/room_info', { params: {
+      res = (await axios.get('http://39.105.155.193:9999/manager/bliveExtra/room_info', { params: {
         roomId: this.roomId
       } })).data.data
     } catch {
+      res = (await axios.get('/api/room_info', { params: {
+        roomId: this.roomId
+      } })).data
+      res.roomOwnerUid = res.ownerUid
       return
     }
     this.realRoomId = res.roomId
