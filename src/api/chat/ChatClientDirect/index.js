@@ -99,12 +99,14 @@ export default class ChatClientDirect {
           }
         })).data
         res.roomOwnerUid = res.ownerUid
+        res.watcherUid = res.roomOwnerUid
       } catch (e) {
         return
       }
     }
     this.realRoomId = res.roomId
     this.roomOwnerUid = res.roomOwnerUid
+    this.watcherUid = res.watcherUid
     this.token = res.token
     if (res.hostServerList.length !== 0) {
       this.hostServerList = res.hostServerList
@@ -124,10 +126,8 @@ export default class ChatClientDirect {
   }
 
   sendAuth() {
-    // eslint-disable-next-line no-debugger
-    // debugger
     let authParams = {
-      uid: Number(this.roomOwnerUid),
+      uid: Number(this.watcherUid),
       roomid: Number(this.realRoomId),
       protover: 3,
       platform: 'web',
