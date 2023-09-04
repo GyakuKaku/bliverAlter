@@ -92,11 +92,16 @@ export default class ChatClientDirect {
         roomId: this.roomId
       } })).data.data
     } catch {
-      res = (await axios.get('/api/room_info', { params: {
-        roomId: this.roomId
-      } })).data
-      res.roomOwnerUid = res.ownerUid
-      return
+      try {
+        res = (await axios.get('/api/room_info', {
+          params: {
+            roomId: this.roomId
+          }
+        })).data
+        res.roomOwnerUid = res.ownerUid
+      } catch (e) {
+        return
+      }
     }
     this.realRoomId = res.roomId
     this.roomOwnerUid = res.roomOwnerUid
