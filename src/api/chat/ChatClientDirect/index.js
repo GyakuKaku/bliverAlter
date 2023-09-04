@@ -47,6 +47,7 @@ export default class ChatClientDirect {
     // 调用initRoom后初始化，如果失败，使用这里的默认值
     this.roomId = roomId
     this.roomOwnerUid = 0
+    this.realRoomId = null
     this.hostServerList = [
       { host: "broadcastlv.chat.bilibili.com", port: 2243, wss_port: 443, ws_port: 2244 }
     ]
@@ -63,6 +64,7 @@ export default class ChatClientDirect {
     this.isDestroying = false
     this.heartbeatTimerId = null
     this.receiveTimeoutTimerId = null
+    this.token = null
   }
 
   async start() {
@@ -86,14 +88,15 @@ export default class ChatClientDirect {
   async initRoom() {
     let res
     try {
-      res = (await axios.get('/api/room_info', { params: {
+      res = (await axios.get('http://127.0.0.1:9999/manager/bliveExtra/room_info', { params: {
         roomId: this.roomId
-      } })).data
+      } })).data.data
     } catch {
       return
     }
-    this.roomId = res.roomId
-    this.roomOwnerUid = res.ownerUid
+    this.realRoomId = res.roomId
+    this.roomOwnerUid = res.roomOwnerUid
+    this.token = res.token
     if (res.hostServerList.length !== 0) {
       this.hostServerList = res.hostServerList
     }
@@ -112,12 +115,15 @@ export default class ChatClientDirect {
   }
 
   sendAuth() {
+    // eslint-disable-next-line no-debugger
+    // debugger
     let authParams = {
-      uid: this.roomOwnerUid,
-      roomid: this.roomId,
+      uid: Number(this.roomOwnerUid),
+      roomid: Number(this.realRoomId),
       protover: 3,
       platform: 'web',
-      type: 2
+      type: 2,
+      key: this.token
     }
     this.websocket.send(this.makePacket(authParams, OP_AUTH))
   }
@@ -346,8 +352,6 @@ export default class ChatClientDirect {
       id: getUuid4Hex(),
       translation: ''
     }
-    // eslint-disable-next-line no-debugger
-    // debugger
     if (info[0][13]) {
       data.imgContent = info[0][13]
       if (data.imgContent.width === 20) {
