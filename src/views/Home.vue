@@ -125,8 +125,11 @@
           <el-button type="primary" @click="handleLogin">扫码登录</el-button>
         </div>
         <div v-else style="display: flex; align-items: center">
-          现在登录用户Uid: {{biliUserInfo.DedeUserID}}
-          <el-button type="danger" size="mini" style="margin-left: 20px" @click="handleLogout">退出登录</el-button>
+          <div>
+            现在登录用户Uid: {{biliUserInfo.DedeUserID}}
+            登录过期时间 {{ getExpireTime(biliUserInfo) }}
+          </div>
+          <p><el-button type="danger" size="mini" style="margin-left: 20px" @click="handleLogout">退出登录</el-button></p>
         </div>
       </el-card>
     </div>
@@ -202,6 +205,18 @@ export default {
     this.updateServerConfig()
   },
   methods: {
+    getExpireTime(data) {
+      try {
+        if (data) {
+          const date = new Date(data.timestamp + (Number(data.Expires) * 1000))
+          return date.toLocaleString()
+        } else {
+          return '--'
+        }
+      } catch (e) {
+        return '--'
+      }
+    },
     setBiliUserInfo(userInfo) {
       this.biliUserInfo = Object.assign({}, userInfo)
       window.localStorage.BLI_USER_INFO = JSON.stringify(userInfo)
@@ -232,11 +247,13 @@ export default {
         try {
           this.biliUserInfo = JSON.parse(window.localStorage.BLI_USER_INFO)
           const timestamp = new Date().getTime()
-          if (timestamp - this.biliUserInfo.timestamp > 86400000) {
+          if (timestamp - this.biliUserInfo.timestamp > (Number(this.biliUserInfo.Expires) * 1000)) {
             this.biliLogout()
+          } else {
+            console.log('登录有效时间还剩', (Number(this.biliUserInfo.Expires) * 1000) - timestamp + this.biliUserInfo.timestamp)
           }
         } catch (e) {
-          this.biliLogout()
+          console.log('登录有效时间异常')
         }
       }
     },
