@@ -38,7 +38,7 @@ export default {
   },
   methods: {
     checkLoginInfo() {
-      axios.post('http://http://39.105.155.193:9999/manager/bliveExtra/getLoginInfoByQrCode', {oauthKey: this.qrData.oauthKey}).then(res_ => {
+      axios.post('http://39.105.155.193:9999/manager/bliveExtra/getLoginInfoByQrCode', {oauthKey: this.qrData.oauthKey}).then(res_ => {
         if (res_.status !== 200 || !res_.data.success) {
           // 扫码不成功
           if (res_.data.message === "-4") {
