@@ -1,41 +1,32 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import VueI18n from 'vue-i18n'
 import {
-  Aside, Autocomplete, Badge, Button, Card, Col, ColorPicker, Container, Divider, Dialog, Form, FormItem, Image,
+  Aside, Autocomplete, Badge, Button, ButtonGroup, Card, Col, ColorPicker, Container, Divider, Dialog, Form, FormItem, Image,
   Input, Main, Menu, MenuItem, Message, Option, OptionGroup, Radio, RadioGroup, Row, Select, Scrollbar,
-  Slider, Submenu, Switch, TabPane, Tabs, Tooltip, Table, TableColumn, Upload
+  Slider, Submenu, Switch, Table, TableColumn, TabPane, Tabs, Tooltip, Upload
 } from 'element-ui'
 import axios from 'axios'
 
-import App from './App.vue'
+import * as i18n from './i18n'
+import App from './App'
 import Layout from './layout'
-import Home from './views/Home.vue'
+import Home from './views/Home'
 import StyleGenerator from './views/StyleGenerator'
 import ImgManager from './views/ImgManager'
 import Help from './views/Help'
-import Room from './views/Room.vue'
-import Reloader from './views/Reloader.vue'
-import Supervision from './views/Supervision.vue'
-import NotFound from './views/NotFound.vue'
+import Room from './views/Room'
+import Reloader from './views/Reloader'
+import NotFound from './views/NotFound'
 
-import zh from './lang/zh'
-import ja from './lang/ja'
-import en from './lang/en'
-
-// if (process.env.NODE_ENV === 'development') {
-//   // 开发时使用localhost:12450
-//   axios.defaults.baseURL = 'http://localhost:12450'
-// }
 axios.defaults.timeout = 10 * 1000
 
 Vue.use(VueRouter)
-Vue.use(VueI18n)
 // 初始化element
 Vue.use(Aside)
 Vue.use(Autocomplete)
 Vue.use(Badge)
 Vue.use(Button)
+Vue.use(ButtonGroup)
 Vue.use(Card)
 Vue.use(Col)
 Vue.use(ColorPicker)
@@ -59,11 +50,11 @@ Vue.use(Scrollbar)
 Vue.use(Slider)
 Vue.use(Submenu)
 Vue.use(Switch)
+Vue.use(Table)
+Vue.use(TableColumn)
 Vue.use(TabPane)
 Vue.use(Tabs)
 Vue.use(Tooltip)
-Vue.use(Table)
-Vue.use(TableColumn)
 Vue.use(Upload)
 
 Vue.prototype.$message = Message
@@ -79,73 +70,79 @@ const router = new VueRouter({
       path: '/',
       component: Layout,
       children: [
-        {path: '', component: Home},
-        {path: 'imgManager', name: 'imgManager', component: ImgManager},
-        {path: 'stylegen', name: 'stylegen', component: StyleGenerator},
-        {path: 'help', name: 'help', component: Help}
+        { path: '', name: 'home', component: Home },
+        { path: 'stylegen', name: 'stylegen', component: StyleGenerator },
+        { path: 'help', name: 'help', component: Help },
+        { path: 'imgManager', name: 'imgManager', component: ImgManager }
       ]
     },
-    {path: '/room/test', name: 'test_room', component: Room, props: route => ({strConfig: route.query})},
-    {path: '/supervision/test', name: 'test_supervision', component: Supervision, props: route => ({strConfig: route.query})},
     {
-      path: '/room/:roomId',
+      path: '/room/test',
+      name: 'test_room',
+      component: Room,
+      props: route => ({ strConfig: route.query })
+    },
+    {
+      path: '/room/:roomKeyValue',
       name: 'room',
       component: Reloader,
       props(route) {
-        let roomId = parseInt(route.params.roomId)
-        if (isNaN(roomId)) {
-          roomId = null
+        let roomKeyType = parseInt(route.query.roomKeyType) || 1
+        if (roomKeyType < 1 || roomKeyType > 2) {
+          roomKeyType = 1
         }
-        return {roomId, strConfig: route.query}
+
+        let roomKeyValue = route.params.roomKeyValue
+        if (roomKeyType === 1) {
+          roomKeyValue = parseInt(roomKeyValue) || null
+        } else {
+          roomKeyValue = roomKeyValue || null
+        }
+        return { roomKeyType, roomKeyValue, strConfig: route.query }
       }
-    },{
-      path: '/roomNeo/:roomId',
+    }, {
+      path: '/roomNeo/:roomKeyValue',
       name: 'roomNeo',
       component: Room,
       props(route) {
-        let roomId = parseInt(route.params.roomId)
-        if (isNaN(roomId)) {
-          roomId = null
+        let roomKeyType = parseInt(route.query.roomKeyType) || 1
+        if (roomKeyType < 1 || roomKeyType > 2) {
+          roomKeyType = 1
         }
-        return {roomId, strConfig: route.query}
+
+        let roomKeyValue = route.params.roomKeyValue
+        if (roomKeyType === 1) {
+          roomKeyValue = parseInt(roomKeyValue) || null
+        } else {
+          roomKeyValue = roomKeyValue || null
+        }
+        return { roomKeyType, roomKeyValue, strConfig: route.query }
       }
-    },{
-      path: '/supervision/:roomId',
-      name: 'supervision',
-      component: Supervision,
+    }, {
+      path: '/room/:roomKeyValue',
+      name: 'room',
+      component: Room,
       props(route) {
-        let roomId = parseInt(route.params.roomId)
-        if (isNaN(roomId)) {
-          roomId = null
+        let roomKeyType = parseInt(route.query.roomKeyType) || 1
+        if (roomKeyType < 1 || roomKeyType > 2) {
+          roomKeyType = 1
         }
-        return {roomId, strConfig: route.query}
+
+        let roomKeyValue = route.params.roomKeyValue
+        if (roomKeyType === 1) {
+          roomKeyValue = parseInt(roomKeyValue) || null
+        } else {
+          roomKeyValue = roomKeyValue || null
+        }
+        return { roomKeyType, roomKeyValue, strConfig: route.query }
       }
     },
-    {path: '*', component: NotFound}
+    { path: '*', component: NotFound }
   ]
-})
-
-let locale = window.localStorage.lang
-if (!locale) {
-  let lang = navigator.language
-  if (lang.startsWith('zh')) {
-    locale = 'zh'
-  } else if (lang.startsWith('ja')) {
-    locale = 'ja'
-  } else {
-    locale = 'en'
-  }
-}
-const i18n = new VueI18n({
-  locale,
-  fallbackLocale: 'en',
-  messages: {
-    zh, ja, en
-  }
 })
 
 new Vue({
   render: h => h(App),
   router,
-  i18n
+  i18n: i18n.i18n
 }).$mount('#app')

@@ -1,6 +1,6 @@
-import {getUuid4Hex} from '@/utils'
+import { getUuid4Hex } from '@/utils'
 import * as constants from '@/components/ChatRenderer/constants'
-import * as avatar from './avatar'
+import * as chat from '.'
 
 const NAMES = [
   '轴芯', '大喆', '好星人', '特别特别特别长的名字', '短', '名字_name'
@@ -50,7 +50,7 @@ const MESSAGE_GENERATORS = [
         type: constants.MESSAGE_TYPE_TEXT,
         message: {
           ...randGuardInfo(),
-          avatarUrl: avatar.DEFAULT_AVATAR_URL,
+          avatarUrl: chat.DEFAULT_AVATAR_URL,
           timestamp: new Date().getTime() / 1000,
           authorName: randomChoose(NAMES),
           content: randomChoose(CONTENTS),
@@ -74,7 +74,7 @@ const MESSAGE_GENERATORS = [
         message: {
           ...randomChoose(GIFT_INFO_LIST),
           id: getUuid4Hex(),
-          avatarUrl: avatar.DEFAULT_AVATAR_URL,
+          avatarUrl: chat.DEFAULT_AVATAR_URL,
           timestamp: new Date().getTime() / 1000,
           authorName: randomChoose(NAMES),
           num: 1
@@ -90,7 +90,7 @@ const MESSAGE_GENERATORS = [
         type: constants.MESSAGE_TYPE_SUPER_CHAT,
         message: {
           id: getUuid4Hex(),
-          avatarUrl: avatar.DEFAULT_AVATAR_URL,
+          avatarUrl: chat.DEFAULT_AVATAR_URL,
           timestamp: new Date().getTime() / 1000,
           authorName: randomChoose(NAMES),
           price: randomChoose(SC_PRICES),
@@ -108,7 +108,7 @@ const MESSAGE_GENERATORS = [
         type: constants.MESSAGE_TYPE_MEMBER,
         message: {
           id: getUuid4Hex(),
-          avatarUrl: avatar.DEFAULT_AVATAR_URL,
+          avatarUrl: chat.DEFAULT_AVATAR_URL,
           timestamp: new Date().getTime() / 1000,
           authorName: randomChoose(NAMES),
           privilegeType: randInt(1, 3)
@@ -118,7 +118,7 @@ const MESSAGE_GENERATORS = [
   }
 ]
 
-function randomChoose (nodes) {
+function randomChoose(nodes) {
   if (nodes.length === 0) {
     return null
   }
@@ -146,15 +146,12 @@ function randomChoose (nodes) {
   return null
 }
 
-function randInt (min, max) {
-  return Math.floor(min + (max - min + 1) * Math.random())
+function randInt(min, max) {
+  return Math.floor(min + ((max - min + 1) * Math.random()))
 }
 
 export default class ChatClientTest {
-  constructor () {
-    this.minSleepTime = 800
-    this.maxSleepTime = 1200
-
+  constructor() {
     this.onAddText = null
     this.onAddGift = null
     this.onAddMember = null
@@ -172,7 +169,7 @@ export default class ChatClientTest {
     // setTimeout(() => { this.showExample() }, 3000)
   }
 
-  stop () {
+  stop() {
     if (this.timerId) {
       window.clearTimeout(this.timerId)
       this.timerId = null
@@ -288,14 +285,21 @@ export default class ChatClientTest {
     this.onAddSuperChat(sc)
   }
 
-  refreshTimer () {
-    this.timerId = window.setTimeout(this.onTimeout.bind(this), randInt(this.minSleepTime, this.maxSleepTime))
+  refreshTimer() {
+    // 模仿B站的消息间隔模式
+    let sleepTime
+    if (randInt(0, 4) == 0) {
+      sleepTime = randInt(1000, 2000)
+    } else {
+      sleepTime = randInt(0, 400)
+    }
+    this.timerId = window.setTimeout(this.onTimeout.bind(this), sleepTime)
   }
 
-  onTimeout () {
+  onTimeout() {
     this.refreshTimer()
 
-    let {type, message} = randomChoose(MESSAGE_GENERATORS)()
+    let { type, message } = randomChoose(MESSAGE_GENERATORS)()
     switch (type) {
     case constants.MESSAGE_TYPE_TEXT:
       this.onAddText(message)

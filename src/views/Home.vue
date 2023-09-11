@@ -1,16 +1,37 @@
 <template>
   <div>
     <p>
-      <el-form :model="form" ref="form" label-width="150px" :rules="{
-        roomId: [
-          {required: true, message: $t('home.roomIdEmpty'), trigger: 'blur'},
-          {type: 'integer', min: 1, message: $t('home.roomIdInteger'), trigger: 'blur'}
-        ]
-      }">
+      <el-form :model="form" ref="form" label-width="150px">
         <el-tabs type="border-card">
           <el-tab-pane :label="$t('home.general')">
-            <el-form-item :label="$t('home.roomId')" required prop="roomId">
-              <el-input v-model.number="form.roomId" type="number" min="1"></el-input>
+            <el-form-item :label="$t('home.room')" required :prop="form.roomKeyType === 1 ? 'roomId' : 'authCode'">
+              <template slot="label">{{ $t('home.room') }}
+                <router-link :to="{ name: 'help' }">
+                  <i class="el-icon-question"></i>
+                </router-link>
+              </template>
+              <el-row>
+                <el-col :span="6">
+                  <el-select v-model="form.roomKeyType" style="width: 100%">
+                    <el-option :label="$t('home.authCode')" :value="2"></el-option>
+                    <el-option :label="$t('home.roomId')" :value="1"></el-option>
+                  </el-select>
+                </el-col>
+                <el-col :span="18">
+                  <el-input v-if="form.roomKeyType === 1"
+                    v-model.number="form.roomId" type="number" min="1" :rules="[
+                      {required: true, message: $t('home.roomIdEmpty'), trigger: 'blur'},
+                      {type: 'integer', min: 1, message: $t('home.roomIdInteger'), trigger: 'blur'}
+                    ]"
+                  ></el-input>
+                  <el-input v-else
+                    v-model.number="form.authCode" :rules="[
+                      {required: true, message: $t('home.authCodeEmpty'), trigger: 'blur'}
+                    ]"
+                  ></el-input>
+                </el-col>
+              </el-row>
+              <el-row v-if="form.roomKeyType === 1" style="color: red">{{ $t('home.useAuthCodeWarning') }}</el-row>
             </el-form-item>
             <el-row :gutter="20">
               <el-col :xs="24" :sm="8">
@@ -122,14 +143,13 @@
         <el-form :model="form" label-width="150px">
           <el-form-item :label="$t('home.roomUrl')">
             <el-input ref="roomUrlInput" readonly :value="obsRoomUrl" style="width: calc(100% - 8em); margin-right: 1em;"></el-input>
-            <el-button type="primary" @click="copyUrl">{{$t('home.copy')}}</el-button>
+            <el-button type="primary" icon="el-icon-copy-document" @click="copyUrl"></el-button>
           </el-form-item>
           <el-form-item>
             <el-button type="primary" :disabled="!roomUrl" @click="enterRoom">{{$t('home.enterRoom')}}</el-button>
             <el-button :disabled="!roomUrl" @click="enterTestRoom">{{$t('home.enterTestRoom')}}</el-button>
             <el-button @click="exportConfig">{{$t('home.exportConfig')}}</el-button>
             <el-button @click="importConfig">{{$t('home.importConfig')}}</el-button>
-            <el-button type="primary" :disabled="!roomUrl" @click="enterSupervision">监控礼物弹幕</el-button>
           </el-form-item>
         </el-form>
       </el-card>
@@ -148,10 +168,10 @@
 
 <script>
 import _ from 'lodash'
-import axios from 'axios'
 import download from 'downloadjs'
 
-import {mergeConfig} from '@/utils'
+import { mergeConfig } from '@/utils'
+import * as mainApi from '@/api/main'
 import * as chatConfig from '@/api/chatConfig'
 
 export default {
@@ -160,15 +180,25 @@ export default {
     return {
       serverConfig: {
         enableTranslate: true,
+        enableUploadFile: true,
         loaderUrl: ''
       },
       form: {
+        ...chatConfig.getLocalConfig(),
+        roomKeyType: parseInt(window.localStorage.roomKeyType || '2'),
         roomId: parseInt(window.localStorage.roomId || '1'),
-        ...chatConfig.getLocalConfig()
+        authCode: window.localStorage.authCode || '',
       }
     }
   },
   computed: {
+    roomKeyValue() {
+      if (this.form.roomKeyType === 1) {
+        return this.form.roomId
+      } else {
+        return this.form.authCode
+      }
+    },
     roomUrl() {
       return this.getRoomUrl(false)
     },
@@ -187,7 +217,9 @@ export default {
   },
   watch: {
     roomUrl: _.debounce(function() {
+      window.localStorage.roomKeyType = this.form.roomKeyType
       window.localStorage.roomId = this.form.roomId
+      window.localStorage.authCode = this.form.authCode
       chatConfig.setLocalConfig(this.form)
     }, 500)
   },
@@ -197,41 +229,37 @@ export default {
   methods: {
     async updateServerConfig() {
       try {
-        this.serverConfig = (await axios.get('/api/server_info')).data.config
+        this.serverConfig = (await mainApi.getServerInfo()).config
       } catch (e) {
-        this.$message.error('Failed to fetch server information: ' + e)
+        this.$message.error(`Failed to fetch server information: ${e}`)
+        throw e
       }
     },
     enterRoom() {
-      window.open(this.roomUrl, `room ${this.form.roomId}`, 'menubar=0,location=0,scrollbars=0,toolbar=0,width=600,height=600')
-    },
-    enterSupervision() {
-      if (this.form.roomId === '') {
-        return
-      }
-      let query = {...this.form}
-      delete query.roomId
-      query.imgTransformer = window.localStorage.imgTransformerV2 == null ? '[]' : window.localStorage.imgTransformerV2
-      let resolved = this.$router.resolve({name: 'supervision', params: {roomId: this.form.roomId}, query})
-
-      window.open(`${window.location.protocol}//${window.location.host}${resolved.href}`, `room ${this.form.roomId}`, 'menubar=0,location=0,scrollbars=0,toolbar=0,width=800,height=600')
+      window.open(this.roomUrl, `room ${this.roomKeyValue}`, 'menubar=0,location=0,scrollbars=0,toolbar=0,width=600,height=600')
     },
     enterTestRoom() {
       window.open(this.getRoomUrl(true), 'test room', 'menubar=0,location=0,scrollbars=0,toolbar=0,width=600,height=600')
     },
     getRoomUrl(isTestRoom) {
-      if (isTestRoom && this.form.roomId === '') {
+      if (!isTestRoom && !this.roomKeyValue) {
         return ''
       }
-      let query = {...this.form}
+
+      let query = {
+        ...this.form,
+        emoticons: JSON.stringify(this.form.emoticons),
+        lang: this.$i18n.locale
+      }
       delete query.roomId
+      delete query.authCode
       query.imgTransformer = window.localStorage.imgTransformerV2 == null ? '[]' : window.localStorage.imgTransformerV2
 
       let resolved
       if (isTestRoom) {
-        resolved = this.$router.resolve({name: 'test_room', query})
+        resolved = this.$router.resolve({ name: 'test_room', query })
       } else {
-        resolved = this.$router.resolve({name: 'room', params: {roomId: this.form.roomId}, query})
+        resolved = this.$router.resolve({ name: 'room', params: { roomKeyValue: this.roomKeyValue }, query })
       }
       return `${window.location.protocol}//${window.location.host}${resolved.href}`
     },
@@ -257,12 +285,21 @@ export default {
             this.$message.error(this.$t('home.failedToParseConfig') + e)
             return
           }
-          cfg = mergeConfig(cfg, chatConfig.DEFAULT_CONFIG)
-          this.form = {roomId: this.form.roomId, ...cfg}
+          this.importConfigFromObj(cfg)
         }
         reader.readAsText(input.files[0])
       }
       input.click()
+    },
+    importConfigFromObj(cfg) {
+      cfg = mergeConfig(cfg, chatConfig.deepCloneDefaultConfig())
+      chatConfig.sanitizeConfig(cfg)
+      this.form = {
+        ...cfg,
+        roomKeyType: this.form.roomKeyType,
+        roomId: this.form.roomId,
+        authCode: this.form.authCode
+      }
     }
   }
 }

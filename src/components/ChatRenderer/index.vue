@@ -69,10 +69,10 @@
 
 <script>
 import * as chatConfig from '@/api/chatConfig'
-import Ticker from './Ticker.vue'
-import TextMessage from './TextMessage.vue'
-import MembershipItem from './MembershipItem.vue'
-import PaidMessage from './PaidMessage.vue'
+import Ticker from './Ticker'
+import TextMessage from './TextMessage'
+import MembershipItem from './MembershipItem'
+import PaidMessage from './PaidMessage'
 import * as constants from './constants'
 
 // 只有要添加的消息需要平滑
@@ -248,12 +248,12 @@ export default {
       this.delMessages([id])
     },
     delMessages(ids) {
-      this.enqueueMessages(ids.map(id => {
-        return {
+      this.enqueueMessages(ids.map(
+        id => ({
           type: constants.MESSAGE_TYPE_DEL,
           id
-        }
-      }))
+        })
+      ))
     },
     clearMessages() {
       this.messages = []
@@ -287,15 +287,19 @@ export default {
       } else {
         let curTime = new Date()
         let interval = curTime - this.lastEnqueueTime
-        // 让发消息速度变化不要太频繁
-        if (interval > 1000) {
+        // 真实的进队列时间间隔模式大概是这样：2500, 300, 300, 300, 2500, 300, ...
+        // B站消息有缓冲，会一次发多条消息。这里把波峰视为发送了一次真实的WS消息，所以要过滤掉间隔太小的
+        if (interval > 1000 || this.enqueueIntervals.length < 5) {
           this.enqueueIntervals.push(interval)
           if (this.enqueueIntervals.length > 5) {
             this.enqueueIntervals.splice(0, this.enqueueIntervals.length - 5)
           }
+          // 这边估计得尽量大，只要不太早把消息缓冲发完就是平滑的。有MESSAGE_MAX_INTERVAL保底，不会让消息延迟太大
+          // 其实可以用单调队列求最大值，偷懒不写了
           this.estimatedEnqueueInterval = Math.max(...this.enqueueIntervals)
-          this.lastEnqueueTime = curTime
         }
+        // 上次入队时间还是要设置，否则会太早把消息缓冲发完，然后较长时间没有新消息
+        this.lastEnqueueTime = curTime
       }
 
       // 把messages分成messageGroup，每个组里最多有1个需要平滑的消息
@@ -325,7 +329,7 @@ export default {
         this.emitSmoothedMessageTimerId = window.setTimeout(this.emitSmoothedMessages)
       }
     },
-    messageNeedSmooth({type}) {
+    messageNeedSmooth({ type }) {
       return NEED_SMOOTH_MESSAGE_TYPES.indexOf(type) !== -1
     },
     emitSmoothedMessages() {
@@ -437,6 +441,7 @@ export default {
         addTime: new Date() // 添加一个本地时间给Ticker用，防止本地时间和服务器时间相差很大的情况
       }
       this.messagesBuffer.push(message)
+
       if (message.type !== constants.MESSAGE_TYPE_TEXT) {
         this.paidMessages.unshift(message)
         const MAX_PAID_MESSAGE_NUM = 100
@@ -460,7 +465,7 @@ export default {
         console.log('图片转换失败handleAddMessage')
       }
     },
-    handleDelMessage({id}) {
+    handleDelMessage({ id }) {
       for (let arr of [this.messages, this.paidMessages, this.messagesBuffer]) {
         for (let i = 0; i < arr.length; i++) {
           if (arr[i].id === id) {
@@ -471,7 +476,7 @@ export default {
         }
       }
     },
-    handleUpdateMessage({id, newValuesObj}) {
+    handleUpdateMessage({ id, newValuesObj }) {
       // 遍历滚动的消息
       this.forEachRecentMessage(999999999, message => {
         if (message.id !== id) {
@@ -539,7 +544,7 @@ export default {
         this.lastSmoothChatMessageAddMs = performance.now()
       }
       let interval = performance.now() - this.lastSmoothChatMessageAddMs
-      this.chatRateMs = 0.9 * this.chatRateMs + 0.1 * interval
+      this.chatRateMs = (0.9 * this.chatRateMs) + (0.1 * interval)
       if (this.isSmoothed) {
         if (this.chatRateMs < 400) {
           this.isSmoothed = false

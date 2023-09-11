@@ -1,17 +1,21 @@
 export default {
   sidebar: {
     home: 'Home',
-    stylegen: 'Style generator',
+    stylegen: 'Style Generator',
     help: 'Help',
-    projectAddress: 'Project address',
-    giftRecordOfficial: 'Official Super Chat record',
+    projectAddress: 'Project Address',
+    giftRecordOfficial: 'Official Super Chat Record',
   },
   home: {
     roomIdEmpty: "Room ID can't be empty",
     roomIdInteger: 'Room ID must be positive integer',
+    authCodeEmpty: "Identity code can't be empty",
+    useAuthCodeWarning: 'Please prioritize the identity code',
 
     general: 'General',
+    room: 'Room',
     roomId: 'Room ID',
+    authCode: 'Identity code',
     showDanmaku: 'Show messages',
     showGift: 'Show Super Chats',
     showGiftName: 'Show gift name',
@@ -38,8 +42,14 @@ export default {
     pinyin: 'Pinyin',
     kana: 'Kana',
 
+    emoticon: 'Custom Emotes',
+    emoticonKeyword: 'Emote Code',
+    emoticonUrl: 'URL',
+    operation: 'Operation',
+    addEmoticon: 'Add emote',
+    emoticonFileTooLarge: 'File size is too large. Max size is 1MB',
+
     roomUrl: 'Room URL',
-    copy: 'Copy',
     enterRoom: 'Enter room',
     enterTestRoom: 'Enter test room',
     exportConfig: 'Export config',
@@ -63,7 +73,7 @@ export default {
     showAvatars: 'Show avatars',
     avatarSize: 'Avatar size',
 
-    userNames: 'User names',
+    userNames: 'User Names',
     showUserNames: 'Show user names',
     font: 'Font',
     fontSize: 'Font size',
@@ -74,6 +84,7 @@ export default {
     memberColor: 'Member color',
     showBadges: 'Show badges',
     showColon: 'Show colon after name',
+    emoticonSize: 'Emoticon size',
 
     messages: 'Messages',
     color: 'Color',
@@ -90,7 +101,7 @@ export default {
     moderatorMessageBgColor: 'Moderator background color',
     memberMessageBgColor: 'Member background color',
 
-    scAndNewMember: 'Super Chat / New member',
+    scAndNewMember: 'Super Chat / New Member',
     firstLineFont: 'First line font',
     firstLineFontSize: 'First line font size',
     firstLineLineHeight: 'First line line height (0 for default)',
@@ -123,10 +134,19 @@ export default {
   },
   help: {
     help: 'Help',
-    p1: '1. Copy the room ID from the Bilibili live room webpage',
-    p2: '2. Enter the room ID into the room ID on the home page. Copy the room URL',
+    p1: '1. Copy the identity code (身份码) from the webpage where you start streaming',
+    p2: '2. Enter the identity code into the room configuration on the home page. Copy the room URL',
     p3: '3. Generate styles with the style generator. Copy the CSS',
     p4: '4. Add browser source in OBS',
     p5: '5. Enter the previously copied room URL at URL, and enter the previously copied CSS at custom CSS'
+  },
+  chat: {
+    moderator: 'moderator',
+    guardLevel1: 'governor',
+    guardLevel2: 'admiral',
+    guardLevel3: 'captain',
+    sendGift: 'Sent {giftName}x{num}',
+    membershipTitle: 'New member',
+    tickerMembership: 'Member'
   }
 }

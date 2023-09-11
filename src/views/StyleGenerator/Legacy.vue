@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-form label-width="150px" size="mini">
-      <h3>{{$t('stylegen.outlines')}}</h3>
+      <h3>{{ $t('stylegen.outlines') }}</h3>
       <el-card shadow="never">
         <el-row :gutter="20">
           <el-col :xs="24" :sm="12">
@@ -20,7 +20,7 @@
         </el-form-item>
       </el-card>
 
-      <h3>{{$t('stylegen.avatars')}}</h3>
+      <h3>{{ $t('stylegen.avatars') }}</h3>
       <el-card shadow="never">
         <el-row :gutter="20">
           <el-col :xs="24" :sm="12">
@@ -36,7 +36,7 @@
         </el-row>
       </el-card>
 
-      <h3>{{$t('stylegen.userNames')}}</h3>
+      <h3>{{ $t('stylegen.userNames') }}</h3>
       <el-card shadow="never">
         <el-row :gutter="20">
           <el-col :xs="24" :sm="12">

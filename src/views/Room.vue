@@ -3,11 +3,15 @@
 </template>
 
 <script>
-import {mergeConfig, toBool, toInt} from '@/utils'
+import * as i18n from '@/i18n'
+import { mergeConfig, toBool, toInt } from '@/utils'
+import * as trie from '@/utils/trie'
 import * as pronunciation from '@/utils/pronunciation'
 import * as chatConfig from '@/api/chatConfig'
+import * as chat from '@/api/chat'
 import ChatClientTest from '@/api/chat/ChatClientTest'
-import ChatClientDirect from '@/api/chat/ChatClientDirect'
+import ChatClientDirectWeb from '@/api/chat/ChatClientDirectWeb'
+import ChatClientDirectOpenLive from '@/api/chat/ChatClientDirectOpenLive'
 import ChatClientRelay from '@/api/chat/ChatClientRelay'
 import ChatRenderer from '@/components/ChatRenderer'
 import * as constants from '@/components/ChatRenderer/constants'
@@ -18,8 +22,12 @@ export default {
     ChatRenderer
   },
   props: {
-    roomId: {
+    roomKeyType: {
       type: Number,
+      default: 1
+    },
+    roomKeyValue: {
+      type: [Number, String],
       default: null
     },
     strConfig: {
@@ -29,22 +37,48 @@ export default {
   },
   data() {
     return {
-      config: {...chatConfig.DEFAULT_CONFIG},
+      config: chatConfig.deepCloneDefaultConfig(),
       chatClient: null,
       pronunciationConverter: null
     }
   },
   computed: {
-    blockKeywords() {
-      return this.config.blockKeywords.split('\n').filter(val => val)
+    blockKeywordsTrie() {
+      let blockKeywords = this.config.blockKeywords.split('\n')
+      let res = new trie.Trie()
+      for (let keyword of blockKeywords) {
+        if (keyword !== '') {
+          res.set(keyword, true)
+        }
+      }
+      return res
     },
-    blockUsers() {
-      return this.config.blockUsers.split('\n').filter(val => val)
+    blockUsersTrie() {
+      let blockUsers = this.config.blockUsers.split('\n')
+      let res = new trie.Trie()
+      for (let user of blockUsers) {
+        if (user !== '') {
+          res.set(user, true)
+        }
+      }
+      return res
+    },
+    emoticonsTrie() {
+      let res = new trie.Trie()
+      for (let emoticons of [this.config.emoticons, this.textEmoticons]) {
+        for (let emoticon of emoticons) {
+          if (emoticon.keyword !== '' && emoticon.url !== '') {
+            res.set(emoticon.keyword, emoticon)
+          }
+        }
+      }
+      return res
     }
   },
   mounted() {
     this.initConfig()
     this.initChatClient()
+    this.initTextEmoticons()
     if (this.config.giftUsernamePronunciation !== '') {
       this.pronunciationConverter = new pronunciation.PronunciationConverter()
       this.pronunciationConverter.loadDict(this.config.giftUsernamePronunciation)
@@ -63,6 +97,11 @@ export default {
   },
   methods: {
     initConfig() {
+      let locale = this.strConfig.lang
+      if (locale) {
+        i18n.setLocale(locale)
+      }
+
       let cfg = {}
       // 留空的使用默认值
       for (let i in this.strConfig) {
@@ -70,7 +109,7 @@ export default {
           cfg[i] = this.strConfig[i]
         }
       }
-      cfg = mergeConfig(cfg, chatConfig.DEFAULT_CONFIG)
+      cfg = mergeConfig(cfg, chatConfig.deepCloneDefaultConfig())
 
       cfg.minGiftPrice = toInt(cfg.minGiftPrice, chatConfig.DEFAULT_CONFIG.minGiftPrice)
       cfg.showDanmaku = toBool(cfg.showDanmaku)
@@ -79,24 +118,44 @@ export default {
       cfg.mergeSimilarDanmaku = toBool(cfg.mergeSimilarDanmaku)
       cfg.mergeGift = toBool(cfg.mergeGift)
       cfg.maxNumber = toInt(cfg.maxNumber, chatConfig.DEFAULT_CONFIG.maxNumber)
+
       cfg.blockGiftDanmaku = toBool(cfg.blockGiftDanmaku)
       cfg.blockLevel = toInt(cfg.blockLevel, chatConfig.DEFAULT_CONFIG.blockLevel)
       cfg.blockNewbie = toBool(cfg.blockNewbie)
       cfg.blockNotMobileVerified = toBool(cfg.blockNotMobileVerified)
       cfg.blockMedalLevel = toInt(cfg.blockMedalLevel, chatConfig.DEFAULT_CONFIG.blockMedalLevel)
+
       cfg.relayMessagesByServer = toBool(cfg.relayMessagesByServer)
       cfg.autoTranslate = toBool(cfg.autoTranslate)
+      cfg.emoticons = this.toObjIfJson(cfg.emoticons)
 
+      chatConfig.sanitizeConfig(cfg)
       this.config = cfg
     },
+    toObjIfJson(str) {
+      if (typeof str !== 'string') {
+        return str
+      }
+      try {
+        return JSON.parse(str)
+      } catch {
+        return {}
+      }
+    },
     initChatClient() {
-      if (this.roomId === null) {
+      if (this.roomKeyValue === null) {
         this.chatClient = new ChatClientTest()
+      } else if (this.config.relayMessagesByServer) {
+        let roomKey = {
+          type: this.roomKeyType,
+          value: this.roomKeyValue
+        }
+        this.chatClient = new ChatClientRelay(roomKey, this.config.autoTranslate)
       } else {
-        if (!this.config.relayMessagesByServer) {
-          this.chatClient = new ChatClientDirect(this.roomId)
+        if (this.roomKeyType === 1) {
+          this.chatClient = new ChatClientDirectWeb(this.roomKeyValue)
         } else {
-          this.chatClient = new ChatClientRelay(this.roomId, false)
+          this.chatClient = new ChatClientDirectOpenLive(this.roomKeyValue)
         }
       }
       this.chatClient.onAddText = this.onAddText
@@ -106,6 +165,9 @@ export default {
       this.chatClient.onDelSuperChat = this.onDelSuperChat
       this.chatClient.onUpdateTranslation = this.onUpdateTranslation
       this.chatClient.start()
+    },
+    async initTextEmoticons() {
+      this.textEmoticons = await chat.getTextEmoticons()
     },
 
     start() {
@@ -196,15 +258,13 @@ export default {
       this.$refs.renderer.addMessage(message)
     },
     onDelSuperChat(data) {
-      for (let id of data.ids) {
-        this.$refs.renderer.delMessage(id)
-      }
+      this.$refs.renderer.delMessages(data.ids)
     },
     onUpdateTranslation(data) {
       if (!this.config.autoTranslate) {
         return
       }
-      this.$refs.renderer.updateMessage(data.id, {translation: data.translation})
+      this.$refs.renderer.updateMessage(data.id, { translation: data.translation })
     },
 
     filterTextMessage(data) {
@@ -219,23 +279,26 @@ export default {
       } else if (this.config.blockMedalLevel > 0 && data.medalLevel < this.config.blockMedalLevel) {
         return false
       }
-      return this.filterSuperChatMessage(data)
+      return this.filterByContent(data.content) && this.filterByAuthorName(data.authorName)
     },
     filterSuperChatMessage(data) {
-      for (let keyword of this.blockKeywords) {
-        if (data.content.indexOf(keyword) !== -1) {
-          return false
-        }
-      }
-      return this.filterNewMemberMessage(data)
+      return this.filterByContent(data.content) && this.filterByAuthorName(data.authorName)
     },
     filterNewMemberMessage(data) {
-      for (let user of this.blockUsers) {
-        if (data.authorName === user) {
+      return this.filterByAuthorName(data.authorName)
+    },
+    filterByContent(content) {
+      let blockKeywordsTrie = this.blockKeywordsTrie
+      for (let i = 0; i < content.length; i++) {
+        let remainContent = content.substring(i)
+        if (blockKeywordsTrie.lazyMatch(remainContent) !== null) {
           return false
         }
       }
       return true
+    },
+    filterByAuthorName(authorName) {
+      return !this.blockUsersTrie.has(authorName)
     },
     mergeSimilarText(content) {
       if (!this.config.mergeSimilarDanmaku) {

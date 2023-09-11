@@ -9,9 +9,13 @@ export default {
   home: {
     roomIdEmpty: '房间ID不能为空',
     roomIdInteger: '房间ID必须为正整数',
+    authCodeEmpty: '身份码不能为空',
+    useAuthCodeWarning: '请优先使用身份码',
 
     general: '常规',
+    room: '房间',
     roomId: '房间ID',
+    authCode: '身份码',
     showDanmaku: '显示弹幕',
     showGift: '显示打赏和新舰长',
     showGiftName: '显示礼物名',
@@ -38,8 +42,14 @@ export default {
     pinyin: '拼音',
     kana: '日文假名',
 
+    emoticon: '自定义表情',
+    emoticonKeyword: '替换关键词',
+    emoticonUrl: 'URL',
+    operation: '操作',
+    addEmoticon: '添加表情',
+    emoticonFileTooLarge: '文件尺寸太大，最大1MB',
+
     roomUrl: '房间URL',
-    copy: '复制',
     enterRoom: '进入房间',
     enterTestRoom: '进入测试房间',
     exportConfig: '导出配置',
@@ -74,6 +84,7 @@ export default {
     memberColor: '舰长颜色',
     showBadges: '显示勋章',
     showColon: '用户名后显示冒号',
+    emoticonSize: '表情大小',
 
     messages: '消息',
     color: '颜色',
@@ -123,10 +134,19 @@ export default {
   },
   help: {
     help: '帮助',
-    p1: '1. 从B站直播间网页复制房间ID',
-    p2: '2. 把房间ID输入到首页的房间ID，复制房间URL',
+    p1: '1. 从开始直播的页面复制身份码',
+    p2: '2. 把身份码输入到首页的房间配置，复制房间URL',
     p3: '3. 使用样式生成器生成样式，复制CSS',
     p4: '4. 在OBS中添加浏览器源',
     p5: '5. URL处输入之前复制的房间URL，自定义CSS处输入之前复制的CSS'
+  },
+  chat: {
+    moderator: '管理员',
+    guardLevel1: '总督',
+    guardLevel2: '提督',
+    guardLevel3: '舰长',
+    sendGift: '赠送 {giftName}x{num}',
+    membershipTitle: '新会员',
+    tickerMembership: '会员'
   }
 }

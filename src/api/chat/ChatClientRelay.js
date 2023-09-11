@@ -7,12 +7,14 @@ const COMMAND_ADD_SUPER_CHAT = 5
 const COMMAND_DEL_SUPER_CHAT = 6
 const COMMAND_UPDATE_TRANSLATION = 7
 
-const HEARTBEAT_INTERVAL = 10 * 1000
-const RECEIVE_TIMEOUT = HEARTBEAT_INTERVAL + 5 * 1000
+// const CONTENT_TYPE_TEXT = 0
+const CONTENT_TYPE_EMOTICON = 1
+
+const RECEIVE_TIMEOUT = 15 * 1000
 
 export default class ChatClientRelay {
-  constructor (roomId, autoTranslate) {
-    this.roomId = roomId
+  constructor(roomKey, autoTranslate) {
+    this.roomKey = roomKey
     this.autoTranslate = autoTranslate
 
     this.onAddText = null
@@ -25,7 +27,6 @@ export default class ChatClientRelay {
     this.websocket = null
     this.retryCount = 0
     this.isDestroying = false
-    this.heartbeatTimerId = null
     this.receiveTimeoutTimerId = null
   }
 
@@ -45,9 +46,7 @@ export default class ChatClientRelay {
       return
     }
     const protocol = window.location.protocol === 'https:' ? 'wss' : 'ws'
-    // 开发时使用localhost:12450
-    const host = process.env.NODE_ENV === 'development' ? 'localhost:12450' : window.location.host
-    const url = `${protocol}://${host}/api/chat`
+    const url = `${protocol}://${window.location.host}/api/chat`
     this.websocket = new WebSocket(url)
     this.websocket.onopen = this.onWsOpen.bind(this)
     this.websocket.onclose = this.onWsClose.bind(this)
@@ -59,20 +58,13 @@ export default class ChatClientRelay {
     this.websocket.send(JSON.stringify({
       cmd: COMMAND_JOIN_ROOM,
       data: {
-        roomId: this.roomId,
+        roomKey: this.roomKey,
         config: {
           autoTranslate: this.autoTranslate
         }
       }
     }))
-    this.heartbeatTimerId = window.setInterval(this.sendHeartbeat.bind(this), HEARTBEAT_INTERVAL)
     this.refreshReceiveTimeoutTimer()
-  }
-
-  sendHeartbeat() {
-    this.websocket.send(JSON.stringify({
-      cmd: COMMAND_HEARTBEAT
-    }))
   }
 
   refreshReceiveTimeoutTimer() {
@@ -94,10 +86,6 @@ export default class ChatClientRelay {
 
   onWsClose() {
     this.websocket = null
-    if (this.heartbeatTimerId) {
-      window.clearInterval(this.heartbeatTimerId)
-      this.heartbeatTimerId = null
-    }
     if (this.receiveTimeoutTimerId) {
       window.clearTimeout(this.receiveTimeoutTimerId)
       this.receiveTimeoutTimerId = null
@@ -111,11 +99,15 @@ export default class ChatClientRelay {
   }
 
   onWsMessage(event) {
-    this.refreshReceiveTimeoutTimer()
-
     let { cmd, data } = JSON.parse(event.data)
     switch (cmd) {
     case COMMAND_HEARTBEAT: {
+      this.refreshReceiveTimeoutTimer()
+
+      // 不能由定时器触发发心跳包，因为浏览器会把不活动页面的定时器调到1分钟以上
+      this.websocket.send(JSON.stringify({
+        cmd: COMMAND_HEARTBEAT
+      }))
       break
     }
     case COMMAND_ADD_TEXT: {

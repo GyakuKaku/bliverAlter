@@ -6,8 +6,12 @@
 export default {
   name: "Reloader",
   props: {
-    roomId: {
+    roomKeyType: {
       type: Number,
+      default: 1
+    },
+    roomKeyValue: {
+      type: [Number, String],
       default: null
     },
     strConfig: {
@@ -23,7 +27,7 @@ export default {
     const date = new Date()
     query.random = date.getMonth().toString() + date.getDate().toString()
     let resolved
-    resolved = this.$router.resolve({name: 'roomNeo', params: {roomId: this.roomId}, query})
+    resolved = this.$router.resolve({ name: 'roomNeo', params: { roomKeyValue: this.roomKeyValue }, query })
     let url = `${window.location.protocol}//${window.location.host}${resolved.href}`
 
     this.tryLoad(url)
