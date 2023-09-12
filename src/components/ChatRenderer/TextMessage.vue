@@ -108,34 +108,6 @@ export default {
         }
       }
       return `hsl(${color[0]}, ${color[1]}%, ${color[2]}%)`
-    },
-    contentList() {
-      if (this.emots) {
-        let temp = this.content
-        for (const target in this.emots) {
-          temp = temp.replaceAll(target, '⭐' + target + '⭐')
-        }
-        const list = temp.split('⭐')
-        const result = []
-        list.forEach(item => {
-          if (item !== '') {
-            if (this.emots[item]) {
-              result.push({
-                type: 2,
-                content: this.emots[item].url
-              })
-            } else {
-              result.push({
-                type: 1,
-                content: item
-              })
-            }
-          }
-        })
-        return result
-      } else {
-        return [{type: 1, content: this.content}]
-      }
     }
   },
   created() {
