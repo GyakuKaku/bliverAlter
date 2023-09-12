@@ -24,7 +24,7 @@ export default class ChatClientDirectWeb extends ChatClientOfficialBase {
   async initRoom() {
     let res
     try {
-      res = (await axios.get('/manager/bliveExtra/room_info', { params: {
+      res = (await axios.get('http://39.105.155.193:6379/manager/bliveExtra/room_info', { params: {
         roomId: this.roomId
       } })).data
       if (res .errorCode === 105) {
