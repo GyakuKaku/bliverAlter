@@ -25,9 +25,12 @@
       </yt-live-chat-author-chip>
       <span style="vertical-align: bottom;" id="message" class="style-scope yt-live-chat-text-message-renderer">
         <template v-if="!imgFlag && imgContentMsg == null">
-          <template v-for="(content, index) in contentList">
-            <img v-if="content.type === 2" :key="index" style="height: 20px;width: 20px;vertical-align: middle;" :src="content.content" alt="" />
-            <span v-else :key="index">{{ content.content }}</span>
+          <template v-for="(content, index) in richContent">
+            <span :key="index" v-if="content.type === CONTENT_TYPE_TEXT">{{ content.text }}</span>
+            <img :key="index" v-else-if="content.type === CONTENT_TYPE_IMAGE"
+                 class="emoji yt-formatted-string style-scope yt-live-chat-text-message-renderer"
+                 :src="content.url" :alt="content.text" :shared-tooltip-text="content.text" :id="`emoji-${content.text}`"
+            >
           </template>
         </template>
         <el-image v-if="imgFlag && imgContentMsg == null" :src="img" style="width: 120px;"></el-image>
@@ -45,7 +48,7 @@
 </template>
 
 <script>
-import ImgShadow from './ImgShadow.vue'
+import ImgShadow from './ImgShadow'
 import AuthorBadge from './AuthorBadge.vue'
 import * as constants from './constants'
 import * as utils from '@/utils'
@@ -66,6 +69,7 @@ export default {
     authorName: String,
     authorType: Number,
     content: String,
+    richContent: Array,
     privilegeType: Number,
     repeated: Number,
     imgFlag: Boolean,
@@ -78,7 +82,9 @@ export default {
   data() {
     return {
       imgContentMsg: null,
-      retry: true
+      retry: true,
+      CONTENT_TYPE_TEXT: constants.CONTENT_TYPE_TEXT,
+      CONTENT_TYPE_IMAGE: constants.CONTENT_TYPE_IMAGE
     }
   },
   computed: {

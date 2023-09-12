@@ -24,6 +24,9 @@ export const MESSAGE_TYPE_SUPER_CHAT = 3
 export const MESSAGE_TYPE_DEL = 4
 export const MESSAGE_TYPE_UPDATE = 5
 
+export const CONTENT_TYPE_TEXT = 0
+export const CONTENT_TYPE_IMAGE = 1
+
 // 美元 -> 人民币 汇率
 // const EXCHANGE_RATE = 7
 export const PRICE_CONFIGS = [
@@ -113,7 +116,7 @@ export const PRICE_CONFIGS = [
   }
 ]
 
-export function getPriceConfig (price) {
+export function getPriceConfig(price) {
   for (const config of PRICE_CONFIGS) {
     if (price >= config.price) {
       return config
@@ -122,21 +125,31 @@ export function getPriceConfig (price) {
   return PRICE_CONFIGS[PRICE_CONFIGS.length - 1]
 }
 
-export function getShowContent (message) {
+export function getShowContent(message) {
   if (message.translation) {
     return `${message.content}（${message.translation}）`
   }
   return message.content
 }
 
-export function getGiftShowContent (message, showGiftName) {
+export function getShowRichContent(message) {
+  // if (message.translation) {
+  //   richContent.push({
+  //     type: CONTENT_TYPE_TEXT,
+  //     text: `（${message.translation}）`
+  //   })
+  // }
+  return [...message.richContent]
+}
+
+export function getGiftShowContent(message, showGiftName) {
   if (!showGiftName) {
     return ''
   }
   return `Sent ${message.giftName}x${message.num}`
 }
 
-export function getShowAuthorName (message) {
+export function getShowAuthorName(message) {
   if (message.authorNamePronunciation && message.authorNamePronunciation !== message.authorName) {
     return `${message.authorName}(${message.authorNamePronunciation})`
   }

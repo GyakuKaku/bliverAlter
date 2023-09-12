@@ -1,9 +1,9 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import {
-  Aside, Autocomplete, Badge, Button, ButtonGroup, Card, Col, ColorPicker, Container, Divider, Dialog, Form, FormItem, Image,
+  Aside, Autocomplete, Badge, Button, ButtonGroup, Card, Col, ColorPicker, Container, Divider, Form, FormItem, Image,
   Input, Main, Menu, MenuItem, Message, Option, OptionGroup, Radio, RadioGroup, Row, Select, Scrollbar,
-  Slider, Submenu, Switch, Table, TableColumn, TabPane, Tabs, Tooltip, Upload
+  Slider, Submenu, Switch, Table, TableColumn, TabPane, Tabs, Tooltip
 } from 'element-ui'
 import axios from 'axios'
 
@@ -12,7 +12,6 @@ import App from './App'
 import Layout from './layout'
 import Home from './views/Home'
 import StyleGenerator from './views/StyleGenerator'
-import ImgManager from './views/ImgManager'
 import Help from './views/Help'
 import Room from './views/Room'
 import Reloader from './views/Reloader'
@@ -31,7 +30,6 @@ Vue.use(Card)
 Vue.use(Col)
 Vue.use(ColorPicker)
 Vue.use(Container)
-Vue.use(Dialog)
 Vue.use(Divider)
 Vue.use(Form)
 Vue.use(FormItem)
@@ -55,8 +53,6 @@ Vue.use(TableColumn)
 Vue.use(TabPane)
 Vue.use(Tabs)
 Vue.use(Tooltip)
-Vue.use(Upload)
-
 Vue.prototype.$message = Message
 
 Vue.config.ignoredElements = [
@@ -72,8 +68,7 @@ const router = new VueRouter({
       children: [
         { path: '', name: 'home', component: Home },
         { path: 'stylegen', name: 'stylegen', component: StyleGenerator },
-        { path: 'help', name: 'help', component: Help },
-        { path: 'imgManager', name: 'imgManager', component: ImgManager }
+        { path: 'help', name: 'help', component: Help }
       ]
     },
     {

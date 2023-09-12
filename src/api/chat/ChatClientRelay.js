@@ -114,6 +114,14 @@ export default class ChatClientRelay {
       if (!this.onAddText) {
         break
       }
+
+      let emoticon = null
+      let contentType = data[13]
+      let contentTypeParams = data[14]
+      if (contentType === CONTENT_TYPE_EMOTICON) {
+        emoticon = contentTypeParams[0]
+      }
+
       data = {
         avatarUrl: data[0],
         timestamp: data[1],
@@ -128,6 +136,12 @@ export default class ChatClientRelay {
         medalLevel: data[10],
         id: data[11],
         translation: data[12]
+      }
+      if (emoticon) {
+        data.imgContent = {
+          url: emoticon,
+          width: 164
+        }
       }
       this.onAddText(data)
       break

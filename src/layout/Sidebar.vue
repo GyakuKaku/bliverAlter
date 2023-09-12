@@ -5,20 +5,16 @@
       background-color="#304156"
       text-color="#bfcbd9"
       active-text-color="rgb(64, 158, 255)"
+      :default-active="$route.path"
     >
       <el-menu-item index="/">
-        <i class="el-icon-s-home"></i>{{$t('sidebar.home')}}
+        <i class="el-icon-s-home"></i>{{ $t('sidebar.home') }}
       </el-menu-item>
-      <el-menu-item :index="$router.resolve({name: 'imgManager'}).href">
-        <i class="el-icon-refresh"></i>图片转换配置
+      <el-menu-item :index="$router.resolve({ name: 'stylegen' }).href">
+        <i class="el-icon-brush"></i>{{ $t('sidebar.stylegen') }}
       </el-menu-item>
-      <el-menu-item :index="$router.resolve({name: 'stylegen', query: {
-        imgTransformer: getUrl()
-      }}).href">
-        <i class="el-icon-brush"></i>{{$t('sidebar.stylegen')}}
-      </el-menu-item>
-      <el-menu-item :index="$router.resolve({name: 'help'}).href">
-        <i class="el-icon-question"></i>{{$t('sidebar.help')}}
+      <el-menu-item :index="$router.resolve({ name: 'help' }).href">
+        <i class="el-icon-question"></i>{{ $t('sidebar.help') }}
       </el-menu-item>
       <el-submenu index="null">
         <template slot="title">

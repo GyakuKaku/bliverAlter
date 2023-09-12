@@ -39,7 +39,8 @@ export default {
     return {
       config: chatConfig.deepCloneDefaultConfig(),
       chatClient: null,
-      pronunciationConverter: null
+      pronunciationConverter: null,
+      textEmoticons: [], // 官方的文本表情
     }
   },
   computed: {
@@ -189,6 +190,7 @@ export default {
         authorName: data.authorName,
         authorType: data.authorType,
         content: data.content,
+        richContent: this.getRichContent(data),
         privilegeType: data.privilegeType,
         repeated: 1,
         translation: data.translation,
@@ -317,6 +319,56 @@ export default {
         return ''
       }
       return this.pronunciationConverter.getPronunciation(text)
+    },
+    getRichContent(data) {
+      let richContent = []
+
+      // 没有文本表情，只能是纯文本
+      if (this.config.emoticons.length === 0 && this.textEmoticons.length === 0) {
+        richContent.push({
+          type: constants.CONTENT_TYPE_TEXT,
+          text: data.content
+        })
+        return richContent
+      }
+
+      // 可能含有文本表情，需要解析
+      let emoticonsTrie = this.emoticonsTrie
+      let startPos = 0
+      let pos = 0
+      while (pos < data.content.length) {
+        let remainContent = data.content.substring(pos)
+        let matchEmoticon = emoticonsTrie.lazyMatch(remainContent)
+        if (matchEmoticon === null) {
+          pos++
+          continue
+        }
+
+        // 加入之前的文本
+        if (pos !== startPos) {
+          richContent.push({
+            type: constants.CONTENT_TYPE_TEXT,
+            text: data.content.slice(startPos, pos)
+          })
+        }
+
+        // 加入表情
+        richContent.push({
+          type: constants.CONTENT_TYPE_IMAGE,
+          text: matchEmoticon.keyword,
+          url: matchEmoticon.url
+        })
+        pos += matchEmoticon.keyword.length
+        startPos = pos
+      }
+      // 加入尾部的文本
+      if (pos !== startPos) {
+        richContent.push({
+          type: constants.CONTENT_TYPE_TEXT,
+          text: data.content.slice(startPos, pos)
+        })
+      }
+      return richContent
     }
   }
 }

@@ -8,9 +8,7 @@
           <h1 class="sidebar-title">blivechat 修改版</h1>
         </router-link>
       </div>
-      <div class="version">
-        v1.6.1
-      </div>
+      <div class="version">{{ APP_VERSION }}</div>
       <sidebar></sidebar>
     </el-aside>
     <el-main>
@@ -32,6 +30,8 @@ export default {
   },
   data() {
     return {
+      APP_VERSION: process.env.APP_VERSION,
+
       isMobile: false,
       hideSidebar: true
     }

@@ -136,12 +136,6 @@ export default class ChatClientDirectWeb extends ChatClientOfficialBase {
         data.imgContent.width = 164
       }
     }
-    if (info[0][15] && info[0][15]['extra'] && (info[0][13] == null || info[0][13] === '{}')) {
-      const extraMap = JSON.parse(info[0][15]['extra'])
-      if (extraMap.emots) {
-        data.emots = extraMap.emots
-      }
-    }
     this.onAddText(data)
   }
 

@@ -2,7 +2,7 @@
   <yt-live-chat-renderer class="style-scope yt-live-chat-app" style="--scrollbar-width:11px;" hide-timestamps
     @mousemove="refreshCantScrollStartTime"
   >
-    <ticker class="style-scope yt-live-chat-renderer" :messages="paidMessages" :showGiftName="showGiftName"></ticker>
+    <ticker class="style-scope yt-live-chat-renderer" :messages.sync="paidMessages" :showGiftName="showGiftName"></ticker>
     <yt-live-chat-item-list-renderer class="style-scope yt-live-chat-renderer" allow-scroll>
       <div ref="scroller" id="item-scroller" class="style-scope yt-live-chat-item-list-renderer animated" @scroll="onScroll">
         <div ref="itemOffset" id="item-offset" class="style-scope yt-live-chat-item-list-renderer" style="height: 0px;">
@@ -12,8 +12,13 @@
                 class="style-scope yt-live-chat-item-list-renderer"
                 :img-flag="message.imgFlag"
                 :img="'/static/img/memes/' + message.img"
-                :avatarUrl="message.avatarUrl" :time="message.time" :authorName="message.authorName"
-                :authorType="message.authorType" :content="getShowContent(message)" :privilegeType="message.privilegeType"
+                :avatarUrl="message.avatarUrl"
+                :time="message.time"
+                :authorName="message.authorName"
+                :authorType="message.authorType"
+                :content="getShowContent(message)"
+                :privilegeType="message.privilegeType"
+                :richContent="getShowRichContent(message)"
                 :repeated="message.repeated"
                 :imgContent="imgContentHandle(message.imgContent)"
                 :emots="message.emots"
@@ -142,7 +147,7 @@ export default {
   },
   computed: {
     canScrollToBottom() {
-      return this.atBottom/* || this.allowScroll*/
+      return this.atBottom/* || this.allowScroll */
     }
   },
   watch: {
@@ -152,7 +157,6 @@ export default {
   },
   mounted() {
     this.scrollToBottom()
-
   },
   beforeDestroy() {
     if (this.emitSmoothedMessageTimerId) {
@@ -172,6 +176,7 @@ export default {
       return constants.getGiftShowContent(message, this.showGiftName)
     },
     getShowContent: constants.getShowContent,
+    getShowRichContent: constants.getShowRichContent,
     getShowAuthorName: constants.getShowAuthorName,
 
     addMessage(message) {
@@ -396,44 +401,24 @@ export default {
 
       for (let message of messageGroup) {
         switch (message.type) {
-          case constants.MESSAGE_TYPE_TEXT:
-            this.handleImgMessage(message)
-            // eslint-disable-next-line no-fallthrough
-          case constants.MESSAGE_TYPE_GIFT:
-          case constants.MESSAGE_TYPE_MEMBER:
-          case constants.MESSAGE_TYPE_SUPER_CHAT:
-            this.handleAddMessage(message)
-            break
-          case constants.MESSAGE_TYPE_DEL:
-            this.handleDelMessage(message)
-            break
-          case constants.MESSAGE_TYPE_UPDATE:
-            this.handleUpdateMessage(message)
-            break
+        case constants.MESSAGE_TYPE_TEXT:
+        case constants.MESSAGE_TYPE_GIFT:
+        case constants.MESSAGE_TYPE_MEMBER:
+        case constants.MESSAGE_TYPE_SUPER_CHAT:
+          this.handleAddMessage(message)
+          break
+        case constants.MESSAGE_TYPE_DEL:
+          this.handleDelMessage(message)
+          break
+        case constants.MESSAGE_TYPE_UPDATE:
+          this.handleUpdateMessage(message)
+          break
         }
       }
 
       this.maybeResizeScrollContainer()
       this.flushMessagesBuffer()
       this.$nextTick(this.maybeScrollToBottom)
-    },
-    handleImgMessage(message) {
-      try {
-        if (this.$route.query.imgTransformer) {
-          const transformerStr = String(this.$route.query.imgTransformer)
-          const transformer = JSON.parse(transformerStr)
-          for (let i = 0; i < transformer.length; i++) {
-            if (message.content.indexOf(transformer[i].from) > -1) {
-              message.imgFlag = true
-              message.img = transformer[i].target
-              break
-            }
-          }
-        }
-      } catch (e) {
-        console.log(e)
-        console.log('图片转换失败handleImgMessage')
-      }
     },
     handleAddMessage(message) {
       message = {
@@ -448,21 +433,6 @@ export default {
         if (this.paidMessages.length > MAX_PAID_MESSAGE_NUM) {
           this.paidMessages.splice(MAX_PAID_MESSAGE_NUM, this.paidMessages.length - MAX_PAID_MESSAGE_NUM)
         }
-      }
-      try {
-        if (this.$route.query.imgTransformer && message.content) {
-          const transformerStr = String(this.$route.query.imgTransformer)
-          const transformer = JSON.parse(transformerStr)
-          for (let i = 0; i < transformer.length; i++) {
-            if (message.content.indexOf(transformer[i].from) > -1) {
-              message.imgFlag = true
-              message.img = transformer[i].target
-              break
-            }
-          }
-        }
-      } catch (e) {
-        console.log('图片转换失败handleAddMessage')
       }
     },
     handleDelMessage({ id }) {
