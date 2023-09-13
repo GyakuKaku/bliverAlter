@@ -31,7 +31,7 @@
                   ></el-input>
                 </el-col>
               </el-row>
-              <el-row v-if="form.roomKeyType === 1" style="color: red">{{ $t('home.useAuthCodeWarning') }}</el-row>
+              <el-row style="color: red">后端登录了我的小号，目前继续用房间id的方式也可以，如果失效了可以再改用原作者更新的身份码方式。</el-row>
             </el-form-item>
             <el-row :gutter="20">
               <el-col :xs="24" :sm="8">
