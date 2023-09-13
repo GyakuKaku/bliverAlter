@@ -10,7 +10,7 @@ export default {
     roomIdEmpty: '房间ID不能为空',
     roomIdInteger: '房间ID必须为正整数',
     authCodeEmpty: '身份码不能为空',
-    useAuthCodeWarning: '请优先使用身份码',
+    useAuthCodeWarning: '后端登录了我的小号，目前继续用房间id的方式也可以，如果失效了可以改用身份码',
 
     general: '常规',
     room: '房间',

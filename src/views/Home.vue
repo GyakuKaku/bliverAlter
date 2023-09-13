@@ -156,7 +156,7 @@
     </p>
     <p>
       <el-card>
-        此服务是基于开源项目blivechat二次开发的弹幕姬服务。
+        此服务是基于开源项目blivechat二次开发的弹幕机服务。
         <br/>
         原项目地址：https://github.com/xfgryujk/blivechat
         <br/>
