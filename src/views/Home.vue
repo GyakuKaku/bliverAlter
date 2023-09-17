@@ -144,23 +144,21 @@
     </p>
     <div>
       <el-card>
-        个人服务器不支持太多人访问，所以请不要在群组或互联网上分享或传播，希望你能理解。
-        如该服务无法正常使用，可使用以下备用方案：
-        直播弹幕姬BLC：https://play-live.bilibili.com/details/1675336975685
-        LAPLACE CHAT：https://chat.laplace.live/
-        blivechat原版：https://play-live.bilibili.com/details/1694397161340
-        blivechat只熊版：https://github.com/DoodleBears/blivechat/releases
+        <p>此服务是基于开源项目blivechat二次开发的弹幕机服务。</p>
+        <ul>
+          <li>原项目地址：https://github.com/xfgryujk/blivechat</li>
+          <li>原作者专栏：https://www.bilibili.com/read/cv4594365</li>
+        </ul>
+        <p>个人服务器不支持太多人访问，所以请不要在群组或互联网上分享或传播，希望你能理解。</p>
+        <p>如该服务无法正常使用，可使用以下备用方案：</p>
+        <ul>
+          <li>直播弹幕姬BLC：https://play-live.bilibili.com/details/1675336975685</li>
+          <li>LAPLACE CHAT：https://chat.laplace.live/</li>
+          <li>blivechat原版：https://play-live.bilibili.com/details/1694397161340</li>
+          <li>blivechat只熊版：https://github.com/DoodleBears/blivechat/releases</li>
+        </ul>
       </el-card>
     </div>
-    <p>
-      <el-card>
-        此服务是基于开源项目blivechat二次开发的弹幕机服务。
-        <br/>
-        原项目地址：https://github.com/xfgryujk/blivechat
-        <br/>
-        原作者专栏：https://www.bilibili.com/read/cv4594365
-      </el-card>
-    </p>
   </div>
 </template>
 
