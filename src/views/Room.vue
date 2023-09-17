@@ -165,6 +165,7 @@ export default {
       this.chatClient.onAddSuperChat = this.onAddSuperChat
       this.chatClient.onDelSuperChat = this.onDelSuperChat
       this.chatClient.onUpdateTranslation = this.onUpdateTranslation
+      this.chatClient.onFatalError = this.onFatalError
       this.chatClient.start()
     },
     async initTextEmoticons() {
@@ -267,6 +268,18 @@ export default {
         return
       }
       this.$refs.renderer.updateMessage(data.id, { translation: data.translation })
+    },
+    onFatalError(error) {
+      this.$message.error({
+        message: error.toString(),
+        duration: 10 * 1000
+      })
+      this.chatClient.stop()
+
+      if (error.type === chat.FATAL_ERROR_TYPE_AUTH_CODE_ERROR) {
+        // Read The Fucking Manual
+        this.$router.push({ name: 'help' })
+      }
     },
 
     filterTextMessage(data) {

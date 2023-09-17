@@ -1,3 +1,5 @@
+import * as chat from '.'
+
 const COMMAND_HEARTBEAT = 0
 const COMMAND_JOIN_ROOM = 1
 const COMMAND_ADD_TEXT = 2
@@ -6,6 +8,7 @@ const COMMAND_ADD_MEMBER = 4
 const COMMAND_ADD_SUPER_CHAT = 5
 const COMMAND_DEL_SUPER_CHAT = 6
 const COMMAND_UPDATE_TRANSLATION = 7
+const COMMAND_FATAL_ERROR = 8
 
 // const CONTENT_TYPE_TEXT = 0
 const CONTENT_TYPE_EMOTICON = 1
@@ -23,6 +26,8 @@ export default class ChatClientRelay {
     this.onAddSuperChat = null
     this.onDelSuperChat = null
     this.onUpdateTranslation = null
+
+    this.onFatalError = null
 
     this.websocket = null
     this.retryCount = 0
@@ -54,7 +59,6 @@ export default class ChatClientRelay {
   }
 
   onWsOpen() {
-    this.retryCount = 0
     this.websocket.send(JSON.stringify({
       cmd: COMMAND_JOIN_ROOM,
       data: {
@@ -95,7 +99,14 @@ export default class ChatClientRelay {
       return
     }
     console.warn(`掉线重连中${++this.retryCount}`)
-    window.setTimeout(this.wsConnect.bind(this), 1000)
+    window.setTimeout(this.wsConnect.bind(this), this.getReconnectInterval())
+  }
+
+  getReconnectInterval() {
+    return Math.min(
+      1000 + ((this.retryCount - 1) * 2000),
+      10 * 1000
+    )
   }
 
   onWsMessage(event) {
@@ -181,6 +192,19 @@ export default class ChatClientRelay {
       this.onUpdateTranslation(data)
       break
     }
+    case COMMAND_FATAL_ERROR: {
+      if (!this.onFatalError) {
+        break
+      }
+      let error = new chat.ChatClientFatalError(data.type, data.msg)
+      this.onFatalError(error)
+      break
+    }
+    }
+
+    // 至少成功处理1条消息
+    if (cmd !== COMMAND_FATAL_ERROR) {
+      this.retryCount = 0
     }
   }
 }
