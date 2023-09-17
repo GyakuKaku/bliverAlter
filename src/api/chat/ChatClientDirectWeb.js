@@ -27,7 +27,7 @@ export default class ChatClientDirectWeb extends ChatClientOfficialBase {
       res = (await axios.get('/manager/bliveExtra/room_info', { params: {
         roomId: this.roomId
       } })).data
-      if (res .errorCode === 105) {
+      if (res.errorCode === 105) {
         res = (await axios.get('/api/room_info', {
           params: {
             roomId: this.roomId
@@ -35,6 +35,8 @@ export default class ChatClientDirectWeb extends ChatClientOfficialBase {
         })).data
         res.roomOwnerUid = res.ownerUid
         res.watcherUid = res.roomOwnerUid
+      } else if (res.errorCode === 106) {
+        return false
       } else {
         res = res.data
       }
