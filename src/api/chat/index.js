@@ -1,6 +1,7 @@
 import axios from 'axios'
 
 export const FATAL_ERROR_TYPE_AUTH_CODE_ERROR = 1
+export const FATAL_ERROR_TYPE_SERVER_BLOCK = 8
 
 export class ChatClientFatalError extends Error {
   constructor(type, message) {

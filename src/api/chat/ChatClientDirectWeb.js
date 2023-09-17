@@ -4,6 +4,7 @@ import { getUuid4Hex } from '@/utils'
 import * as chat from '.'
 import * as base from './ChatClientOfficialBase'
 import ChatClientOfficialBase from './ChatClientOfficialBase'
+import {FATAL_ERROR_TYPE_SERVER_BLOCK} from ".";
 
 export default class ChatClientDirectWeb extends ChatClientOfficialBase {
   constructor(roomId) {
@@ -36,7 +37,8 @@ export default class ChatClientDirectWeb extends ChatClientOfficialBase {
         res.roomOwnerUid = res.ownerUid
         res.watcherUid = res.roomOwnerUid
       } else if (res.errorCode === 106) {
-        return false
+        let msg = ``
+        throw new chat.ChatClientFatalError(chat.FATAL_ERROR_TYPE_SERVER_BLOCK, msg)
       } else {
         res = res.data
       }
