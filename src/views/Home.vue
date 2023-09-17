@@ -31,7 +31,7 @@
                   ></el-input>
                 </el-col>
               </el-row>
-              <el-row style="color: red">后端登录了我的账号，目前继续用房间id的方式也可以，如果失效了可以再改用原作者更新的身份码方式。</el-row>
+              <el-row style="color: red">后端做了处理，目前继续用房间id的方式也可以，如果失效了可以再改用原作者更新的身份码方式。</el-row>
             </el-form-item>
             <el-row :gutter="20">
               <el-col :xs="24" :sm="8">
@@ -121,19 +121,7 @@
                   <el-switch v-model="form.relayMessagesByServer"></el-switch>
                 </el-form-item>
               </el-col>
-<!--              <el-col :xs="24" :sm="8">-->
-<!--                <el-form-item :label="$t('home.autoTranslate')">-->
-<!--                  <el-switch v-model="form.autoTranslate" :disabled="!serverConfig.enableTranslate || !form.relayMessagesByServer"></el-switch>-->
-<!--                </el-form-item>-->
-<!--              </el-col>-->
             </el-row>
-<!--            <el-form-item :label="$t('home.giftUsernamePronunciation')">-->
-<!--              <el-radio-group v-model="form.giftUsernamePronunciation">-->
-<!--                <el-radio label="">{{$t('home.dontShow')}}</el-radio>-->
-<!--                <el-radio label="pinyin">{{$t('home.pinyin')}}</el-radio>-->
-<!--                <el-radio label="kana">{{$t('home.kana')}}</el-radio>-->
-<!--              </el-radio-group>-->
-<!--            </el-form-item>-->
           </el-tab-pane>
         </el-tabs>
       </el-form>
@@ -154,6 +142,15 @@
         </el-form>
       </el-card>
     </p>
+    <div>
+      <el-card>
+        建议准备一个其他弹幕机工具作为备用方案：
+        直播弹幕姬BLC：https://play-live.bilibili.com/details/1675336975685
+        LAPLACE CHAT：https://chat.laplace.live/
+        blivechat原版：https://play-live.bilibili.com/details/1694397161340
+        blivechat只熊版：https://github.com/DoodleBears/blivechat/releases
+      </el-card>
+    </div>
     <p>
       <el-card>
         此服务是基于开源项目blivechat二次开发的弹幕机服务。
