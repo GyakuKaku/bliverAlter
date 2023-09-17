@@ -144,7 +144,8 @@
     </p>
     <div>
       <el-card>
-        建议准备一个其他弹幕机工具作为备用方案：
+        个人服务器不支持太多人访问，所以请不要在群组或互联网上分享或传播，希望你能理解。
+        如该服务无法正常使用，可使用以下备用方案：
         直播弹幕姬BLC：https://play-live.bilibili.com/details/1675336975685
         LAPLACE CHAT：https://chat.laplace.live/
         blivechat原版：https://play-live.bilibili.com/details/1694397161340
