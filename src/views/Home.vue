@@ -149,7 +149,7 @@
           <li>原项目地址：https://github.com/xfgryujk/blivechat</li>
           <li>原作者专栏：https://www.bilibili.com/read/cv4594365</li>
         </ul>
-        <p>个人服务器不支持太多人访问，所以请不要在群组或互联网上分享或传播，希望你能理解。</p>
+        <p>个人服务器不支持太多人访问，所以请不要在群组或互联网上分享或传播，谢谢理解。</p>
         <p>如该服务无法正常使用，可使用以下备用方案：</p>
         <ul>
           <li>直播弹幕姬BLC：https://play-live.bilibili.com/details/1675336975685</li>
