@@ -4,7 +4,6 @@ import { getUuid4Hex } from '@/utils'
 import * as chat from '.'
 import * as base from './ChatClientOfficialBase'
 import ChatClientOfficialBase from './ChatClientOfficialBase'
-import {FATAL_ERROR_TYPE_SERVER_BLOCK} from ".";
 
 export default class ChatClientDirectWeb extends ChatClientOfficialBase {
   constructor(roomId) {
@@ -23,6 +22,7 @@ export default class ChatClientDirectWeb extends ChatClientOfficialBase {
   }
 
   async initRoom() {
+    let flag = false
     let res
     try {
       res = (await axios.get('/manager/bliveExtra/room_info', { params: {
@@ -37,8 +37,7 @@ export default class ChatClientDirectWeb extends ChatClientOfficialBase {
         res.roomOwnerUid = res.ownerUid
         res.watcherUid = res.roomOwnerUid
       } else if (res.errorCode === 106) {
-        let msg = ``
-        throw new chat.ChatClientFatalError(chat.FATAL_ERROR_TYPE_SERVER_BLOCK, msg)
+        flag = true
       } else {
         res = res.data
       }
@@ -54,6 +53,9 @@ export default class ChatClientDirectWeb extends ChatClientOfficialBase {
       } catch (e) {
         return true
       }
+    }
+    if (flag) {
+      throw new chat.ChatClientFatalError(chat.FATAL_ERROR_TYPE_ROOM_ERROR, '')
     }
     this.realRoomId = res.roomId
     this.roomOwnerUid = res.roomOwnerUid

@@ -15,7 +15,6 @@ import ChatClientDirectOpenLive from '@/api/chat/ChatClientDirectOpenLive'
 import ChatClientRelay from '@/api/chat/ChatClientRelay'
 import ChatRenderer from '@/components/ChatRenderer'
 import * as constants from '@/components/ChatRenderer/constants'
-import {FATAL_ERROR_TYPE_SERVER_BLOCK} from "@/api/chat";
 
 export default {
   name: 'Room',
@@ -271,7 +270,7 @@ export default {
       this.$refs.renderer.updateMessage(data.id, { translation: data.translation })
     },
     onFatalError(error) {
-      if (error.type === chat.FATAL_ERROR_TYPE_SERVER_BLOCK) {
+      if (error.type === chat.FATAL_ERROR_TYPE_ROOM_ERROR) {
         this.chatClient.stop()
         return
       }
