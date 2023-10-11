@@ -12,8 +12,8 @@
                 class="style-scope yt-live-chat-item-list-renderer"
                 :img-flag="message.imgFlag"
                 :img="'/static/img/memes/' + message.img"
-                :avatarUrl="message.avatarUrl"
                 :time="message.time"
+                :avatarUrl="message.avatarUrl"
                 :authorName="message.authorName"
                 :authorType="message.authorType"
                 :content="getShowContent(message)"
@@ -35,8 +35,11 @@
                   `--x-offset:${message.offsetX}px;
                   --y-offset:${message.offsetY}px;`
                 "
-                :price="message.price" :avatarUrl="message.avatarUrl" :authorName="getShowAuthorName(message)"
-                :time="message.time" :content="getGiftShowContent(message)"
+                :time="message.time"
+                :avatarUrl="message.avatarUrl"
+                :authorName="getShowAuthorName(message)"
+                :price="message.price"
+                :content="getGiftShowContent(message)"
                 :offsetX="message.offsetX"
                 :offsetY="message.offsetY"
               ></paid-message>

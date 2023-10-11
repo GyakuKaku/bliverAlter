@@ -1,6 +1,7 @@
 import axios from 'axios'
 
 import * as chat from '.'
+import * as chatModels from './models'
 import * as base from './ChatClientOfficialBase'
 import ChatClientOfficialBase from './ChatClientOfficialBase'
 
@@ -54,13 +55,13 @@ export default class ChatClientDirectOpenLive extends ChatClientOfficialBase {
         let msg = `code=${res.code}, message=${res.message}, request_id=${res.request_id}`
         if (res.code === 7007) {
           // 身份码错误
-          throw new chat.ChatClientFatalError(chat.FATAL_ERROR_TYPE_AUTH_CODE_ERROR, msg)
+          throw new chatModels.ChatClientFatalError(chatModels.FATAL_ERROR_TYPE_AUTH_CODE_ERROR, msg)
         }
         throw Error(msg)
       }
     } catch (e) {
       console.error('startGame failed:', e)
-      if (e instanceof chat.ChatClientFatalError) {
+      if (e instanceof chatModels.ChatClientFatalError) {
         throw e
       }
       return false
@@ -148,9 +149,6 @@ export default class ChatClientDirectOpenLive extends ChatClientOfficialBase {
   }
 
   async dmCallback(command) {
-    if (!this.onAddText) {
-      return
-    }
     let data = command.data
 
     let authorType
@@ -162,101 +160,78 @@ export default class ChatClientDirectOpenLive extends ChatClientOfficialBase {
       authorType = 0
     }
 
-    data = {
+    const dataBody = {
       avatarUrl: chat.processAvatarUrl(data.uface),
       timestamp: data.timestamp,
       authorName: data.uname,
       authorType: authorType,
       content: data.msg,
       privilegeType: data.guard_level,
-      isGiftDanmaku: false,
-      authorLevel: 1,
-      isNewbie: false,
-      isMobileVerified: true,
+      isGiftDanmaku: chat.isGiftDanmakuByContent(data.msg),
       medalLevel: data.fans_medal_wearing_status ? data.fans_medal_level : 0,
-      id: data.msg_id,
-      translation: ''
+      id: data.msg_id
     }
+
     if (command.data.dm_type === 1) {
-      data.imgContent = {
+      dataBody.imgContent = {
         url: command.data.emoji_img_url,
         width: 164
       }
     }
-    // if (info[0][15] && info[0][15]['extra'] && (info[0][13] == null || info[0][13] === '{}')) {
-    //   const extraMap = JSON.parse(info[0][15]['extra'])
-    //   if (extraMap.emots) {
-    //     data.emots = extraMap.emots
-    //   }
-    // }
-    this.onAddText(data)
+    data = new chatModels.AddTextMsg(dataBody)
+    this.msgHandler.onAddText(data)
   }
 
   sendGiftCallback(command) {
-    if (!this.onAddGift) {
-      return
-    }
     let data = command.data
     if (!data.paid) { // 丢人
       return
     }
 
-    data = {
+    data = new chatModels.AddGiftMsg({
       id: data.msg_id,
       avatarUrl: chat.processAvatarUrl(data.uface),
       timestamp: data.timestamp,
       authorName: data.uname,
-      totalCoin: data.price,
+      totalCoin: data.price * data.gift_num,
       giftName: data.gift_name,
       num: data.gift_num
-    }
-    this.onAddGift(data)
+    })
+    this.msgHandler.onAddGift(data)
   }
 
   async guardCallback(command) {
-    if (!this.onAddMember) {
-      return
-    }
-
     let data = command.data
-    data = {
+    data = new chatModels.AddMemberMsg({
       id: data.msg_id,
       avatarUrl: chat.processAvatarUrl(data.user_info.uface),
       timestamp: data.timestamp,
       authorName: data.user_info.uname,
       privilegeType: data.guard_level
-    }
-    this.onAddMember(data)
+    })
+    this.msgHandler.onAddMember(data)
   }
 
   superChatCallback(command) {
-    if (!this.onAddSuperChat) {
-      return
-    }
-
     let data = command.data
-    data = {
+    data = new chatModels.AddSuperChatMsg({
       id: data.message_id.toString(),
       avatarUrl: chat.processAvatarUrl(data.uface),
       timestamp: data.start_time,
       authorName: data.uname,
       price: data.rmb,
       content: data.message,
-      translation: ''
-    }
-    this.onAddSuperChat(data)
+    })
+    this.msgHandler.onAddSuperChat(data)
   }
 
   superChatDelCallback(command) {
-    if (!this.onDelSuperChat) {
-      return
-    }
-
     let ids = []
     for (let id of command.data.message_ids) {
       ids.push(id.toString())
     }
-    this.onDelSuperChat({ ids })
+    let data = new chatModels.DelSuperChatMsg({ ids })
+    this.msgHandler.onDelSuperChat(data)
   }
 }
 

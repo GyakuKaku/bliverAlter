@@ -1,7 +1,7 @@
 import axios from 'axios'
 
-import { getUuid4Hex } from '@/utils'
 import * as chat from '.'
+import * as chatModels from './models'
 import * as base from './ChatClientOfficialBase'
 import ChatClientOfficialBase from './ChatClientOfficialBase'
 
@@ -55,7 +55,7 @@ export default class ChatClientDirectWeb extends ChatClientOfficialBase {
       }
     }
     if (flag) {
-      throw new chat.ChatClientFatalError(chat.FATAL_ERROR_TYPE_ROOM_ERROR, '')
+      throw new chatModels.ChatClientFatalError(chatModels.FATAL_ERROR_TYPE_ROOM_ERROR, '')
     }
     this.realRoomId = res.roomId
     this.roomOwnerUid = res.roomOwnerUid
@@ -94,9 +94,6 @@ export default class ChatClientDirectWeb extends ChatClientOfficialBase {
   }
 
   async danmuMsgCallback(command) {
-    if (!this.onAddText) {
-      return
-    }
     let info = command.info
 
     let roomId, medalLevel
@@ -121,95 +118,79 @@ export default class ChatClientDirectWeb extends ChatClientOfficialBase {
       authorType = 0
     }
 
-    let data = {
-      avatarUrl: await chat.getAvatarUrl(uid),
+    let authorName = info[2][1]
+    let content = info[1]
+    const dataBody = {
+      avatarUrl: await chat.getAvatarUrl(uid, authorName),
       timestamp: info[0][4] / 1000,
-      authorName: info[2][1],
+      authorName: authorName,
       authorType: authorType,
-      content: info[1],
+      content: content,
       privilegeType: privilegeType,
       isGiftDanmaku: Boolean(info[0][9]),
       authorLevel: info[4][0],
       isNewbie: info[2][5] < 10000,
       isMobileVerified: Boolean(info[2][6]),
-      medalLevel: roomId === this.roomId ? medalLevel : 0,
-      id: getUuid4Hex(),
-      translation: ''
+      medalLevel: roomId === this.roomId ? medalLevel : 0
     }
     if (info[0][13]) {
-      data.imgContent = info[0][13]
-      if (data.imgContent.width === 20) {
-        data.imgContent.width = 164
+      dataBody.imgContent = info[0][13]
+      if (dataBody.imgContent.width === 20) {
+        dataBody.imgContent.width = 164
       }
     }
-    this.onAddText(data)
+    let data = new chatModels.AddTextMsg(dataBody)
+    this.msgHandler.onAddText(data)
   }
 
   sendGiftCallback(command) {
-    if (!this.onAddGift) {
-      return
-    }
     let data = command.data
     if (data.coin_type !== 'gold') { // 丢人
       return
     }
 
-    data = {
-      id: getUuid4Hex(),
+    data = new chatModels.AddGiftMsg({
       avatarUrl: chat.processAvatarUrl(data.face),
       timestamp: data.timestamp,
       authorName: data.uname,
       totalCoin: data.total_coin,
       giftName: data.giftName,
       num: data.num
-    }
-    this.onAddGift(data)
+    })
+    this.msgHandler.onAddGift(data)
   }
 
   async guardBuyCallback(command) {
-    if (!this.onAddMember) {
-      return
-    }
-
     let data = command.data
-    data = {
-      id: getUuid4Hex(),
-      avatarUrl: await chat.getAvatarUrl(data.uid),
+    data = new chatModels.AddMemberMsg({
+      avatarUrl: await chat.getAvatarUrl(data.uid, data.username),
       timestamp: data.start_time,
       authorName: data.username,
       privilegeType: data.guard_level
-    }
-    this.onAddMember(data)
+    })
+    this.msgHandler.onAddMember(data)
   }
 
   superChatMessageCallback(command) {
-    if (!this.onAddSuperChat) {
-      return
-    }
-
     let data = command.data
-    data = {
+    data = new chatModels.AddSuperChatMsg({
       id: data.id.toString(),
       avatarUrl: chat.processAvatarUrl(data.user_info.face),
       timestamp: data.start_time,
       authorName: data.user_info.uname,
       price: data.price,
       content: data.message,
-      translation: ''
-    }
-    this.onAddSuperChat(data)
+    })
+    this.msgHandler.onAddSuperChat(data)
   }
 
   superChatMessageDeleteCallback(command) {
-    if (!this.onDelSuperChat) {
-      return
-    }
-
     let ids = []
     for (let id of command.data.ids) {
       ids.push(id.toString())
     }
-    this.onDelSuperChat({ ids })
+    let data = new chatModels.DelSuperChatMsg({ ids })
+    this.msgHandler.onDelSuperChat(data)
   }
 }
 

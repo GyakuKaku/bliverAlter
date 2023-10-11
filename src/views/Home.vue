@@ -263,6 +263,7 @@ export default {
       this.$refs.roomUrlInput.select()
       document.execCommand('Copy')
     },
+
     exportConfig() {
       let cfg = mergeConfig(this.form, chatConfig.DEFAULT_CONFIG)
       download(JSON.stringify(cfg, null, 2), 'blivechat.json', 'application/json')

@@ -9,10 +9,7 @@ import * as trie from '@/utils/trie'
 import * as pronunciation from '@/utils/pronunciation'
 import * as chatConfig from '@/api/chatConfig'
 import * as chat from '@/api/chat'
-import ChatClientTest from '@/api/chat/ChatClientTest'
-import ChatClientDirectWeb from '@/api/chat/ChatClientDirectWeb'
-import ChatClientDirectOpenLive from '@/api/chat/ChatClientDirectOpenLive'
-import ChatClientRelay from '@/api/chat/ChatClientRelay'
+import * as chatModels from '@/api/chat/models'
 import ChatRenderer from '@/components/ChatRenderer'
 import * as constants from '@/components/ChatRenderer/constants'
 
@@ -36,11 +33,16 @@ export default {
     }
   },
   data() {
+    let customStyleElement = document.createElement('style')
+    document.head.appendChild(customStyleElement)
     return {
       config: chatConfig.deepCloneDefaultConfig(),
+
       chatClient: null,
+      textEmoticons: [], // 官方的文本表情（后端配置的）
       pronunciationConverter: null,
-      textEmoticons: [], // 官方的文本表情
+
+      customStyleElement, // 仅用于样式生成器中预览样式
     }
   },
   computed: {
@@ -54,15 +56,10 @@ export default {
       }
       return res
     },
-    blockUsersTrie() {
+    blockUsersSet() {
       let blockUsers = this.config.blockUsers.split('\n')
-      let res = new trie.Trie()
-      for (let user of blockUsers) {
-        if (user !== '') {
-          res.set(user, true)
-        }
-      }
-      return res
+      blockUsers = blockUsers.filter(user => user !== '')
+      return new Set(blockUsers)
     },
     emoticonsTrie() {
       let res = new trie.Trie()
@@ -77,26 +74,60 @@ export default {
     }
   },
   mounted() {
-    this.initConfig()
-    this.initChatClient()
-    this.initTextEmoticons()
-    if (this.config.giftUsernamePronunciation !== '') {
-      this.pronunciationConverter = new pronunciation.PronunciationConverter()
-      this.pronunciationConverter.loadDict(this.config.giftUsernamePronunciation)
+    if (document.visibilityState === 'visible') {
+      this.init()
+    } else {
+      // 当前窗口不可见，延迟到可见时加载，防止OBS中一次并发太多请求（OBS中浏览器不可见时也会加载网页，除非显式设置）
+      document.addEventListener('visibilitychange', this.onVisibilityChange)
     }
 
-    // 提示用户已加载
-    this.$message({
-      message: 'Loaded',
-      duration: '500'
-    })
+    window.addEventListener('message', this.onWindowMessage)
   },
   beforeDestroy() {
+    window.removeEventListener('message', this.onWindowMessage)
+
+    document.removeEventListener('visibilitychange', this.onVisibilityChange)
     if (this.chatClient) {
       this.chatClient.stop()
     }
+
+    document.head.removeChild(this.customStyleElement)
   },
   methods: {
+    onVisibilityChange() {
+      if (document.visibilityState !== 'visible') {
+        return
+      }
+      document.removeEventListener('visibilitychange', this.onVisibilityChange)
+      this.init()
+    },
+    async init() {
+      this.initConfig()
+
+      let initChatClientPromise = this.initChatClient()
+      this.initTextEmoticons()
+      if (this.config.giftUsernamePronunciation !== '') {
+        this.pronunciationConverter = new pronunciation.PronunciationConverter()
+        this.pronunciationConverter.loadDict(this.config.giftUsernamePronunciation)
+      }
+
+      try {
+        // 其他初始化就不用等了，就算失败了也不会有很大影响
+        await initChatClientPromise
+      } catch (e) {
+        this.$message.error({
+          message: `Failed to load: ${e}`,
+          duration: 10 * 1000
+        })
+        throw e
+      }
+
+      // 提示用户已加载
+      this.$message({
+        message: 'Loaded',
+        duration: 500
+      })
+    },
     initConfig() {
       let locale = this.strConfig.lang
       if (locale) {
@@ -143,42 +174,60 @@ export default {
         return {}
       }
     },
-    initChatClient() {
+    async initChatClient() {
       if (this.roomKeyValue === null) {
+        let ChatClientTest = (await import('@/api/chat/ChatClientTest')).default
         this.chatClient = new ChatClientTest()
       } else if (this.config.relayMessagesByServer) {
         let roomKey = {
           type: this.roomKeyType,
           value: this.roomKeyValue
         }
+        let ChatClientRelay = (await import('@/api/chat/ChatClientRelay')).default
         this.chatClient = new ChatClientRelay(roomKey, this.config.autoTranslate)
       } else {
         if (this.roomKeyType === 1) {
+          let ChatClientDirectWeb = (await import('@/api/chat/ChatClientDirectWeb')).default
           this.chatClient = new ChatClientDirectWeb(this.roomKeyValue)
         } else {
+          let ChatClientDirectOpenLive = (await import('@/api/chat/ChatClientDirectOpenLive')).default
           this.chatClient = new ChatClientDirectOpenLive(this.roomKeyValue)
         }
       }
-      this.chatClient.onAddText = this.onAddText
-      this.chatClient.onAddGift = this.onAddGift
-      this.chatClient.onAddMember = this.onAddMember
-      this.chatClient.onAddSuperChat = this.onAddSuperChat
-      this.chatClient.onDelSuperChat = this.onDelSuperChat
-      this.chatClient.onUpdateTranslation = this.onUpdateTranslation
-      this.chatClient.onFatalError = this.onFatalError
+
+      this.chatClient.msgHandler = this
       this.chatClient.start()
     },
     async initTextEmoticons() {
       this.textEmoticons = await chat.getTextEmoticons()
     },
 
-    start() {
-      this.chatClient.start()
-    },
-    stop() {
-      this.chatClient.stop()
+    // 处理样式生成器发送的消息
+    onWindowMessage(event) {
+      if (event.origin !== window.location.origin) {
+        console.warn(`消息origin错误，${event.origin} != ${window.location.origin}`)
+        return
+      }
+
+      let { type, data } = event.data
+      switch (type) {
+      case 'roomSetCustomStyle':
+        this.customStyleElement.innerText = data.css
+        break
+      case 'roomStartClient':
+        if (this.chatClient) {
+          this.chatClient.start()
+        }
+        break
+      case 'roomStopClient':
+        if (this.chatClient) {
+          this.chatClient.stop()
+        }
+        break
+      }
     },
 
+    /** @param {chatModels.AddTextMsg} data */
     onAddText(data) {
       if (!this.config.showDanmaku || !this.filterTextMessage(data) || this.mergeSimilarText(data.content)) {
         return
@@ -200,6 +249,7 @@ export default {
       }
       this.$refs.renderer.addMessage(message)
     },
+    /** @param {chatModels.AddGiftMsg} data */
     onAddGift(data) {
       if (!this.config.showGift) {
         return
@@ -224,6 +274,7 @@ export default {
       }
       this.$refs.renderer.addMessage(message)
     },
+    /** @param {chatModels.AddMemberMsg} data */
     onAddMember(data) {
       if (!this.config.showGift || !this.filterNewMemberMessage(data)) {
         return
@@ -240,6 +291,7 @@ export default {
       }
       this.$refs.renderer.addMessage(message)
     },
+    /** @param {chatModels.AddSuperChatMsg} data */
     onAddSuperChat(data) {
       if (!this.config.showGift || !this.filterSuperChatMessage(data)) {
         return
@@ -269,8 +321,9 @@ export default {
       }
       this.$refs.renderer.updateMessage(data.id, { translation: data.translation })
     },
+    /** @param {chatModels.ChatClientFatalError} error */
     onFatalError(error) {
-      if (error.type === chat.FATAL_ERROR_TYPE_ROOM_ERROR) {
+      if (error.type === chatModels.FATAL_ERROR_TYPE_ROOM_ERROR) {
         this.chatClient.stop()
         return
       }
@@ -281,7 +334,7 @@ export default {
       })
       this.chatClient.stop()
 
-      if (error.type === chat.FATAL_ERROR_TYPE_AUTH_CODE_ERROR) {
+      if (error.type === chatModels.FATAL_ERROR_TYPE_AUTH_CODE_ERROR) {
         // Read The Fucking Manual
         this.$router.push({ name: 'help' })
       }
@@ -318,7 +371,7 @@ export default {
       return true
     },
     filterByAuthorName(authorName) {
-      return !this.blockUsersTrie.has(authorName)
+      return !this.blockUsersSet.has(authorName)
     },
     mergeSimilarText(content) {
       if (!this.config.mergeSimilarDanmaku) {

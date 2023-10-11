@@ -1,59 +1,12 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import {
-  Aside, Autocomplete, Badge, Button, ButtonGroup, Card, Col, ColorPicker, Container, Divider, Form, FormItem, Image,
-  Input, Main, Menu, MenuItem, Message, Option, OptionGroup, Radio, RadioGroup, Row, Select, Scrollbar,
-  Slider, Submenu, Switch, Table, TableColumn, TabPane, Tabs, Tooltip
-} from 'element-ui'
 import axios from 'axios'
 
 import * as i18n from './i18n'
 import App from './App'
-import Layout from './layout'
-import Home from './views/Home'
-import StyleGenerator from './views/StyleGenerator'
-import Help from './views/Help'
-import Room from './views/Room'
-import Reloader from './views/Reloader'
 import NotFound from './views/NotFound'
 
 axios.defaults.timeout = 10 * 1000
-
-Vue.use(VueRouter)
-// 初始化element
-Vue.use(Aside)
-Vue.use(Autocomplete)
-Vue.use(Badge)
-Vue.use(Button)
-Vue.use(ButtonGroup)
-Vue.use(Card)
-Vue.use(Col)
-Vue.use(ColorPicker)
-Vue.use(Container)
-Vue.use(Divider)
-Vue.use(Form)
-Vue.use(FormItem)
-Vue.use(Image)
-Vue.use(Input)
-Vue.use(Main)
-Vue.use(Menu)
-Vue.use(MenuItem)
-Vue.use(Option)
-Vue.use(OptionGroup)
-Vue.use(Radio)
-Vue.use(RadioGroup)
-Vue.use(Row)
-Vue.use(Select)
-Vue.use(Scrollbar)
-Vue.use(Slider)
-Vue.use(Submenu)
-Vue.use(Switch)
-Vue.use(Table)
-Vue.use(TableColumn)
-Vue.use(TabPane)
-Vue.use(Tabs)
-Vue.use(Tooltip)
-Vue.prototype.$message = Message
 
 Vue.config.ignoredElements = [
   /^yt-/
@@ -64,23 +17,23 @@ const router = new VueRouter({
   routes: [
     {
       path: '/',
-      component: Layout,
+      component: () => import('./layout'),
       children: [
-        { path: '', name: 'home', component: Home },
-        { path: 'stylegen', name: 'stylegen', component: StyleGenerator },
-        { path: 'help', name: 'help', component: Help }
+        { path: '', name: 'home', component: () => import('./views/Home') },
+        { path: 'stylegen', name: 'stylegen', component: () => import('./views/StyleGenerator') },
+        { path: 'help', name: 'help', component: () => import('./views/Help') }
       ]
     },
     {
       path: '/room/test',
       name: 'test_room',
-      component: Room,
+      component: () => import('./views/Room'),
       props: route => ({ strConfig: route.query })
     },
     {
       path: '/room/:roomKeyValue',
       name: 'room',
-      component: Reloader,
+      component: () => import('./views/Reloader.vue'),
       props(route) {
         let roomKeyType = parseInt(route.query.roomKeyType) || 1
         if (roomKeyType < 1 || roomKeyType > 2) {
@@ -98,7 +51,7 @@ const router = new VueRouter({
     }, {
       path: '/roomNeo/:roomKeyValue',
       name: 'roomNeo',
-      component: Room,
+      component: () => import('./views/Room'),
       props(route) {
         let roomKeyType = parseInt(route.query.roomKeyType) || 1
         if (roomKeyType < 1 || roomKeyType > 2) {
@@ -116,7 +69,7 @@ const router = new VueRouter({
     }, {
       path: '/room/:roomKeyValue',
       name: 'room',
-      component: Room,
+      component: () => import('./views/Room'),
       props(route) {
         let roomKeyType = parseInt(route.query.roomKeyType) || 1
         if (roomKeyType < 1 || roomKeyType > 2) {

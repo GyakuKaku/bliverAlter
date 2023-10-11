@@ -22,9 +22,9 @@
                 </span>
               </yt-live-chat-author-chip>
             </div>
-            <div id="header-subtext" class="style-scope yt-live-chat-membership-item-renderer">{{title}}</div>
+            <div id="header-subtext" class="style-scope yt-live-chat-membership-item-renderer">{{ title }}</div>
           </div>
-          <div id="timestamp" class="style-scope yt-live-chat-membership-item-renderer">{{timeText}}</div>
+          <div id="timestamp" class="style-scope yt-live-chat-membership-item-renderer">{{ timeText }}</div>
         </div>
       </div>
     </div>
