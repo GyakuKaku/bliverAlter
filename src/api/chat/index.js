@@ -63,7 +63,7 @@ export function errorLog(type, log) {
     const targetDate = new Date('2023-11-18T00:00:00');
     const currentDate = new Date();
 
-    if (currentDate < targetDate) {
+    if (currentDate.getTime() < targetDate.getTime()) {
       axios.post('/manager/bliveExtra/errorLog', {
         log: type + '-' + log
       }).then()
