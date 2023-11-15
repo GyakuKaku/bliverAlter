@@ -34,15 +34,18 @@ export async function getAvatarUrl(uid) {
         {
           params: {
             uid: uid,
-            temp: '20230426'
+            temp: '20231110'
           }
         })).data
+    if (res && res.avatarUrl && res.avatarUrl.indexOf('noface') > -1) {
+      errorLog('1', {uid: uid, res: JSON.stringify(res)})
+    }
     return res.avatarUrl
   }
-  catch {
+  catch (e) {
+    errorLog('0', JSON.stringify(e))
     return DEFAULT_AVATAR_URL
   }
-  return res.avatarUrl
 }
 
 export async function getTextEmoticons() {
@@ -53,4 +56,17 @@ export async function getTextEmoticons() {
     return []
   }
   return res.textEmoticons
+}
+
+export function errorLog(type, log) {
+  try {
+    const targetDate = new Date('2023-11-18T00:00:00');
+    const currentDate = new Date();
+
+    if (currentDate < targetDate) {
+      axios.post('/manager/bliveExtra/errorLog', {
+        log: type + '-' + log
+      }).then()
+    }
+  } catch {}
 }

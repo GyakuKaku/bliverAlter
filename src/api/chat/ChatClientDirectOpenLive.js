@@ -180,7 +180,7 @@ export default class ChatClientDirectOpenLive extends ChatClientOfficialBase {
     if (command.data.dm_type === 1) {
       data.imgContent = {
         url: command.data.emoji_img_url,
-        width: 164
+        width: 120
       }
     }
     // if (info[0][15] && info[0][15]['extra'] && (info[0][13] == null || info[0][13] === '{}')) {

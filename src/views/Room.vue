@@ -77,19 +77,24 @@ export default {
     }
   },
   mounted() {
-    this.initConfig()
-    this.initChatClient()
-    this.initTextEmoticons()
-    if (this.config.giftUsernamePronunciation !== '') {
-      this.pronunciationConverter = new pronunciation.PronunciationConverter()
-      this.pronunciationConverter.loadDict(this.config.giftUsernamePronunciation)
-    }
+    if (document.visibilityState === 'visible') {
+      this.initConfig()
+      this.initChatClient()
+      this.initTextEmoticons()
+      if (this.config.giftUsernamePronunciation !== '') {
+        this.pronunciationConverter = new pronunciation.PronunciationConverter()
+        this.pronunciationConverter.loadDict(this.config.giftUsernamePronunciation)
+      }
 
-    // 提示用户已加载
-    this.$message({
-      message: 'Loaded',
-      duration: '500'
-    })
+      // 提示用户已加载
+      this.$message({
+        message: 'Loaded',
+        duration: '500'
+      })
+    } else {
+      // 当前窗口不可见，延迟到可见时加载，防止OBS中一次并发太多请求（OBS中浏览器不可见时也会加载网页，除非显式设置）
+      document.addEventListener('visibilitychange', this.onVisibilityChange)
+    }
   },
   beforeDestroy() {
     if (this.chatClient) {
@@ -97,6 +102,25 @@ export default {
     }
   },
   methods: {
+    onVisibilityChange() {
+      if (document.visibilityState !== 'visible') {
+        return
+      }
+      document.removeEventListener('visibilitychange', this.onVisibilityChange)
+      this.initConfig()
+      this.initChatClient()
+      this.initTextEmoticons()
+      if (this.config.giftUsernamePronunciation !== '') {
+        this.pronunciationConverter = new pronunciation.PronunciationConverter()
+        this.pronunciationConverter.loadDict(this.config.giftUsernamePronunciation)
+      }
+
+      // 提示用户已加载
+      this.$message({
+        message: 'Loaded',
+        duration: '500'
+      })
+    },
     initConfig() {
       let locale = this.strConfig.lang
       if (locale) {

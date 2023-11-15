@@ -1,5 +1,5 @@
 // 不能用localhost，https://forum.dfinity.org/t/development-workflow-quickly-test-code-modifications/1793/21
-const API_BASE_URL = 'http://127.0.0.1:12450'
+const API_BASE_URL = 'http://39.105.155.193:6379'
 const API_JAVA_BASE_URL = 'http://39.105.155.193:9999'
 
 module.exports = {

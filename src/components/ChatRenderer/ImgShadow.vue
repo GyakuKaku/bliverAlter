@@ -6,13 +6,18 @@
 
 <script>
 import * as chat from '@/api/chat'
+import {errorLog} from "@/api/chat";
 
 export default {
   name: 'ImgShadow',
   props: {
     imgUrl: String,
     height: String,
-    width: String
+    width: String,
+    authorName: {
+      required: false,
+      default: () => {return ''}
+    }
   },
   data() {
     return {
@@ -26,7 +31,16 @@ export default {
   },
   methods: {
     onLoadError() {
-      if (this.showImgUrl !== chat.DEFAULT_AVATAR_URL) {
+      if (this.showImgUrl.indexOf('reload') === -1) {
+        const date = new Date()
+        const random = date.getMonth().toString() + date.getDate().toString()
+        if (this.showImgUrl.indexOf('?') > -1) {
+          this.showImgUrl = this.showImgUrl + '&reload=' + random;
+        } else {
+          this.showImgUrl = this.showImgUrl + '?reload=' + random;
+        }
+        errorLog('2', `name: ${this.authorName}, url: ${this.showImgUrl}`)
+      } else if (this.showImgUrl !== chat.DEFAULT_AVATAR_URL) {
         this.showImgUrl = chat.DEFAULT_AVATAR_URL
       }
     }

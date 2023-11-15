@@ -126,9 +126,18 @@
             </el-form-item>
           </el-col>
         </el-row>
-        <el-form-item :label="$t('stylegen.onNewLine')">
-          <el-switch v-model="form.messageOnNewLine"></el-switch>
-        </el-form-item>
+        <el-row :gutter="20">
+          <el-col :xs="24" :sm="12">
+            <el-form-item label="表情包大小">
+              <el-input v-model.number="form.largeEmoticonSize" type="number" min="0"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :xs="24" :sm="12">
+            <el-form-item :label="$t('stylegen.onNewLine')">
+              <el-switch v-model="form.messageOnNewLine"></el-switch>
+            </el-form-item>
+          </el-col>
+        </el-row>
       </el-card>
 
       <h3>{{$t('stylegen.time')}}</h3>
@@ -375,6 +384,7 @@ export const DEFAULT_CONFIG = {
   messageFontSize: 18,
   messageLineHeight: 0,
   messageColor: '#ffffff',
+  largeEmoticonSize: 120,
   messageOnNewLine: false,
 
   showTime: false,
@@ -536,6 +546,10 @@ yt-live-chat-text-message-renderer #message * {
   font-family: "${common.cssEscapeStr(this.form.messageFont)}"${common.FALLBACK_FONTS};
   font-size: ${this.form.messageFontSize}px !important;
   line-height: ${this.form.messageLineHeight || this.form.messageFontSize}px !important;
+}
+
+.content-img {
+  width: ${this.form.largeEmoticonSize}px !important;
 }
 
 ${!this.form.messageOnNewLine ? '' : `yt-live-chat-text-message-renderer #message {

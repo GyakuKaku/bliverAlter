@@ -138,8 +138,8 @@ export default class ChatClientDirectWeb extends ChatClientOfficialBase {
     }
     if (info[0][13]) {
       data.imgContent = info[0][13]
-      if (data.imgContent.width === 20) {
-        data.imgContent.width = 164
+      if (data.imgContent.width) {
+        data.imgContent.width = 120
       }
     }
     this.onAddText(data)
