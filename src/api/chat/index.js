@@ -38,7 +38,7 @@ export async function getAvatarUrl(uid) {
           }
         })).data
     if (res && res.avatarUrl && res.avatarUrl.indexOf('noface') > -1) {
-      errorLog('1', {uid: uid, res: JSON.stringify(res)})
+      errorLog('1', JSON.stringify({uid: uid, res: JSON.stringify(res)}))
     }
     return res.avatarUrl
   }
