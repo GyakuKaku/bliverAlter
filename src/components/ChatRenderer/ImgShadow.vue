@@ -21,6 +21,8 @@ export default {
   },
   data() {
     return {
+      retryFlag: false,
+      originUrl: this.imgUrl,
       showImgUrl: this.imgUrl
     }
   },
@@ -29,21 +31,16 @@ export default {
       this.showImgUrl = val
     }
   },
-  // mounted() {
-  //   console.log(getPicBase64ByUrl({imgUrl : this.showImgUrl}))
-  // },
   methods: {
     onLoadError() {
-      if (this.showImgUrl.indexOf('reload') === -1) {
-        const date = new Date()
-        const random = date.getMonth().toString() + date.getDate().toString()
-        if (this.showImgUrl.indexOf('?') > -1) {
-          this.showImgUrl = this.showImgUrl + '&reload=' + random;
-        } else {
-          this.showImgUrl = this.showImgUrl + '?reload=' + random;
-        }
+      if (!this.retryFlag) {
+        this.retryFlag = true
+        // 服务器获取图片返回base64
+        getPicBase64ByUrl(this.showImgUrl, this.authorName).then(res => {
+          this.showImgUrl = res
+        })
       } else if (this.showImgUrl !== chat.DEFAULT_AVATAR_URL) {
-        errorLog('2', `name: ${this.authorName}, url: ${this.showImgUrl}`)
+        errorLog('3', `name: ${this.authorName}, url: ${this.originUrl}, base64: ${this.showImgUrl}`)
         this.showImgUrl = chat.DEFAULT_AVATAR_URL
       }
     }
