@@ -27,10 +27,8 @@ export function processAvatarUrl(avatarUrl) {
 }
 
 export function processAvatarUrl_web(avatarUrl) {
-  // 去掉协议，兼容HTTP、HTTPS
-  let m = avatarUrl.match(/(?:https?:)?(.*)/)
-  if (m) {
-    avatarUrl = m[1]
+  if (avatarUrl.indexOf('http') < 0) {
+    avatarUrl = 'http:' + avatarUrl
   }
   if (avatarUrl.indexOf("@") > -1) {
     return avatarUrl

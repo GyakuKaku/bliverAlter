@@ -16,7 +16,7 @@ module.exports = {
         target: API_BASE_URL
       },
       '/manager': {
-        target: API_JAVA_BASE_URL
+        target: API_BASE_URL
       }
     }
   },
