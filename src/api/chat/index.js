@@ -26,24 +26,40 @@ export function processAvatarUrl(avatarUrl) {
   return avatarUrl
 }
 
+export function processAvatarUrl_web(avatarUrl) {
+  // 去掉协议，兼容HTTP、HTTPS
+  let m = avatarUrl.match(/(?:https?:)?(.*)/)
+  if (m) {
+    avatarUrl = m[1]
+  }
+  if (avatarUrl.indexOf("@") > -1) {
+    return avatarUrl
+  }
+  // 缩小图片加快传输
+  if (!avatarUrl.endsWith('noface.gif') && !avatarUrl.endsWith('noface.png')) {
+    avatarUrl += '@42w_42h_!web-avatar-nav.avif'
+  }
+  return avatarUrl
+}
+
 export async function getAvatarUrl(uid) {
   let res
   try {
-    res = (await
-      axios.get('/api/avatar_url',
-        {
-          params: {
-            uid: uid,
-            temp: '20231110'
-          }
-        })).data
-    if (res && res.avatarUrl && res.avatarUrl.indexOf('noface') > -1) {
+    res = (await axios.get('/manager/bliveExtra/getAvatarUrl', {params: { uid: uid, temp: '20231111' }})).data
+    if (res.success) {
+      return processAvatarUrl_web(res.data.avatarUrl)
+    } else {
       errorLog('1', JSON.stringify({uid: uid, res: JSON.stringify(res)}))
+      return DEFAULT_AVATAR_URL
     }
-    return res.avatarUrl
-  }
-  catch (e) {
-    errorLog('0', JSON.stringify(e))
+  } catch (e) {
+    if (e.response) {
+      // 请求已发出，但服务器返回状态码不在 2xx 范围内
+      errorLog('0', JSON.stringify(e.response))
+    } else {
+      // 请求未发出，或者没有收到响应
+      errorLog('0', JSON.stringify(e))
+    }
     return DEFAULT_AVATAR_URL
   }
 }
@@ -60,7 +76,7 @@ export async function getTextEmoticons() {
 
 export function errorLog(type, log) {
   try {
-    const targetDate = new Date('2023-11-18T00:00:00');
+    const targetDate = new Date('2023-11-22T00:00:00');
     const currentDate = new Date();
 
     if (currentDate.getTime() < targetDate.getTime()) {

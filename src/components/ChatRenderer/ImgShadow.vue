@@ -39,8 +39,8 @@ export default {
         } else {
           this.showImgUrl = this.showImgUrl + '?reload=' + random;
         }
-        errorLog('2', `name: ${this.authorName}, url: ${this.showImgUrl}`)
       } else if (this.showImgUrl !== chat.DEFAULT_AVATAR_URL) {
+        errorLog('2', `name: ${this.authorName}, url: ${this.showImgUrl}`)
         this.showImgUrl = chat.DEFAULT_AVATAR_URL
       }
     }
