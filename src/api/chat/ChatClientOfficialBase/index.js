@@ -119,16 +119,16 @@ export default class ChatClientOfficialBase {
     if (!this.needInitRoom) {
       return
     }
-
     let res
     try {
       res = await this.initRoom()
     } catch (e) {
       res = false
       console.error('initRoom exception:', e)
-      if (e instanceof chat.ChatClientFatalError && this.onFatalError) {
-        this.onFatalError(e)
-      }
+      // if (e instanceof chat.ChatClientFatalError && this.onFatalError) {
+      //   this.onFatalError(e)
+      // }
+      this.onFatalError(e)
     }
 
     if (!res) {

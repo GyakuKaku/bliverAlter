@@ -45,7 +45,7 @@ export function processAvatarUrl_web(avatarUrl) {
 export async function getAvatarUrl(uid) {
   let res
   try {
-    res = (await axios.get('/manager/bliveExtra/getAvatarUrl', {params: { uid: uid, temp: '20231111' }})).data
+    res = (await axios.get('/manager/bliveExtra/getAvatarUrl', {params: { uid: uid, temp: '20231112' }})).data
     if (res.success) {
       return processAvatarUrl_web(res.data.avatarUrl)
     } else {
@@ -63,6 +63,20 @@ export async function getAvatarUrl(uid) {
     return DEFAULT_AVATAR_URL
   }
 }
+
+// export async function getPicBase64ByUrl(uid, imageUrl) {
+//   let res
+//   try {
+//     res = (await axios.get('/manager/bliveExtra/getPicBase64ByUrl', {params: { uid: uid, imageUrl: imageUrl }})).data
+//     if (res.success) {
+//       return res.data.avatarUrl
+//     } else {
+//       return DEFAULT_AVATAR_URL
+//     }
+//   } catch (e) {
+//     return DEFAULT_AVATAR_URL
+//   }
+// }
 
 export async function getTextEmoticons() {
   let res

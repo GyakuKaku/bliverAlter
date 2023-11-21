@@ -6,7 +6,7 @@
 
 <script>
 import * as chat from '@/api/chat'
-import {errorLog} from "@/api/chat";
+import {errorLog, getPicBase64ByUrl} from "@/api/chat";
 
 export default {
   name: 'ImgShadow',
@@ -29,6 +29,9 @@ export default {
       this.showImgUrl = val
     }
   },
+  // mounted() {
+  //   console.log(getPicBase64ByUrl({imgUrl : this.showImgUrl}))
+  // },
   methods: {
     onLoadError() {
       if (this.showImgUrl.indexOf('reload') === -1) {

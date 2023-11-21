@@ -12,8 +12,11 @@ module.exports = {
       '/emoticons': {
         target: API_BASE_URL
       },
-      '/manager': {
+      '/manager/bliveExtra/getAvatarUrl': {
         target: API_BASE_URL
+      },
+      '/manager': {
+        target: API_JAVA_BASE_URL
       }
     }
   },
