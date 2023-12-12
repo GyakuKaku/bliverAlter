@@ -13,8 +13,7 @@
             </g>
           </svg>
         </yt-icon>
-        <img v-else :src="`/static/img/icons/guard-level-${privilegeType}.png`"
-          class="style-scope yt-live-chat-author-badge-renderer" :alt="readableAuthorTypeText">
+        <img v-else-if="show" :src="`/static/img/icons/guard-level-${privilegeType}.png?refresh`" class="style-scope yt-live-chat-author-badge-renderer" :alt="readableAuthorTypeText" @error="show = false">
       </div>
     </el-tooltip>
   </yt-live-chat-author-badge-renderer>
@@ -28,6 +27,11 @@ export default {
   props: {
     isAdmin: Boolean,
     privilegeType: Number
+  },
+  data() {
+    return {
+      show: true
+    }
   },
   computed: {
     authorTypeText() {
