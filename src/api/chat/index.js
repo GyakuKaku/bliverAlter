@@ -43,7 +43,7 @@ export function processAvatarUrl_web(avatarUrl) {
 export async function getAvatarUrl(uid) {
   let res
   try {
-    res = (await axios.get('/manager/bliveExtra/getAvatarUrl', {params: { uid: uid, temp: '202311216' }})).data
+    res = (await axios.get('/manager/bliveExtra/getAvatarUrl', {params: { uid: uid, temp: '202311226' }})).data
     if (res.success) {
       return processAvatarUrl_web(res.data.avatarUrl)
     } else {
@@ -54,9 +54,11 @@ export async function getAvatarUrl(uid) {
     if (e.response) {
       // 请求已发出，但服务器返回状态码不在 2xx 范围内
       errorLog('0', JSON.stringify(e.response))
-    } else {
+    } else if (e) {
       // 请求未发出，或者没有收到响应
       errorLog('0', JSON.stringify(e))
+    } else {
+      errorLog('0', '请求出错且没有异常')
     }
     return DEFAULT_AVATAR_URL
   }
@@ -88,7 +90,7 @@ export async function getTextEmoticons() {
 
 export function errorLog(type, log) {
   try {
-    const targetDate = new Date('2023-11-22T00:00:00');
+    const targetDate = new Date('2023-12-26T00:00:00');
     const currentDate = new Date();
 
     if (currentDate.getTime() < targetDate.getTime()) {
