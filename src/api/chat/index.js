@@ -43,8 +43,6 @@ export function processAvatarUrl_web(avatarUrl) {
 export async function getAvatarUrl(uid) {
   let res
   try {
-    const date = new Date()
-    const random = date.getMonth().toString() + date.getDate().toString()
     res = (await axios.get('/manager/bliveExtra/v2/getAvatarUrl', {params: { uid: uid, temp: "0101" }})).data
     if (res.success) {
       if (res.data.avatarUrl.indexOf("noface") > -1) {
@@ -104,7 +102,7 @@ export async function getTextEmoticons() {
 
 export function errorLog(type, log) {
   try {
-    const targetDate = new Date('2024-01-02T00:00:00');
+    const targetDate = new Date('2024-01-03T00:00:00');
     const currentDate = new Date();
 
     if (currentDate.getTime() < targetDate.getTime()) {
