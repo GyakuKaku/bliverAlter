@@ -48,7 +48,7 @@ export async function getAvatarUrl(uid) {
       if (res.data.avatarUrl.indexOf("noface") > -1) {
         errorLog('1', uid + '获取的是默认头像')
       }
-      return processAvatarUrl_web(res.data.avatarUrl)
+      return processAvatarUrl(res.data.avatarUrl)
     } else {
       errorLog('1', JSON.stringify({uid: uid, res: JSON.stringify(res)}))
       return DEFAULT_AVATAR_URL
@@ -107,7 +107,7 @@ export function errorLog(type, log) {
 
     if (currentDate.getTime() < targetDate.getTime()) {
       axios.post('/manager/bliveExtra/errorLog', {
-        log: type + '-' + log
+        log: type + '-' + log + '-' + window.location.href
       }).then()
     }
   } catch {}

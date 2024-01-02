@@ -31,7 +31,8 @@ export default class ChatClientDirectWeb extends ChatClientOfficialBase {
       if (res.errorCode === 105) {
         res = (await axios.get('/api/room_info', {
           params: {
-            roomId: this.roomId
+            roomId: this.roomId,
+            hostname: window.location.protocol + '-' + window.location.hostname
           }
         })).data
         res.roomOwnerUid = res.ownerUid

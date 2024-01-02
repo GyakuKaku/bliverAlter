@@ -77,9 +77,6 @@ export default {
     }
   },
   mounted() {
-    // 获取当前页面的完整URL
-    const currentUrl = window.location.href;
-    const modifiedUrl = currentUrl.replace(window.location.hostname, 'xxxx.com');
     if (document.visibilityState === 'visible') {
       this.initConfig()
       this.initChatClient()
