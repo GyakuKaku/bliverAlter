@@ -34,7 +34,7 @@ export function processAvatarUrl_web(avatarUrl) {
     return avatarUrl
   }
   // 缩小图片加快传输
-  if (!avatarUrl.endsWith('noface.gif') && !avatarUrl.endsWith('noface.png')) {
+  if (!avatarUrl.endsWith('noface.gif') && !avatarUrl.endsWith('noface.png') && !avatarUrl.endsWith('noface.png')) {
     avatarUrl += '@42w_42h_!web-avatar-nav.avif'
   }
   return avatarUrl
@@ -43,15 +43,20 @@ export function processAvatarUrl_web(avatarUrl) {
 export async function getAvatarUrl(uid) {
   let res
   try {
-    res = (await axios.get('/manager/bliveExtra/getAvatarUrl', {params: { uid: uid, temp: '202311226' }})).data
+    const date = new Date()
+    const random = date.getMonth().toString() + date.getDate().toString()
+    res = (await axios.get('/manager/bliveExtra/v2/getAvatarUrl', {params: { uid: uid, temp: "0101" }})).data
     if (res.success) {
+      if (res.data.avatarUrl.indexOf("noface") > -1) {
+        errorLog('1', uid + '获取的是默认头像')
+      }
       return processAvatarUrl_web(res.data.avatarUrl)
     } else {
       errorLog('1', JSON.stringify({uid: uid, res: JSON.stringify(res)}))
       return DEFAULT_AVATAR_URL
     }
   } catch (e) {
-    if (e.response) {
+    if (e && e.response) {
       // 请求已发出，但服务器返回状态码不在 2xx 范围内
       errorLog('0', JSON.stringify(e.response))
     } else if (e) {
@@ -74,6 +79,15 @@ export async function getPicBase64ByUrl(imageUrl, authorName) {
       return DEFAULT_AVATAR_URL
     }
   } catch (e) {
+    if (e && e.response) {
+      // 请求已发出，但服务器返回状态码不在 2xx 范围内
+      errorLog('2', authorName + imageUrl + JSON.stringify(e.response))
+    } else if (e) {
+      // 请求未发出，或者没有收到响应
+      errorLog('2', authorName + imageUrl + JSON.stringify(e))
+    } else {
+      errorLog('2', authorName + imageUrl + '请求出错且没有异常')
+    }
     return DEFAULT_AVATAR_URL
   }
 }
@@ -90,7 +104,7 @@ export async function getTextEmoticons() {
 
 export function errorLog(type, log) {
   try {
-    const targetDate = new Date('2023-12-26T00:00:00');
+    const targetDate = new Date('2024-01-02T00:00:00');
     const currentDate = new Date();
 
     if (currentDate.getTime() < targetDate.getTime()) {

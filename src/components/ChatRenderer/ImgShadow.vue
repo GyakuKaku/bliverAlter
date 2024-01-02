@@ -39,7 +39,6 @@ export default {
         getPicBase64ByUrl(this.showImgUrl, this.authorName).then(res => {
           this.showImgUrl = res
         })
-        // errorLog('2', `name: ${this.authorName}, url: ${this.originUrl}, location: ${window.location.href}`)
       } else if (this.showImgUrl !== chat.DEFAULT_AVATAR_URL) {
         errorLog('3', `name: ${this.authorName}, url: ${this.originUrl}, base64: ${this.showImgUrl}`)
         this.showImgUrl = chat.DEFAULT_AVATAR_URL

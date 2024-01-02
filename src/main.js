@@ -17,7 +17,7 @@ import Room from './views/Room'
 import Reloader from './views/Reloader'
 import NotFound from './views/NotFound'
 
-axios.defaults.timeout = 10 * 1000
+axios.defaults.timeout = 15 * 1000
 
 Vue.use(VueRouter)
 // 初始化element

@@ -28,7 +28,7 @@ export default {
     query.random = date.getMonth().toString() + date.getDate().toString()
     let resolved
     resolved = this.$router.resolve({ name: 'roomNeo', params: { roomKeyValue: this.roomKeyValue }, query })
-    let url = `${window.location.protocol}//${window.location.host}${resolved.href}`
+    let url = `https://chats.my-glimmer.top${resolved.href}`
 
     this.tryLoad(url)
   },
