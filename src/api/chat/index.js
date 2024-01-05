@@ -19,6 +19,9 @@ export function processAvatarUrl(avatarUrl) {
   if (m) {
     avatarUrl = m[1]
   }
+  if (avatarUrl.indexOf("@") > -1) {
+    return avatarUrl
+  }
   // 缩小图片加快传输
   if (!avatarUrl.endsWith('noface.gif') && !avatarUrl.endsWith('noface.png')) {
     avatarUrl += '@42w_42h'

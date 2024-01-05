@@ -26,13 +26,13 @@ export default class ChatClientDirectWeb extends ChatClientOfficialBase {
     let res
     try {
       res = (await axios.get('/manager/bliveExtra/room_info', { params: {
-        roomId: this.roomId
+        roomId: this.roomId,
+        hostname: window.location.protocol + '-' + window.location.hostname
       } })).data
       if (res.errorCode === 105) {
         res = (await axios.get('/api/room_info', {
           params: {
-            roomId: this.roomId,
-            hostname: window.location.protocol + '-' + window.location.hostname
+            roomId: this.roomId
           }
         })).data
         res.roomOwnerUid = res.ownerUid
