@@ -1,6 +1,6 @@
 <template>
   <yt-img-shadow class="no-transition" :height="height" :width="width" style="background-color: transparent;" loaded>
-    <img id="img" class="style-scope yt-img-shadow" alt="" :height="height" :width="width" :src="showImgUrl" @error="onLoadError">
+    <img v-if="showImgUrl !== banUrl" id="img" class="style-scope yt-img-shadow" alt="" :height="height" :width="width" :src="showImgUrl" @error="onLoadError">
   </yt-img-shadow>
 </template>
 
@@ -21,6 +21,7 @@ export default {
   },
   data() {
     return {
+      banUrl: chat.BAN_UID,
       retryFlag: false,
       originUrl: this.imgUrl,
       showImgUrl: this.imgUrl

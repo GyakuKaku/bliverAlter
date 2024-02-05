@@ -11,6 +11,7 @@ export class ChatClientFatalError extends Error {
 }
 
 export const DEFAULT_AVATAR_URL = '//static.hdslb.com/images/member/noface.gif?refresh'
+export const BAN_UID = '//static.hdslb.com/images/member/noface.gif?ban'
 export const DEFAULT_AVATAR_URL_LOCAL = '/static/img/icons/noface.png?refresh'
 
 export function processAvatarUrl(avatarUrl) {
@@ -44,6 +45,9 @@ export function processAvatarUrl_web(avatarUrl) {
 }
 
 export async function getAvatarUrl(uid) {
+  if (uid == 0) {
+    return BAN_UID
+  }
   let res
   try {
     res = (await axios.get('/manager/bliveExtra/v2/getAvatarUrl', {params: { uid: uid, temp: "0101" }})).data
